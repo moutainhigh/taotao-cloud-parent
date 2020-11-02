@@ -1,0 +1,47 @@
+/**
+ * Project Name: my-projects
+ * Package Name: com.taotao.cloud.order.biz.service.impl
+ * Date: 2020/6/10 16:55
+ * Author: dengtao
+ */
+package com.taotao.cloud.order.biz.service.impl;
+
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.taotao.cloud.common.utils.BeanUtil;
+import com.taotao.cloud.order.api.dto.OrderDTO;
+import com.taotao.cloud.order.biz.entity.OrderInfo;
+import com.taotao.cloud.order.biz.entity.QOrderInfo;
+import com.taotao.cloud.order.biz.repository.OrderInfoRepository;
+import com.taotao.cloud.order.biz.service.IOrderInfoService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * <br>
+ *
+ * @author dengtao
+ * @version v1.0.0
+ * @create 2020/6/10 16:55
+ */
+@Service
+@AllArgsConstructor
+public class OrderInfoServiceImpl implements IOrderInfoService {
+
+    private final OrderInfoRepository orderInfoRepository;
+    private final static QOrderInfo ORDER_INFO = QOrderInfo.orderInfo;
+
+    @Override
+    public OrderInfo findOrderInfoByCode(String code) {
+        BooleanExpression expression = ORDER_INFO.delFlag.eq(false).and(ORDER_INFO.code.eq(code));
+        return orderInfoRepository.fetchOne(expression);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public OrderInfo saveOrder(OrderDTO orderDTO) {
+        OrderInfo orderInfo = OrderInfo.builder().build();
+        BeanUtil.copyIgnoredNull(orderDTO, orderInfo);
+        return orderInfoRepository.saveAndFlush(orderInfo);
+    }
+}

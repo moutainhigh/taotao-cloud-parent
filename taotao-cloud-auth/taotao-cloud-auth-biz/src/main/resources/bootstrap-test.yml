@@ -1,0 +1,301 @@
+server:
+  port: 9800
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
+
+spring:
+  cache:
+    type: none
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: taotao-cloud-auth-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+      config:
+        enabled: false
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.230}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8718}
+      eager: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      max-lifetime: 120000
+      maximum-pool-size: 15
+      minimum-idle: 3
+      connection-timeout: 30000
+      idle-timeout: 30000
+      auto-commit: true
+      pool-name: DatebookHikariCP
+  redis:
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.230}
+    port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
+    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  kafka:
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.230}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        linger.ms: 500
+    consumer:
+      auto-commit-interval: 1S
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    disable-html-escaping: true
+    pretty-printing: true
+    serialize-nulls: true
+    long-serialization-policy: string
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0
+  zipkin:
+    enabled: true
+    sender:
+      type: kafka
+
+
+mybatis-plus:
+  typeAliasesPackage: com.taotao.cloud.auth.model
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+taotao:
+  cloud:
+    # 认证模块
+    oauth2:
+      # 存储token方式
+      token:
+        store:
+          type: redis
+      security:
+        enabled: false
+        code:
+          # 忽略验证码的应用编号
+          ignore-client-code: web
+        ignore:
+          # 忽略认证的地址
+          http-urls: >
+            /sms/code,
+            /mobile/login,
+            /current/user,
+            /token/oauth/user/token,
+            /social/**,
+            /auth/**,
+            /user/login,
+            /api/socket/**,
+            /sendCode/**,
+            /mobile/login/**,
+            /oauth/**,
+            /api-docs
+    # 第三方认证模块
+    social:
+      security:
+        filter-processes-url: /auth
+        qq:
+          provider-id: qq
+          app-id: 101715108
+          app-secret: 453e1be400a9cf207fea273f0d2c6248
+          redirect-uri: http://38b0608d.ngrok.io/login
+        github:
+          provider-id: github
+          app-id: Iv1.f4c52616ef60f7be
+          app-secret: 639f4adac570de58f73de87e9846d02d14de59b5
+          redirect-uri: http://38b0608d.ngrok.io/login
+        gitee:
+          provider-id: gitee
+          app-id: 81bc2a5852cbcd35f94fa77512e1efb776b57102e1fb9b82105acf7b412f072b
+          app-secret: 6cf101f97728215e3455d19bf84e4b277be505a9690cf0e9558bc24904dd6ad6
+          redirect-uri: http://51d47d02.ngrok.io/login
+        weixin:
+          provider-id: weixin
+          app-id:
+          app-secret:
+    # swagger模块
+    swagger:
+      enabled: true
+      title: 认证中心
+      description: 认证中心接口文档
+      version: 1.0
+      license: Apache
+      license-url: https://opensource.org/licenses/Apache-2.0Url
+      base-package: com.taotao.cloud.auth.controller
+      contact:
+        name: dengtao
+        url: http://dtbox.top/
+        email: 981376577@qq.com
+      host: ${spring.cloud.client.ip-address}:${server.port}
+    # ribbon模块
+    ribbon:
+      isolation:
+        enabled: true
+      rest-template:
+        max-total: 200
+        max-per-route: 50
+        read-timeout: 35000
+        connect-timeout: 10000
+    # redis缓存模块
+    redis:
+      cache-manager:
+        configs:
+          - key: menu
+            second: 300
+    # 消息模块
+    message:
+      sms:
+        enabled: true
+        aliyun:
+          enabled: true
+          access-key-id: 1400337314
+          access-key-secret: fadf8790b472f031c34f3debcfea3820
+          configs:
+            - type: login
+              code: 560871
+            - type: register
+              code: sldj234osfu
+        miaodiyun:
+          enabled: true
+          # 平台里的ACOUNT_SID
+          access-key-id: 2be56dd4aa6e4564b9690abb2d0a3f89
+          # 平台里的AUTH_TOKEN
+          access-key-secret: cc8f4a3bf3664665ade85818fa3b2516
+    # 日志模块
+    log:
+      type: kafka
+      enabled: true
+      trace:
+        enabled: true
+    # elk模块
+    elk:
+      enabled: true
+      app-name: taotao-cloud-uc-center
+      spring-app-name: taotao-cloud-uc-center
+      destinations: >
+        127.0.0.1:4560
+      log:
+        statistic:
+          enabled: true
+    data:
+      mybatis-plus:
+        auto-fill:
+          enabled: false
+      tenant:
+        enabled: true
+
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
+
+ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+
+feign:
+  sentinel:
+    enabled: false
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+    max-connections: 10000
+    max-connections-per-route: 1000
+  client:
+    config:
+      feign-name:
+        connectTimeout: 300000
+        readTimeout: 300000
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    tags:
+      application: ${spring.application.name}

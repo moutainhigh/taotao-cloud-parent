@@ -1,0 +1,13 @@
+archivesBaseName = 'taotao-cloud-presto-udf'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    implementation 'com.facebook.presto:presto-spi:0.242'
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.2.3'
+    implementation 'io.airlift:slice:0.40'
+    implementation 'io.airlift:units:1.6'
+    implementation 'org.openjdk.jol:jol-core:0.14'
+}

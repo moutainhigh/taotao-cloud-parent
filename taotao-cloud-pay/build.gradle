@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-pay'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

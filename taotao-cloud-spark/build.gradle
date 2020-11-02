@@ -1,0 +1,12 @@
+archivesBaseName = 'taotao-cloud-spark'
+
+jar.enabled = false
+bootJar.enabled = false
+
+apply plugin: 'scala'
+
+dependencies {
+    implementation "org.apache.spark:spark-core_2.12:3.0.1"
+    implementation "org.apache.spark:spark-sql_2.12:3.0.1"
+//    implementation "org.scala-lang:scala-library:2.13.3"
+}

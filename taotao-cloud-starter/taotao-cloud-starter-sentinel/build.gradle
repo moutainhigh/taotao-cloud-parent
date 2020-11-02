@@ -1,0 +1,23 @@
+archivesBaseName = 'taotao-cloud-starter-sentinel'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+
+    compile "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
+    implementation "com.alibaba.csp:sentinel-datasource-nacos"
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework:spring-webflux'
+
+    implementation 'javax.servlet:javax.servlet-api'
+    implementation 'org.aspectj:aspectjweaver'
+
+    implementation "org.springframework.cloud:spring-cloud-context"
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}

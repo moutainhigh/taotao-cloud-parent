@@ -1,0 +1,33 @@
+archivesBaseName = 'taotao-cloud-sms-biz'
+
+jar.enabled = true
+bootJar.enabled = true
+
+dependencies {
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-mybatis-plus')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-redis')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-security')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-log')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-job')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-shardingjdbc')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-sentinel')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-elk')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-seata')
+	implementation project(':taotao-cloud-uc:taotao-cloud-uc-api')
+
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation "org.springframework.boot:spring-boot-starter-undertow"
+	implementation "org.springframework.boot:spring-boot-starter-test"
+
+	implementation "org.springframework.cloud:spring-cloud-starter-zipkin"
+
+	implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+	implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+
+	runtime "mysql:mysql-connector-java"
+	runtime "io.micrometer:micrometer-registry-prometheus"
+}

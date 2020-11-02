@@ -1,0 +1,10 @@
+archivesBaseName = 'taotao-cloud-hive-udf'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    implementation "org.apache.hive:hive-exec:3.1.2"
+    implementation 'org.apache.hadoop:hadoop-common:3.1.2'
+}
+

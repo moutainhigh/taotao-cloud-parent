@@ -1,0 +1,32 @@
+archivesBaseName = 'taotao-cloud-hadoop-mr'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-security')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-log')
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.cloud:spring-cloud-context'
+    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    implementation 'org.apache.hadoop:hadoop-common:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-hdfs:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-client:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.1.2'
+}

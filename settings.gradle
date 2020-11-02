@@ -1,0 +1,133 @@
+rootProject.name = 'taotao-cloud'
+
+/* starter模块 */
+include 'taotao-cloud-starter'
+include 'taotao-cloud-starter:taotao-cloud-starter-security'
+include 'taotao-cloud-starter:taotao-cloud-starter-common'
+include 'taotao-cloud-starter:taotao-cloud-starter-core'
+include 'taotao-cloud-starter:taotao-cloud-starter-data-mybatis-plus'
+include 'taotao-cloud-starter:taotao-cloud-starter-data-jpa'
+include 'taotao-cloud-starter:taotao-cloud-starter-elasticsearch'
+include 'taotao-cloud-starter:taotao-cloud-starter-elk'
+include 'taotao-cloud-starter:taotao-cloud-starter-file'
+include 'taotao-cloud-starter:taotao-cloud-starter-job'
+include 'taotao-cloud-starter:taotao-cloud-starter-p6spy'
+include 'taotao-cloud-starter:taotao-cloud-starter-log'
+include 'taotao-cloud-starter:taotao-cloud-starter-kafka'
+include 'taotao-cloud-starter:taotao-cloud-starter-rabbitmq'
+include 'taotao-cloud-starter:taotao-cloud-starter-redis'
+include 'taotao-cloud-starter:taotao-cloud-starter-ribbon'
+include 'taotao-cloud-starter:taotao-cloud-starter-seata'
+include 'taotao-cloud-starter:taotao-cloud-starter-sentinel'
+include 'taotao-cloud-starter:taotao-cloud-starter-shardingjdbc'
+include 'taotao-cloud-starter:taotao-cloud-starter-swagger'
+include 'taotao-cloud-starter:taotao-cloud-starter-zookeeper'
+
+include 'taotao-cloud-gateway'
+include 'taotao-cloud-ws'
+include 'taotao-cloud-config'
+include 'taotao-cloud-code'
+include 'taotao-cloud-mall'
+include 'taotao-cloud-manager'
+
+include 'taotao-cloud-flink'
+include 'taotao-cloud-flume'
+include 'taotao-cloud-hbase'
+include 'taotao-cloud-scala'
+include 'taotao-cloud-spark'
+include 'taotao-cloud-storm'
+include 'taotao-cloud-netty'
+include 'taotao-cloud-recommend'
+include 'taotao-cloud-hudi'
+
+/* 售后模块 */
+include 'taotao-cloud-aftersale'
+include 'taotao-cloud-aftersale:taotao-cloud-aftersale-api'
+include 'taotao-cloud-aftersale:taotao-cloud-aftersale-biz'
+
+/* 认证中心 */
+include 'taotao-cloud-auth'
+include 'taotao-cloud-auth:taotao-cloud-auth-api'
+include 'taotao-cloud-auth:taotao-cloud-auth-biz'
+
+/* 客服模块 */
+include 'taotao-cloud-customer'
+include 'taotao-cloud-customer:taotao-cloud-customer-api'
+include 'taotao-cloud-customer:taotao-cloud-customer-biz'
+
+/* 物流模块 */
+include 'taotao-cloud-logistics'
+include 'taotao-cloud-logistics:taotao-cloud-logistics-api'
+include 'taotao-cloud-logistics:taotao-cloud-logistics-biz'
+
+/* 用户模块 */
+include 'taotao-cloud-uc'
+include 'taotao-cloud-uc:taotao-cloud-uc-api'
+include 'taotao-cloud-uc:taotao-cloud-uc-biz'
+
+/* 搜索模块 */
+include 'taotao-cloud-search'
+include 'taotao-cloud-search:taotao-cloud-search-api'
+include 'taotao-cloud-search:taotao-cloud-search-biz'
+
+/* 支付模块 */
+include 'taotao-cloud-pay'
+include 'taotao-cloud-pay:taotao-cloud-pay-api'
+include 'taotao-cloud-pay:taotao-cloud-pay-biz'
+
+/* sms模块 */
+include 'taotao-cloud-sms'
+include 'taotao-cloud-sms:taotao-cloud-sms-api'
+include 'taotao-cloud-sms:taotao-cloud-sms-biz'
+
+/* 邮件模块 */
+include 'taotao-cloud-mail'
+include 'taotao-cloud-mail:taotao-cloud-mail-api'
+include 'taotao-cloud-mail:taotao-cloud-mail-biz'
+
+/* 订单模块 */
+include 'taotao-cloud-order'
+include 'taotao-cloud-order:taotao-cloud-order-api'
+include 'taotao-cloud-order:taotao-cloud-order-biz'
+
+/* 商品模块 */
+include 'taotao-cloud-product'
+include 'taotao-cloud-product:taotao-cloud-product-api'
+include 'taotao-cloud-product:taotao-cloud-product-biz'
+
+/* 秒杀模块 */
+include 'taotao-cloud-seckill'
+include 'taotao-cloud-seckill:taotao-cloud-seckill-api'
+include 'taotao-cloud-seckill:taotao-cloud-seckill-biz'
+
+/* 结算模块 */
+include 'taotao-cloud-settlement'
+include 'taotao-cloud-settlement:taotao-cloud-settlement-api'
+include 'taotao-cloud-settlement:taotao-cloud-settlement-biz'
+
+/* 分布式文件系统模块 */
+include 'taotao-cloud-dfs'
+include 'taotao-cloud-dfs:taotao-cloud-dfs-api'
+include 'taotao-cloud-dfs:taotao-cloud-dfs-biz'
+
+/* hadoop模块 */
+include 'taotao-cloud-hadoop'
+include 'taotao-cloud-hadoop:taotao-cloud-hadoop-hdfs'
+include 'taotao-cloud-hadoop:taotao-cloud-hadoop-mr'
+
+/* hive模块 */
+include 'taotao-cloud-hive'
+include 'taotao-cloud-hive:taotao-cloud-hive-api'
+include 'taotao-cloud-hive:taotao-cloud-hive-udf'
+
+/* presto模块 */
+include 'taotao-cloud-presto'
+include 'taotao-cloud-presto:taotao-cloud-presto-api'
+include 'taotao-cloud-presto:taotao-cloud-presto-udf'
+
+/* demo模块 */
+include 'taotao-cloud-demo'
+include 'taotao-cloud-demo:taotao-cloud-demo-youzan'
+include 'taotao-cloud-demo:taotao-cloud-demo-graphql'
+include 'taotao-cloud-demo:taotao-cloud-demo-mqtt'
+

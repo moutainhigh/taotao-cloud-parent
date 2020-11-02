@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-presto'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

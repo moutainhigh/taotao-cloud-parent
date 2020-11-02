@@ -1,0 +1,18 @@
+archivesBaseName = 'taotao-cloud-ws'
+
+jar.enabled = true
+bootJar.enabled = true
+
+dependencies {
+//	compile project(':common') /* 子模块之间的依赖 */
+//	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation('org.springframework.boot:spring-boot-starter-web'){
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+}

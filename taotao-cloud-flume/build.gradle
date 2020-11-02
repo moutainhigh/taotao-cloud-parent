@@ -1,0 +1,11 @@
+archivesBaseName = 'taotao-cloud-flume'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    compile 'org.apache.flume:flume-ng-core:1.7.0'
+    compile 'org.apache.flume.flume-ng-sources:flume-kafka-source:1.9.0'
+    compile 'com.alibaba:fastjson:1.2.70'
+}
+

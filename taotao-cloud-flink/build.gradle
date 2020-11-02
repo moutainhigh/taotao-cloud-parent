@@ -1,0 +1,16 @@
+archivesBaseName = 'taotao-cloud-flink'
+
+jar.enabled = false
+bootJar.enabled = false
+
+apply plugin: 'scala'
+
+dependencies {
+    implementation group: 'org.apache.flink', name: 'flink-core', version: '1.11.2'
+    implementation group: 'org.apache.flink', name: 'flink-java', version: '1.11.2'
+    implementation group: 'org.apache.flink', name: 'flink-scala_2.12', version: '1.11.2'
+    implementation group: 'org.apache.flink', name: 'flink-streaming-scala_2.12', version: '1.11.2'
+    implementation group: 'org.apache.flink', name: 'flink-streaming-java_2.12', version: '1.11.2'
+
+    implementation group: 'org.apache.flink', name: 'flink-clients_2.12', version: '1.11.2'
+}

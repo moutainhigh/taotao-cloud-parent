@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-settlement'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

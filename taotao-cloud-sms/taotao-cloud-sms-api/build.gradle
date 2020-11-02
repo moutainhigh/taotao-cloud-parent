@@ -1,0 +1,12 @@
+archivesBaseName = 'taotao-cloud-sms-api'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+	implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
+
+	implementation "org.springframework.boot:spring-boot-starter-validation"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+}

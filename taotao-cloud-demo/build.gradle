@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-demo'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

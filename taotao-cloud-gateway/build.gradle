@@ -1,0 +1,56 @@
+archivesBaseName = 'taotao-cloud-gateway'
+
+jar.enabled = true
+bootJar.enabled = true
+
+dependencies {
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-security')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-log')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-redis')
+
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix"
+    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+//    implementation "org.springframework.security:spring-security-config"
+    implementation "org.springframework.security:spring-security-oauth2-resource-server"
+//    implementation "org.springframework.security:spring-security-oauth2-client"
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'
+
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery") {
+        exclude group: "org.springframework.cloud", module: "spring-cloud-starter-netflix-ribbon"
+    }
+    implementation "org.springframework.cloud:spring-cloud-starter-loadbalancer"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel") {
+        exclude group: "com.fasterxml.jackson.dataformat", module: "jackson-dataformat-xml"
+    }
+
+    implementation("com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway")
+
+    implementation("io.springfox:springfox-swagger2") {
+        exclude group: "io.swagger", module: "swagger-models"
+    }
+    implementation "io.swagger:swagger-models:1.6.1"
+    implementation "com.github.xiaoymin:knife4j-spring-ui"
+    implementation "eu.bitwalker:UserAgentUtils"
+    implementation "org.apache.commons:commons-pool2"
+    implementation "org.apache.commons:commons-lang3"
+
+    implementation "org.springframework.cloud:spring-cloud-context"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+//    implementation "org.springframework.cloud:spring-cloud-starter-zipkin"
+//    implementation "io.micrometer:micrometer-registry-prometheus"
+}
+
+configurations {
+    compile.exclude group: "org.springframework", module: "spring-webmvc"
+    compile.exclude group: "org.springframework.cloud", module: "spring-cloud-starter-netflix-ribbon"
+}

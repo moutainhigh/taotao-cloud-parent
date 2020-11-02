@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-hbase'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+    compile 'org.apache.hbase:hbase-client:2.3.2'
+}

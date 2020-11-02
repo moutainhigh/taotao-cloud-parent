@@ -1,0 +1,174 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.3.RELEASE'
+        springCloudVersion = 'Hoxton.SR8'
+        springCloudAlibabaVersion = '2.2.1.RELEASE'
+
+        swaggerVersion = '2.9.2'
+        swaggerUiVersion = '1.8.7'
+        swaggerMgUiVersion = '1.0.6'
+        swaggerButlerVersion = '2.0.1'
+        swaggerModelsVersion = '1.5.21'
+        swaggerBootstrapUiVersion = '1.9.6'
+        knife4jVersion = '2.0.2'
+        mysqlVersion = '8.0.20'
+        mybatisPlusStarterVersion = '3.4.0'
+        lombokVersion = '1.18.12'
+        hutoolVersion = '5.1.4'
+        servletApiVersion = '4.0.1'
+        easyCaptchaVersion = '1.6.2'
+        transmittableVersion = '2.11.4'
+        commonsIoVersion = '2.6'
+        commonsCollectionsVersion = '3.2.2'
+        commonsCollections4Version = '4.4'
+        qiniuJavaSdkVersion = '7.2.28'
+        fastdfsClientVersion = '1.26.7'
+        aliyunSdkOssVersion = '3.8.1'
+        logstashLogbackEncoderVersion = '4.11'
+        javassistVersion = '3.24.1-GA'
+        qcloudsmsVersion = '1.0.6'
+        okhttpVersion = '3.14.8'
+        userAgentUtilsVersion = '1.21'
+        xxlJobVersion = '2.2.0'
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+    id "com.google.cloud.tools.jib" version "2.0.0"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+group = 'com.taotao.cloud'
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+
+    group = 'com.taotao.cloud'
+    version = '1.0'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+            mavenBom 'org.projectlombok:lombok:1.18.8'
+        }
+
+        dependencies {
+            dependency "commons-collections:commons-collections:${commonsCollectionsVersion}"
+            dependency "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+            dependency "commons-io:commons-io:${commonsIoVersion}"
+            dependency "commons-lang:commons-lang:${commonsIoVersion}"
+
+            dependency "org.projectlombok:lombok:${lombokVersion}"
+            dependency "mysql:mysql-connector-java:${mysqlVersion}"
+            dependency "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
+
+            dependency "cn.hutool:hutool-all:${hutoolVersion}"
+
+            dependency "io.springfox:springfox-swagger2:${swaggerVersion}"
+            dependency "io.springfox:springfox-bean-validators:${swaggerVersion}"
+            dependency "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+            dependency "com.github.xiaoymin:swagger-bootstrap-ui:${swaggerBootstrapUiVersion}"
+            dependency "com.zyplayer:swagger-mg-ui:${swaggerMgUiVersion}"
+            dependency "io.swagger:swagger-models:${swaggerModelsVersion}"
+            dependency "com.github.xiaoymin:knife4j-spring-ui:${knife4jVersion}"
+            dependency "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusStarterVersion}"
+            dependency "com.baomidou:mybatis-plus-extension:${mybatisPlusStarterVersion}"
+            dependency "javax.servlet:javax.servlet-api:${servletApiVersion}"
+            dependency "com.alibaba:transmittable-thread-local:${transmittableVersion}"
+            dependency "com.google.code.gson:gson:2.8.5"
+            dependency "com.google.guava:guava:29.0-jre"
+            dependency "com.qiniu:qiniu-java-sdk:${qiniuJavaSdkVersion}"
+            dependency "com.aliyun.oss:aliyun-sdk-oss:${aliyunSdkOssVersion}"
+            dependency "com.github.tobato:fastdfs-client:${fastdfsClientVersion}"
+            dependency "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+
+            dependency "org.javassist:javassist:${javassistVersion}"
+            dependency "com.github.qcloudsms:qcloudsms:${qcloudsmsVersion}"
+            dependency "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+            dependency "eu.bitwalker:UserAgentUtils:${userAgentUtilsVersion}"
+            dependency "com.xuxueli:xxl-job-core:${xxlJobVersion}"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: "com.github.johnrengelman.shadow"
+
+    group = 'com.taotao.cloud'
+    version = '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+
+        compile 'cn.hutool:hutool-all'
+    }
+}
+
+
+jib {
+    from {
+        image = 'registry.cn-shanghai.aliyuncs.com/starxin/docker-jib:1.0'
+    }
+    to {
+        image = 'registry.cn-shanghai.aliyuncs.com/MyRegistry/projectM'
+        auth {
+            username = '登录账号'
+            password = '登录密码'
+        }
+    }
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        jvmFlags = ['-Djava.security.egd=file:/dev/./urandom', '-Dspring.profiles.active=prod', '-Dfile.encoding=utf-8', '-Duser.timezone=GMT+08']
+        mainClass = 'com.xxx.RunApplication'
+        ports = ['8080']
+    }
+}
+
+
+
+
+

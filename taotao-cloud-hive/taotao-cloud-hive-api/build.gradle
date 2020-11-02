@@ -1,0 +1,19 @@
+archivesBaseName = 'taotao-cloud-hive-api'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    implementation 'org.apache.hadoop:hadoop-common:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-mapreduce-client-common:3.1.2'
+    implementation 'org.apache.hadoop:hadoop-hdfs:3.1.2'
+    implementation 'org.apache.hive:hive-exec:3.1.2'
+    implementation 'org.apache.hive:hive-service:3.1.2'
+    implementation('org.apache.hive:hive-jdbc:3.1.2'){
+        exclude group: 'org.eclipse.jetty.aggregate', module: '*'
+    }
+
+    implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.1'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+}

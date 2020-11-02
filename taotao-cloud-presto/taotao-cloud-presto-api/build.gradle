@@ -1,0 +1,10 @@
+archivesBaseName = 'taotao-cloud-presto-api'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    compile group: 'com.facebook.presto', name: 'presto-jdbc', version: '0.242'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+}
+

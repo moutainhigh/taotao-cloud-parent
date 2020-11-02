@@ -1,0 +1,24 @@
+archivesBaseName = 'taotao-cloud-starter-common'
+
+jar.enabled = true
+bootJar.enabled = false
+
+dependencies {
+    compile 'com.alibaba:transmittable-thread-local'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    compile 'javax.servlet:javax.servlet-api'
+    compile 'org.slf4j:slf4j-api'
+    compile 'com.google.code.gson:gson'
+    compile 'org.springframework:spring-context'
+    compile 'org.springframework.data:spring-data-commons'
+    compile 'org.javassist:javassist'
+    compile 'com.github.whvcse:easy-captcha:1.6.2'
+
+//    implementation 'com.baomidou:mybatis-plus-extension'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation "org.springframework.cloud:spring-cloud-context"
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}
+
