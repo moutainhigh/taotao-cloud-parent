@@ -37,7 +37,7 @@ object SparkHelper {
         SparkSession
           .builder()
           .config(conf)
-          .enableHiveSupport()
+          //.enableHiveSupport()
           .getOrCreate()
 
       case _ =>

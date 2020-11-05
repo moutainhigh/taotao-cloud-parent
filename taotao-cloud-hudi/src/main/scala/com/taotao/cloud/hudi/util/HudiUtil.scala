@@ -1,5 +1,7 @@
 package com.taotao.cloud.hudi.util
 
+import org.apache.hudi.DataSourceWriteOptions.RECORDKEY_FIELD_OPT_KEY
+
 import scala.collection.mutable
 
 object HudiUtil {
@@ -16,6 +18,7 @@ object HudiUtil {
       case _ =>
         props.put("hoodie.datasource.write.table.type", "COPY_ON_WRITE")
     }
+
     props.put("hoodie.datasource.write.operation", "insert")
     props.put("hoodie.datasource.write.recordKey.field", "uuid")
     props.put("hoodie.datasource.write.precombine.field", "uuid")

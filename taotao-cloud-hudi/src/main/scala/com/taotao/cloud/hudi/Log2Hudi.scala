@@ -1,7 +1,7 @@
 package com.taotao.cloud.hudi
 
 import com.taotao.cloud.hudi.config.Config
-import com.taotao.cloud.hudi.extract.NewsAction
+import com.taotao.cloud.hudi.extract.LogExtract
 import com.taotao.cloud.hudi.util.{HudiUtil, MetaUtil, SparkHelper}
 import org.apache.hudi.DataSourceWriteOptions
 import org.apache.hudi.config.{HoodieIndexConfig, HoodieWriteConfig}
@@ -11,6 +11,7 @@ import org.apache.spark.sql.streaming.{StreamingQueryListener, Trigger}
 import org.apache.spark.sql.{DataFrame, Dataset, SaveMode}
 import org.slf4j.{Logger, LoggerFactory}
 
+//-e dev -b 192.168.99.37:9092 -t taotao-cloud-backend -m 0 -i 10 -c /checkpoint/spark/log_hudi -g /user/hudi/cow/action_data -s action_data -y cow -r jdbc:hive2://192.68.99.37:10000 -n root
 object Log2Hudi {
   val LOGGER: Logger = LoggerFactory.getLogger("Log2Hudi")
 
@@ -20,15 +21,15 @@ object Log2Hudi {
 
     spark.streams.addListener(new StreamingQueryListener() {
       override def onQueryStarted(queryStarted: QueryStartedEvent): Unit = {
-        println("Query started: " + queryStarted.id)
+        LOGGER.info("Query started: " + queryStarted.id)
       }
 
       override def onQueryTerminated(queryTerminated: QueryTerminatedEvent): Unit = {
-        println("Query terminated: " + queryTerminated.id)
+        LOGGER.info("Query terminated: " + queryTerminated.id)
       }
 
       override def onQueryProgress(queryProgress: QueryProgressEvent): Unit = {
-        println("Query made progress: " + queryProgress.progress)
+        LOGGER.info("Query made progress: " + queryProgress.progress)
       }
     })
 
@@ -47,6 +48,7 @@ object Log2Hudi {
 
     val metaType: String = config.metaType
     val meta_log_json_str: String = MetaUtil.getMetaJson(metaType.toInt)
+    LOGGER.info(meta_log_json_str)
     val log_meta: DataFrame = spark.read.json(Seq(meta_log_json_str).toDS())
     val log_meta_schema = log_meta.schema
 
@@ -60,7 +62,7 @@ object Log2Hudi {
       .foreachBatch((batchDF: Dataset[String], batchId: Long) => {
         batchDF.persist()
 
-        val newDF: Dataset[String] = batchDF.map(new NewsAction().unionMeatAndBody(_, meta_log_json_str))
+        val newDF: Dataset[String] = batchDF.map(new LogExtract().unionMeatAndBody(_, meta_log_json_str))
 
         if (!newDF.isEmpty) {
           newDF.select(from_json($"value", msb.value).as("log_data"))

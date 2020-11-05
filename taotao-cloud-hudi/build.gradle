@@ -28,14 +28,49 @@ dependencies {
     implementation "mysql:mysql-connector-java"
     implementation "commons-codec:commons-codec:1.6"
     implementation 'org.codehaus.janino:janino:3.0.11'
-//    implementation "org.scala-lang:scala-library:2.13.3"
-//    implementation "org.scala-lang:scala-reflect:2.13.3"
+    //implementation "org.scala-lang:scala-library:2.13.3"
+    //implementation "org.scala-lang:scala-reflect:2.13.3"
 
     implementation('com.github.scopt:scopt_2.12:4.0.0-RC2') {
         exclude group: 'org.scala-lang', module: 'scala-library'
     }
 }
 
-//configurations {
-//    compile.exclude group: "org.scala-lang", module: "scala-library"
+configurations {
+    compile.exclude group: "xml-apis", module: "xml-apis"
+    compile.exclude group: "xerces", module: "xercesImpl"
+}
+
+shadowJar {
+    mergeServiceFiles()
+    classifier = null
+    version = 1.0
+    manifest {
+        attributes(
+                'Main-Class': "com.taotao.cloud.hudi.Log2Hudi"
+        )
+    }
+    zip64 true
+    dependencies {
+        exclude(dependency('xml-apis:xml-apis:.*'))
+        exclude(dependency('xerces:xercesImpl:.*'))
+        exclude(dependency { it.moduleGroup == 'xml-apis' })
+    }
+}
+
+//uploadShadow {
+//    repositories {
+//        mavenDeployer {
+//            //上传资源到Maven私服
+//            repository(url: "http://maven.xuexiyuan.cn:8081/repository/maven-releases/") {
+//                authentication(userName:"admin", password:"passwd")
+//            }
+//            pom.version ="$project.version"
+//            pom.artifactId ="$project.name"
+//            pom.groupId ="$project.group"
+//        }
+//    }
 //}
+
+
+

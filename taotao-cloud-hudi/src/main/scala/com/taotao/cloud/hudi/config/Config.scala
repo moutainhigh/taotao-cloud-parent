@@ -20,8 +20,8 @@ case class Config(
 object Config {
   def parseConfig(obj: Object, args: Array[String]): Config = {
     val programName = obj.getClass.getSimpleName.replaceAll("\\$", "")
-    val parser = new OptionParser[Config]("spark ss hudi" + programName) {
-      head(programName, "3.x")
+    val parser = new OptionParser[Config]("programName") {
+      head("programName", "3.x")
       opt[String]('e', "env").required().action((x, config) => config.copy(env = x)).text("env dev or prod")
       opt[String]('b', "brokerList").required().action((x, config) => config.copy(brokerList = x)).text("brokerList")
       opt[String]('t', "sourceTopic").required().action((x, config) => config.copy(sourceTopic = x)).text("sourceTopic")

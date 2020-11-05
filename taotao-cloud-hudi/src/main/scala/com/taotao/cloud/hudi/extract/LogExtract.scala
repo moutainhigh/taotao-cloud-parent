@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat
 import java.util.Base64
 
 import com.alibaba.fastjson.{JSON, JSONObject}
+import org.slf4j.{Logger, LoggerFactory}
 
-class NewsAction extends java.io.Serializable {
+class LogExtract extends java.io.Serializable {
+  val LOGGER: Logger = LoggerFactory.getLogger("LogExtract")
 
   def unionMeatAndBody(base64Line: String, jsonStr: String): String = {
     try {
@@ -43,7 +45,17 @@ class NewsAction extends java.io.Serializable {
 
       val json = JSON.parseObject(jsonStr)
       unionJson.forEach((key, value) => {json.put(key, value)})
-      json.toJSONString
+
+      val result = new JSONObject()
+      json.forEach((key, value) => {
+        if(key.startsWith("$") || key.startsWith("_")){
+          result.put(key.substring(0, key.length), value)
+        }else{
+          result.put(key, value)
+        }
+      })
+
+      result.toJSONString
     } catch {
       case e: Exception =>
         null
