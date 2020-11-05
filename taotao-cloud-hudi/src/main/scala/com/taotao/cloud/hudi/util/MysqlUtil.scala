@@ -9,7 +9,7 @@ class MysqlUtil private(val config: collection.mutable.Map[String, String]) {
   def getMysqlConn: Connection = {
     var conn: Connection = null
     try {
-      Class.forName("driver")
+      Class.forName(config("driver"))
       conn = DriverManager.getConnection(config("url"), config("username"), config("password"))
     } catch {
       case e: Exception =>
@@ -31,16 +31,14 @@ class MysqlUtil private(val config: collection.mutable.Map[String, String]) {
 object MysqlUtil {
 
   val mysqlConfig: mutable.Map[String, String] = collection.mutable.Map(
-    "driver" -> "com.mysql.jdbc.driver",
-    "url" -> "jdbc:mysql://192.168.99.10:3306/biz?autoReconnect=true",
+    "driver" -> "com.mysql.cj.jdbc.Driver",
+    "url" -> "jdbc:mysql://127.0.0.1:3306/taotao-cloud-uc-center?autoReconnect=true",
     "username" -> "root",
     "password" -> "123456"
   )
 
-  var mysqlUtil: MysqlUtil = _
 
-  def apply(): MysqlUtil = if (mysqlUtil == null) {
-    mysqlUtil = new MysqlUtil(mysqlConfig);
-    mysqlUtil
-  };
+  def apply(): MysqlUtil = {
+    new MysqlUtil(mysqlConfig);
+  }
 }

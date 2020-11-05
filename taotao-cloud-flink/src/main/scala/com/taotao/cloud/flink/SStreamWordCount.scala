@@ -2,18 +2,18 @@ package com.taotao.cloud.flink
 
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, createTypeInformation}
 
-object BatchWordCount {
+// nc -lk 8888
+object SStreamWordCount {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
-    env.setParallelism(1)
-    val lines: DataStream[String] = env.readTextFile("/Users/dengtao/spark/hello.txt")
+    val lines: DataStream[String] = env.socketTextStream("localhost", 8888)
 
     lines.flatMap(_.split(" "))
       .map((_, 1))
-      .keyBy(_._1)
+      .keyBy(0)
       .sum(1)
-      .writeAsText("/Users/dengtao/sparktest")
+      .print()
 
-    env.execute("BatchWordCount")
+    env.execute("SStreamWordCount")
   }
 }

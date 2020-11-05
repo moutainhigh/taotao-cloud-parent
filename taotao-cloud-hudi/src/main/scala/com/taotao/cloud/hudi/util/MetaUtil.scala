@@ -5,19 +5,10 @@ import com.alibaba.fastjson.JSONObject
 import scala.collection.mutable
 
 object MetaUtil {
-  def getMetaJson(metaType: String): String = {
-    val conn = MysqlUtil().getMysqlConn()
+  def getMetaJson(metaType: Int): String = {
+    val conn = MysqlUtil().getMysqlConn
     val statement = conn.createStatement()
-    var sql = ""
-
-    metaType match {
-      case "event" =>
-        sql = "select field, field_type from biz.meta where meta_type = 0"
-      case "user" =>
-        sql = "select field, field_type from biz.meta where meta_type = 1"
-      case _ =>
-        return ""
-    }
+    val sql = "select field, field_type from log_meta where meta_type = " + metaType
 
     val resultSet = statement.executeQuery(sql)
     val jsonMeta = new JSONObject()
@@ -34,9 +25,9 @@ object MetaUtil {
 
   def getMeta: mutable.HashMap[String, String] = {
     val columnMetaMap = new mutable.HashMap[String, String]
-    val conn = MysqlUtil().getMysqlConn()
+    val conn = MysqlUtil().getMysqlConn
     val statement = conn.createStatement()
-    val resultSet = statement.executeQuery("select field, field_type from biz.meta")
+    val resultSet = statement.executeQuery("select field, field_type from log_meta")
 
     while (resultSet.next()) {
       val field = resultSet.getString("field")
@@ -54,6 +45,8 @@ object MetaUtil {
       case "int" => jsonObj.put(field, 0)
       case "bigint" => jsonObj.put(field, 0L)
       case "double" => jsonObj.put(field, 0.1)
+      case "boolean" => jsonObj.put(field, false)
+      case "datetime" => jsonObj.put(field, null)
       case "array" => jsonObj.put(field, List())
     }
   }

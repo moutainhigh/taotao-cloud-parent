@@ -22,10 +22,11 @@ object SparkHelper {
           .config(conf)
           .enableHiveSupport()
           .getOrCreate()
+
       case "dev" =>
         val conf = new SparkConf()
           .setAppName("Log2Hudi DEV")
-          .setMaster("local[6]")
+          .setMaster("local[2]")
           .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
           .set("spark.sql.hive.metastore.version", "3.1.2")
           .set("spark.sql.hive.metastore.jars", "maven")
@@ -38,6 +39,7 @@ object SparkHelper {
           .config(conf)
           .enableHiveSupport()
           .getOrCreate()
+
       case _ =>
         println("exit")
         System.exit(-1)

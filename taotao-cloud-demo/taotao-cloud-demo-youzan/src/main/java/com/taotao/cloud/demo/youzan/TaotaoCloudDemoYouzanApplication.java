@@ -11,27 +11,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 
-@RestController
-@SpringBootApplication
+// @RestController
+// @SpringBootApplication
 public class TaotaoCloudDemoYouzanApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TaotaoCloudDemoYouzanApplication.class, args);
+        // SpringApplication.run(TaotaoCloudDemoYouzanApplication.class, args);
     }
 
-    @RequestMapping("/sm.gif")
-    public void log(HttpServletRequest request,
-                    HttpServletResponse response) {
-        String data = request.getParameter("data");
-        System.out.println(data);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setHeader("Content-Type", "application/json;charset=UTF-8");
-        try (Writer writer = response.getWriter()) {
-            writer.write("hello");
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    // @RequestMapping("/sm.gif")
+    // public void log(HttpServletRequest request,
+    //                 HttpServletResponse response) {
+    //     String data = request.getParameter("data");
+    //     System.out.println(data);
+    //     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+    //     response.setHeader("Content-Type", "application/json;charset=UTF-8");
+    //     try (Writer writer = response.getWriter()) {
+    //         writer.write("hello");
+    //         writer.flush();
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
 }

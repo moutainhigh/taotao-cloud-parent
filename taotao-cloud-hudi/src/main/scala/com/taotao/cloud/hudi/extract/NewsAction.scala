@@ -7,9 +7,9 @@ import com.alibaba.fastjson.{JSON, JSONObject}
 
 class NewsAction extends java.io.Serializable {
 
-  def unionMeatAndBody(base64Line: String): String = {
+  def unionMeatAndBody(base64Line: String, jsonStr: String): String = {
     try {
-      val textArray = base64Line.split("[-]]")
+      val textArray = base64Line.split("-")
       if (textArray.length != 2) {
         return null
       }
@@ -24,21 +24,26 @@ class NewsAction extends java.io.Serializable {
       val bodyJson = JSON.parseObject(body);
 
       val unionJson = new JSONObject()
-      val contentJson = bodyJson.getJSONObject("content")
-      val propertiesJson = contentJson.getJSONObject("properties")
+      val propertiesJson = bodyJson.getJSONObject("properties")
+      val libJson = bodyJson.getJSONObject("lib")
       unionJson.putAll(propertiesJson.asInstanceOf[java.util.Map[String, _]])
+      unionJson.putAll(libJson.asInstanceOf[java.util.Map[String, _]])
 
-      contentJson.remove("properties")
-      unionJson.putAll(contentJson.asInstanceOf[java.util.Map[String, _]])
+      bodyJson.remove("properties")
+      bodyJson.remove("lib")
+
+      unionJson.putAll(bodyJson.asInstanceOf[java.util.Map[String, _]])
       unionJson.putAll(metaJson.asInstanceOf[java.util.Map[String, _]])
 
-      val sdf = new SimpleDateFormat("yyyyMMdd")
+      val sdf = new SimpleDateFormat("yyyy-MM-dd")
       val serverTime = metaJson.getBigInteger("ctime")
       val logDay = sdf.format(serverTime)
 
       unionJson.put("logday", logDay)
 
-      unionJson.toJSONString
+      val json = JSON.parseObject(jsonStr)
+      unionJson.forEach((key, value) => {json.put(key, value)})
+      json.toJSONString
     } catch {
       case e: Exception =>
         null

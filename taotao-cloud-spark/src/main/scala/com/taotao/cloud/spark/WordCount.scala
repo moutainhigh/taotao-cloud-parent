@@ -11,7 +11,6 @@ object WordCount {
 
     val context = new SparkContext(conf)
 
-
     context.textFile("/Users/dengtao/spark")
       .flatMap(_.split(" "))
       .map((_, 1))

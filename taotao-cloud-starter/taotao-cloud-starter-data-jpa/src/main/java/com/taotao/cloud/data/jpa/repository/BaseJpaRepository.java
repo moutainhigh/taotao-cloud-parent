@@ -43,58 +43,64 @@ import java.util.List;
  * @since v1.0
  */
 public abstract class BaseJpaRepository<T, ID> extends SimpleJpaRepository<T, ID> {
-    protected final JPAQueryFactory jpaQueryFactory;
-    protected final QuerydslJpaPredicateExecutor<T> jpaPredicateExecutor;
-    protected final EntityManager em;
-    private final EntityPath<T> path;
-    protected final Querydsl querydsl;
+	protected final JPAQueryFactory jpaQueryFactory;
+	protected final QuerydslJpaPredicateExecutor<T> jpaPredicateExecutor;
+	protected final EntityManager em;
+	private final EntityPath<T> path;
+	protected final Querydsl querydsl;
 
-    public BaseJpaRepository(Class<T> domainClass, EntityManager em) {
-        super(domainClass, em);
-        this.em = em;
-        this.jpaPredicateExecutor = new QuerydslJpaPredicateExecutor<>(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em,
-                SimpleEntityPathResolver.INSTANCE, getRepositoryMethodMetadata());
-        this.jpaQueryFactory = new JPAQueryFactory(em);
-        this.path = SimpleEntityPathResolver.INSTANCE.createPath(domainClass);
-        this.querydsl = new Querydsl(em, new PathBuilder<T>(path.getType(), path.getMetadata()));
-    }
+	public BaseJpaRepository(Class<T> domainClass, EntityManager em) {
+		super(domainClass, em);
+		this.em = em;
+		this.jpaPredicateExecutor = new QuerydslJpaPredicateExecutor<>(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em,
+			SimpleEntityPathResolver.INSTANCE, getRepositoryMethodMetadata());
+		this.jpaQueryFactory = new JPAQueryFactory(em);
+		this.path = SimpleEntityPathResolver.INSTANCE.createPath(domainClass);
+		this.querydsl = new Querydsl(em, new PathBuilder<T>(path.getType(), path.getMetadata()));
+	}
 
-    public Page<T> findAll(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
-        final JPAQuery<T> countQuery = jpaQueryFactory.selectFrom(path);
-        countQuery.where(predicate);
-        JPQLQuery<T> query = querydsl.applyPagination(pageable, countQuery);
-        query.orderBy(orders);
-        return PageableExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
-    }
+	public Page<T> findAll(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+		final JPAQuery<T> countQuery = jpaQueryFactory.selectFrom(path);
+		countQuery.where(predicate);
+		JPQLQuery<T> query = querydsl.applyPagination(pageable, countQuery);
+		query.orderBy(orders);
+		return PageableExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
+	}
 
-    public Boolean exists(Predicate predicate) {
-        return jpaPredicateExecutor.exists(predicate);
-    }
+	public long count(Predicate predicate) {
+		return jpaQueryFactory.selectFrom(path)
+			.where(predicate)
+			.fetchCount();
+	}
 
-    public List<T> fetch(Predicate predicate) {
-        return jpaQueryFactory.selectFrom(path)
-                .where(predicate)
-                .fetch();
-    }
+	public Boolean exists(Predicate predicate) {
+		return jpaPredicateExecutor.exists(predicate);
+	}
 
-    public T fetchOne(Predicate predicate) {
-        return jpaQueryFactory.selectFrom(path)
-                .where(predicate)
-                .fetchOne();
-    }
+	public List<T> fetch(Predicate predicate) {
+		return jpaQueryFactory.selectFrom(path)
+			.where(predicate)
+			.fetch();
+	}
 
-    public long fetchCount(Predicate predicate) {
-        return jpaQueryFactory.selectFrom(path)
-                .where(predicate)
-                .fetchCount();
-    }
+	public T fetchOne(Predicate predicate) {
+		return jpaQueryFactory.selectFrom(path)
+			.where(predicate)
+			.fetchOne();
+	}
 
-    public List<?> find(Predicate predicate, Expression<?> expr, OrderSpecifier<?>... o) {
-        return jpaQueryFactory
-                .select(expr)
-                .from(path)
-                .where(predicate)
-                .orderBy(o)
-                .fetch();
-    }
+	public long fetchCount(Predicate predicate) {
+		return jpaQueryFactory.selectFrom(path)
+			.where(predicate)
+			.fetchCount();
+	}
+
+	public List<?> find(Predicate predicate, Expression<?> expr, OrderSpecifier<?>... o) {
+		return jpaQueryFactory
+			.select(expr)
+			.from(path)
+			.where(predicate)
+			.orderBy(o)
+			.fetch();
+	}
 }
