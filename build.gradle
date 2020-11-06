@@ -44,6 +44,7 @@ buildscript {
 plugins {
     id 'java'
     id 'idea'
+    id 'maven-publish'
     id "com.google.cloud.tools.jib" version "2.0.0"
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
@@ -120,6 +121,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'maven-publish'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: "com.github.johnrengelman.shadow"
@@ -148,6 +150,60 @@ subprojects {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            //版本名称选择不同的仓库地址
+            def releasesRepoUrl = "$buildDir/repos/releases"
+            def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+            // url是必须要配置的
+            url = project.version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username System.getenv("MAVEN_USER")
+                password System.getenv("MAVEN_PSWD")
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            //artifact bootJar
+            groupId project.group
+            artifactId project.name
+            version project.version
+            //打包类型 war: components.web jar: components.java
+            from components.java
+
+            pom {
+                name = 'My Library'
+                description = 'A concise description of my library'
+                url = 'http://www.example.com/library'
+                properties = [
+                        myProp: "value",
+                        "prop.with.dots": "anotherValue"
+                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'johnd'
+                        name = 'John Doe'
+                        email = 'john.doe@example.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://example.com/my-library.git'
+                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
+                    url = 'http://example.com/my-library/'
+                }
+            }
+        }
+    }
+}
 
 jib {
     from {
@@ -156,8 +212,8 @@ jib {
     to {
         image = 'registry.cn-shanghai.aliyuncs.com/MyRegistry/projectM'
         auth {
-            username = '登录账号'
-            password = '登录密码'
+            username System.getenv("MAVEN_USER")
+            password System.getenv("MAVEN_PSWD")
         }
     }
     container {

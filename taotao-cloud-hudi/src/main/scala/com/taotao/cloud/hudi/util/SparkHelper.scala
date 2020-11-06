@@ -12,8 +12,8 @@ object SparkHelper {
           .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
           .set("spark.sql.hive.metastore.version", "3.1.2")
           .set("spark.sql.cbo.enabled", "true")
-          .set("spark.default.parallelism", "9")
-          .set("spark.sql.shuffle.partitions", "9")
+          .set("spark.default.parallelism", "2")
+          .set("spark.sql.shuffle.partitions", "2")
           .set("spark.hadoop.dfs.client.block.write.replace-datanode-on-failure.enabled", "true")
           .set("spark.hadoop.dfs.client.block.write.replace-datanode-on-failure.policy", "NEVER")
 
@@ -37,7 +37,7 @@ object SparkHelper {
         SparkSession
           .builder()
           .config(conf)
-          //.enableHiveSupport()
+          .enableHiveSupport()
           .getOrCreate()
 
       case _ =>

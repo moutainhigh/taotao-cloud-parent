@@ -41,9 +41,26 @@ configurations {
     compile.exclude group: "xerces", module: "xercesImpl"
 }
 
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: "${mavenThirdparty}") {
+//                authentication(userName: "${mavenThirdpartyUserName}", password: "${mavenThirdpartyPwd}")
+//            }
+//            snapshotRepository(url: "${mavenSnapshot}") {
+//                authentication(userName: "${mavenSnapshotUserName}", password: "${mavenSnapshotPwd}")
+//            }
+//            pom.version = "$version"
+//            pom.artifactId = "$archivesBaseName"
+//            pom.groupId = "$project.group"
+//        }
+//    }
+//}
+
 shadowJar {
     mergeServiceFiles()
-    classifier = null
+    classifier=null
     version = 1.0
     manifest {
         attributes(
@@ -55,22 +72,12 @@ shadowJar {
         exclude(dependency('xml-apis:xml-apis:.*'))
         exclude(dependency('xerces:xercesImpl:.*'))
         exclude(dependency { it.moduleGroup == 'xml-apis' })
+        exclude(dependency { it.moduleGroup == 'org.apache.spark' })
+        exclude(dependency { it.moduleGroup == 'org.scala-lang' })
     }
 }
 
-//uploadShadow {
-//    repositories {
-//        mavenDeployer {
-//            //上传资源到Maven私服
-//            repository(url: "http://maven.xuexiyuan.cn:8081/repository/maven-releases/") {
-//                authentication(userName:"admin", password:"passwd")
-//            }
-//            pom.version ="$project.version"
-//            pom.artifactId ="$project.name"
-//            pom.groupId ="$project.group"
-//        }
-//    }
-//}
+
 
 
 

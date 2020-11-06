@@ -26,9 +26,9 @@ import java.sql.SQLException;
  */
 public class TestJson {
 	public static void main(String[] args) throws SQLException {
-		String s = "$app_id";
+		String s = "country ";
 		char first = s.charAt(0);
-		System.out.println(Character.isLetter('_'));
+
 		if (!(Character.isLetter(first) || first == '_')) {
 			throw new SchemaParseException("Illegal initial character: " + s);
 		}

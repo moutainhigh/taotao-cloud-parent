@@ -16,7 +16,7 @@ object MetaUtil {
       val field = resultSet.getString("field")
       val fieldType = resultSet.getString("field_type")
 
-      genSimpleJsonMeta(jsonMeta, field, fieldType)
+      genSimpleJsonMeta(jsonMeta, field.trim(), fieldType)
     }
 
     conn.close()

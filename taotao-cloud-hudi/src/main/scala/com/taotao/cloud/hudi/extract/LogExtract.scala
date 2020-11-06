@@ -44,14 +44,14 @@ class LogExtract extends java.io.Serializable {
       unionJson.put("logday", logDay)
 
       val json = JSON.parseObject(jsonStr)
-      unionJson.forEach((key, value) => {json.put(key, value)})
+      unionJson.forEach((key, value) => {json.put(key.trim(), value)})
 
       val result = new JSONObject()
       json.forEach((key, value) => {
         if(key.startsWith("$") || key.startsWith("_")){
-          result.put(key.substring(0, key.length), value)
+          result.put(key.substring(1, key.length).trim(), value)
         }else{
-          result.put(key, value)
+          result.put(key.trim(), value)
         }
       })
 

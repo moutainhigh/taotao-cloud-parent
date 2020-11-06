@@ -43,12 +43,11 @@ object Log2Hudi {
       .option("staringOffsets", "earliest")
       .option("maxOffsetsPerTrigger", 100000)
       .option("failOnDataLoss", value = false)
-      .option("kafka.consumer.group-id", "Log2Hudi")
+      .option("consumer.group.id", "Log2Hudi")
       .load()
 
     val metaType: String = config.metaType
     val meta_log_json_str: String = MetaUtil.getMetaJson(metaType.toInt)
-    LOGGER.info(meta_log_json_str)
     val log_meta: DataFrame = spark.read.json(Seq(meta_log_json_str).toDS())
     val log_meta_schema = log_meta.schema
 
