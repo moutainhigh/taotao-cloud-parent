@@ -50,10 +50,8 @@ public class HiveServiceImpl implements HiveService {
 	public String select() {
 		String sql = "select * from HIVE_TEST";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-		Iterator<Map<String, Object>> it = rows.iterator();
-		while (it.hasNext()) {
-			Map<String, Object> row = it.next();
-			System.out.println(String.format("%s\t%s", row.get("key"), row.get("value")));
+		for (Map<String, Object> row : rows) {
+			System.out.printf("%s\t%s%n", row.get("key"), row.get("value"));
 		}
 		return "Done";
 	}
@@ -69,7 +67,7 @@ public class HiveServiceImpl implements HiveService {
 
 	@Override
 	public String create() {
-		StringBuffer sql = new StringBuffer("create table IF NOT EXISTS ");
+		StringBuilder sql = new StringBuilder("create table IF NOT EXISTS ");
 		sql.append("HIVE_TEST");
 		sql.append("(KEY INT, VALUE STRING)");
 		sql.append("PARTITIONED BY (CTIME DATE)"); // 分区存储

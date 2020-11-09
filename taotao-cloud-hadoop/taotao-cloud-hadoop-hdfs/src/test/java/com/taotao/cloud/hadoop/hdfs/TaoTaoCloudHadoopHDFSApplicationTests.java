@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest(classes = HadoopHDFSApplication.class)
+@SpringBootTest(classes = TaoTaoCloudHadoopHDFSApplication.class)
 @RunWith(SpringRunner.class)
-public class HadoopHDFSApplicationTests {
+public class TaoTaoCloudHadoopHDFSApplicationTests {
 
 	@Test
 	public void contextLoads() {

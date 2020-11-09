@@ -1,4 +1,4 @@
-package com.taotao.cloud.hadoop.hdfs;
+package com.taotao.cloud.hive.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,10 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since v1.0
  */
 @SpringBootApplication
-public class HadoopHDFSApplication {
+public class TaoTaoCloudHiveApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HadoopHDFSApplication.class, args);
+		SpringApplication.run(TaoTaoCloudHiveApplication.class, args);
 	}
 
 }

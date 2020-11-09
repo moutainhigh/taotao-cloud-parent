@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.hadoop.mr.service;
+package com.taotao.cloud.mall.entity;
 
-import java.io.IOException;
+import lombok.Data;
 
 /**
  * @author dengtao
- * @date 2020/10/30 17:40
+ * @date 2020/11/9 09:53
  * @since v1.0
  */
-public interface MapReduceService {
-	void groupSort(String jobName, String inputPath) throws InterruptedException, IOException, ClassNotFoundException;
+@Data
+public class User {
+	private String id;
+	private String nickname;
+	private String mail;
+	private String password;
+	private String description;
+	private String updateTime;
+	private String createTime;
 }

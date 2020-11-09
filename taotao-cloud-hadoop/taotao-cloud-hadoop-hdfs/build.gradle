@@ -27,4 +27,5 @@ configurations {
     compile.exclude group:"org.springframework.security.oauth", module: "spring-security-oauth2"
     compile.exclude group:"org.slf4j", module: "slf4j-log4j12"
     compile.exclude group:"org.springframework.security", module: "spring-security-core"
+    compile.exclude group:"org.eclipse.jetty", module: "*"
 }

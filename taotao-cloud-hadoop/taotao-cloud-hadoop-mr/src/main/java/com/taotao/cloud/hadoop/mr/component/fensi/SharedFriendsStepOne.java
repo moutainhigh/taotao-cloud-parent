@@ -20,9 +20,9 @@ public class SharedFriendsStepOne {
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             // A:B,C,D,F,E,O
             String line = value.toString();
-            String[] person_friends = line.split(":");
-            String person = person_friends[0];
-            String friends = person_friends[1];
+            String[] personFriends = line.split(":");
+            String person = personFriends[0];
+            String friends = personFriends[1];
 
             for (String friend : friends.split(",")) {
 

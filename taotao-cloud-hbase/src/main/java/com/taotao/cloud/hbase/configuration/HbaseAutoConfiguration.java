@@ -19,6 +19,7 @@ import com.taotao.cloud.hbase.properties.HbaseProperties;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.Bean;
  * @date 2020/10/30 11:10
  * @since v1.0
  */
-@Configuration
+@org.springframework.context.annotation.Configuration
 @EnableConfigurationProperties(HbaseProperties.class)
 public class HbaseAutoConfiguration {
 

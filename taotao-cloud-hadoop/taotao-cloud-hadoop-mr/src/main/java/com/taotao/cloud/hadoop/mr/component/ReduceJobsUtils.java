@@ -15,8 +15,14 @@
  */
 package com.taotao.cloud.hadoop.mr.component;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -53,6 +59,7 @@ public class ReduceJobsUtils {
 
 	/**
 	 * 分组统计、排序
+	 *
 	 * @param jobName
 	 * @param inputPath
 	 * @param outputPath
@@ -64,19 +71,19 @@ public class ReduceJobsUtils {
 		throws IOException, ClassNotFoundException, InterruptedException {
 		Configuration conf = getConfiguration();
 		Job job = Job.getInstance(conf, jobName);
-		job.setJarByClass(GroupSort.class);
-
-		// 设置reduce文件拆分个数
-		// job.setNumReduceTasks(3);
-		// 设置mapper信息
-		job.setMapperClass(GroupSort.GroupSortMapper.class);
-		job.setPartitionerClass(GroupSort.GroupSortPartitioner.class);
-		job.setGroupingComparatorClass(GroupSort.GroupSortComparator.class);
-		// 设置reduce信息
-		job.setReducerClass(GroupSort.GroupSortReduce.class);
-
-		// 设置Mapper的输出
-		job.setMapOutputKeyClass(GroupSortModel.class);
+		// job.setJarByClass(GroupSort.class);
+		//
+		// // 设置reduce文件拆分个数
+		// // job.setNumReduceTasks(3);
+		// // 设置mapper信息
+		// job.setMapperClass(GroupSort.GroupSortMapper.class);
+		// job.setPartitionerClass(GroupSort.GroupSortPartitioner.class);
+		// job.setGroupingComparatorClass(GroupSort.GroupSortComparator.class);
+		// // 设置reduce信息
+		// job.setReducerClass(GroupSort.GroupSortReduce.class);
+		//
+		// // 设置Mapper的输出
+		// job.setMapOutputKeyClass(GroupSortModel.class);
 		job.setMapOutputValueClass(IntWritable.class);
 
 		// 设置mapper和reduce的输出格式，如果相同则只需设置一个

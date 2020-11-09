@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_aftersale_withdraw")
-@org.hibernate.annotations.Table(appliesTo = "t_aftersale_withdraw", comment = "提现申请表")
+@Table(name = "tt_aftersale_withdraw")
+@org.hibernate.annotations.Table(appliesTo = "tt_aftersale_withdraw", comment = "提现申请表")
 public class Withdraw extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;
@@ -35,7 +35,6 @@ public class Withdraw extends BaseEntity {
 	 */
 	@Column(name = "code", nullable = true, unique = true, columnDefinition = "varchar(32) not null comment '申请单号'")
 	private String code;
-
 
 	@ApiModelProperty(value = "公司ID -> 租户编码")
 	private Long companyId;

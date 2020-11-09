@@ -19,6 +19,7 @@ import com.taotao.cloud.hbase.service.ProductService;
 import org.apache.hadoop.hbase.client.Mutation;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +29,6 @@ import java.util.List;
  * @date 2020/10/30 11:13
  * @since v1.0
  */
+@Service
 public class ProductServiceImpl implements ProductService {
 }

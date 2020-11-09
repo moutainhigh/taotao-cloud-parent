@@ -35,8 +35,6 @@ public class FlowRecord extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-
-
 	/**
 	 * 交易时间
 	 */

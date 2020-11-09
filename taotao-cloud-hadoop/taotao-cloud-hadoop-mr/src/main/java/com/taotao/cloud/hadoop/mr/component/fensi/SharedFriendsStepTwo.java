@@ -24,10 +24,10 @@ public class SharedFriendsStepTwo {
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
             String line = value.toString();
-            String[] friend_persons = line.split("\t");
+            String[] friendPersons = line.split("\t");
 
-            String friend = friend_persons[0];
-            String[] persons = friend_persons[1].split(",");
+            String friend = friendPersons[0];
+            String[] persons = friendPersons[1].split(",");
 
             Arrays.sort(persons);
 
