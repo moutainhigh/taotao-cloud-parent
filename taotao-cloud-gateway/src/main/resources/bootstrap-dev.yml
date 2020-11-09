@@ -25,7 +25,7 @@ spring:
   cloud:
     loadbalancer:
       ribbon:
-        enabled: true
+        enabled: false
     nacos:
       discovery:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
@@ -118,6 +118,17 @@ spring:
           uri: lb://taotao-cloud-order-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/order/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-manager-center
+          uri: lb://taotao-cloud-manager-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/manager/**
           filters:
             - StripPrefix=3
             - name: RequestRateLimiter
@@ -229,6 +240,7 @@ taotao:
             /uc/repeat/check,
             /uc/user,
             /auth/client,
+            /manager/graphql,
             /auth/oauth/**,
             /auth/mobile/login,
             /auth/sms/code,

@@ -5,6 +5,24 @@ bootJar.enabled = true
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-mybatis-plus')
 
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:8.0.0'
+    implementation 'com.graphql-java-kickstart:graphql-java-tools:6.2.0'
+    runtimeOnly 'com.graphql-java-kickstart:graphiql-spring-boot-starter:8.0.0'
+
+}
+
+configurations {
+    compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
 }

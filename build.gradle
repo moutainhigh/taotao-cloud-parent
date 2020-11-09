@@ -33,6 +33,7 @@ buildscript {
     }
     repositories {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -56,6 +57,7 @@ allprojects {
     repositories {
         mavenLocal()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
         mavenCentral()
     }
 
@@ -127,7 +129,7 @@ subprojects {
     apply plugin: "com.github.johnrengelman.shadow"
 
     group = 'com.taotao.cloud'
-    version = '0.0.1-SNAPSHOT'
+    version = '1.0'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -137,6 +139,7 @@ subprojects {
     repositories {
         mavenLocal()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
         mavenCentral()
     }
 

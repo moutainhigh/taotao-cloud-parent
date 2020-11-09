@@ -71,7 +71,6 @@ dependencies {
 //    implementation project(':taotao-cloud-starter:taotao-cloud-starter-seata')
 }
 
-import com.github.jengelman.gradle.plugins.shadow.transformers.*
 
 //shadowJar {
 //    zip64 true

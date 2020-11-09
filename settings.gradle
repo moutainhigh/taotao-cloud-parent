@@ -75,7 +75,7 @@ include 'taotao-cloud-pay'
 include 'taotao-cloud-pay:taotao-cloud-pay-api'
 include 'taotao-cloud-pay:taotao-cloud-pay-biz'
 
-/* sms模块 */
+/* 短信模块 */
 include 'taotao-cloud-sms'
 include 'taotao-cloud-sms:taotao-cloud-sms-api'
 include 'taotao-cloud-sms:taotao-cloud-sms-biz'
