@@ -19,7 +19,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sys_role_dept")
+@Table(name = "tt_sys_role_dept")
 @org.hibernate.annotations.Table(appliesTo = "sys_role_dept", comment = "角色-部门第三方表")
 public class SysRoleDept {
     @Id

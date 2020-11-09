@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sys_dict")
+@Table(name = "tt_sys_dict")
 @org.hibernate.annotations.Table(appliesTo = "sys_dict", comment = "字典表")
 public class SysDict extends BaseEntity {
 

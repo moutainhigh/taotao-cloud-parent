@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sys_dept")
+@Table(name = "tt_sys_dept")
 @org.hibernate.annotations.Table(appliesTo = "sys_dept", comment = "后台部门表")
 public class SysDept extends BaseEntity {
 

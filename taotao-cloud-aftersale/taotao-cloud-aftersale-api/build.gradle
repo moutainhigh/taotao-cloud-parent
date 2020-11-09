@@ -6,4 +6,8 @@ bootJar.enabled = false
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
+
+    compile "org.springframework.boot:spring-boot-starter-validation"
 }

@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "uc_member_address")
+@Table(name = "tt_uc_member_address")
 @org.hibernate.annotations.Table(appliesTo = "uc_member_address", comment = "会员收货地址")
 public class MemberAddress extends BaseEntity {
 

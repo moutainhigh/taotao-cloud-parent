@@ -26,7 +26,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "uc_company")
+@Table(name = "tt_uc_company")
 @org.hibernate.annotations.Table(appliesTo = "uc_company", comment = "公司表")
 public class Company extends BaseEntity {
 

@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-aftersale'
 
 jar.enabled = false
 bootJar.enabled = false
+description("")
 
 dependencies {
 

@@ -1,5 +1,6 @@
 server:
   port: 9900
+  shutdown: graceful
   http2:
     enabled: true
 

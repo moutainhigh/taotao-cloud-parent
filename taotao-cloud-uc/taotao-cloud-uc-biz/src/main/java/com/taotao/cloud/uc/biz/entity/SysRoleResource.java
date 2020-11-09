@@ -19,7 +19,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sys_role_resource")
+@Table(name = "tt_sys_role_resource")
 @org.hibernate.annotations.Table(appliesTo = "sys_role_resource", comment = "角色-资源第三方表")
 public class SysRoleResource {
 

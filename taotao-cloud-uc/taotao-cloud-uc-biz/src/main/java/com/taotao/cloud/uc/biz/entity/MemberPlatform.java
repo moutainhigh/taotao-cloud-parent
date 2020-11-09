@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "uc_member_platform")
+@Table(name = "tt_uc_member_platform")
 @org.hibernate.annotations.Table(appliesTo = "uc_member_platform", comment = "第三方登录信息")
 public class MemberPlatform extends BaseEntity {
 
