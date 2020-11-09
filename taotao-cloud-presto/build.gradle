@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-presto'
 
 jar.enabled = false
 bootJar.enabled = false
+description("presto模块")
 
 dependencies {
 

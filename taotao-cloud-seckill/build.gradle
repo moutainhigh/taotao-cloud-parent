@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-seckill'
 
 jar.enabled = false
 bootJar.enabled = false
+description("秒杀模块")
 
 dependencies {
 

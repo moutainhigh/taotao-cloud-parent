@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-logistics'
 
 jar.enabled = false
 bootJar.enabled = false
+description("物流模块")
 
 dependencies {
 

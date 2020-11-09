@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-netty'
 
 jar.enabled = true
 bootJar.enabled = true
+description("netty模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')

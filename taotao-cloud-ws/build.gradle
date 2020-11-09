@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-ws'
 
 jar.enabled = true
 bootJar.enabled = true
+description("websocket模块")
 
 dependencies {
 //	compile project(':common') /* 子模块之间的依赖 */

@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-recommend'
 
 jar.enabled = true
 bootJar.enabled = true
+description("推荐模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')

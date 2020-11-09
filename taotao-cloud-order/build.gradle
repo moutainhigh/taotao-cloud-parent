@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-order'
 
 jar.enabled = false
 bootJar.enabled = false
+description("订单模块")
 
 dependencies {
 

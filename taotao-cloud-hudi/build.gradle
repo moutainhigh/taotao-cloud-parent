@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-hudi'
 
 jar.enabled = true
 bootJar.enabled = false
+description("hudi模块")
 
 apply plugin: 'scala'
 

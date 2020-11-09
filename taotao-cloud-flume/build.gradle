@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-flume'
 
 jar.enabled = true
 bootJar.enabled = false
+description("flume模块")
 
 dependencies {
     compile 'org.apache.flume:flume-ng-core:1.7.0'

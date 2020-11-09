@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-spark'
 
 jar.enabled = false
 bootJar.enabled = false
+description("spark模块")
 
 apply plugin: 'scala'
 

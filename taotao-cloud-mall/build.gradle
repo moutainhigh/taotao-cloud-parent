@@ -2,6 +2,7 @@ archivesBaseName = 'taotao-cloud-mall'
 
 jar.enabled = true
 bootJar.enabled = true
+description("商城api模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
