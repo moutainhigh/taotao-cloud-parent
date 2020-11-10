@@ -4,6 +4,13 @@ jar.enabled = false
 bootJar.enabled = true
 
 dependencies {
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
+
+    implementation 'org.apache.commons:commons-collections4'
+    implementation 'org.apache.commons:commons-lang3'
+
     implementation('org.springframework.boot:spring-boot-starter-web'){
         exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     }
@@ -13,4 +20,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
+    implementation "commons-lang:commons-lang"
+    implementation group: 'com.alipay.sdk', name: 'alipay-sdk-java', version: '4.10.170.ALL'
+    implementation group: 'com.yungouos.pay', name: 'yungouos-pay-sdk', version: '1.1.20'
+    implementation 'com.google.zxing:core:2.1'
+    implementation 'commons-configuration:commons-configuration:1.10'
 }
