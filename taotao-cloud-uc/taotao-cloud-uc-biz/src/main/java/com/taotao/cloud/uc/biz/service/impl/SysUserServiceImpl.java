@@ -46,6 +46,14 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public SysUser saveUser(SysUser sysUser) {
+		if (Objects.nonNull(sysUser.getId())) {
+			throw new BusinessException("不允许存在id值");
+		}
+		String phone = sysUser.getPhone();
+		Boolean isExists = existsByPhone(phone);
+		if (isExists) {
+			throw new BusinessException(ResultEnum.USER_PHONE_EXISTS_ERROR);
+		}
 		String nickname = sysUser.getNickname();
 		if (StrUtil.isBlank(nickname)) {
 			sysUser.setNickname(DEFAULT_USERNAME);
@@ -63,6 +71,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public SysUser updateUser(SysUser sysUser) {
+		if (Objects.isNull(sysUser.getId())) {
+			throw new BusinessException("id不能为空");
+		}
 		return sysUserRepository.save(sysUser);
 
 		// 此处修改用户角色

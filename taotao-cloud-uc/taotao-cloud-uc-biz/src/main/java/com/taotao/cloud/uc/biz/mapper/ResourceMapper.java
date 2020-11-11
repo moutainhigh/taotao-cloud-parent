@@ -15,10 +15,9 @@
  */
 package com.taotao.cloud.uc.biz.mapper;
 
-import com.taotao.cloud.uc.api.dto.user.UserDTO;
-import com.taotao.cloud.uc.api.vo.user.AddUserVO;
-import com.taotao.cloud.uc.api.vo.user.UserVO;
-import com.taotao.cloud.uc.biz.entity.SysUser;
+import com.taotao.cloud.uc.api.dto.resource.ResourceDTO;
+import com.taotao.cloud.uc.api.vo.resource.ResourceVO;
+import com.taotao.cloud.uc.biz.entity.SysResource;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -29,69 +28,59 @@ import java.util.List;
 
 /**
  * @author dengtao
- * @date 2020/11/11 14:42
+ * @date 2020/11/11 16:58
  * @since v1.0
  */
 @Mapper(builder = @Builder(disableBuilder = true),
 	unmappedSourcePolicy = ReportingPolicy.IGNORE,
 	unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface UserMapper {
+public interface ResourceMapper {
 
-	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+	ResourceMapper INSTANCE = Mappers.getMapper(ResourceMapper.class);
 
 	/**
-	 * SysUser转UserVO
+	 * ResourceDTO转SysResource
 	 *
-	 * @param sysUser sysUser
-	 * @return com.taotao.cloud.uc.api.vo.user.UserVO
+	 * @param resourceDTO resourceDTO
+	 * @return com.taotao.cloud.uc.biz.entity.SysResource
 	 * @author dengtao
-	 * @date 2020/11/11 14:47
+	 * @date 2020/11/11 17:21
 	 * @since v1.0
 	 */
-	UserVO sysUserToUserVO(SysUser sysUser);
+	SysResource resourceDtoToSysResource(ResourceDTO resourceDTO);
 
 	/**
-	 * SysUser转AddUserVO
+	 * SysResource转ResourceVO
 	 *
-	 * @param sysUser sysUser
-	 * @return com.taotao.cloud.uc.api.vo.user.AddUserVO
+	 * @param sysResource sysResource
+	 * @return com.taotao.cloud.uc.api.vo.resource.ResourceVO
 	 * @author dengtao
-	 * @date 2020/11/11 16:59
+	 * @date 2020/11/11 17:25
 	 * @since v1.0
 	 */
-	AddUserVO sysUserToAddUserVO(SysUser sysUser);
+	ResourceVO sysResourceDtoResourceVo(SysResource sysResource);
 
 	/**
-	 * list -> SysUser转UserVO
+	 * list -> SysResource转ResourceVO
 	 *
-	 * @param userList userList
+	 * @param resourceList userList
 	 * @return java.util.List<com.taotao.cloud.uc.api.vo.user.UserVO>
 	 * @author dengtao
 	 * @date 2020/11/11 15:00
 	 * @since v1.0
 	 */
-	List<UserVO> sysUserToUserVO(List<SysUser> userList);
-
-	/**
-	 * UserDTO转SysUser
-	 *
-	 * @param userDTO userDTO
-	 * @return com.taotao.cloud.uc.biz.entity.SysUser
-	 * @author dengtao
-	 * @date 2020/11/11 14:52
-	 * @since v1.0
-	 */
-	SysUser userDtoToSysUser(UserDTO userDTO);
+	List<ResourceVO> sysResourceToResourceVo(List<SysResource> resourceList);
 
 	/**
 	 * 拷贝 UserDTO 到SysUser
 	 *
-	 * @param userDTO userDTO
-	 * @param user    user
+	 * @param resourceDTO resourceDTO
+	 * @param sysResource sysResource
 	 * @return void
 	 * @author dengtao
 	 * @date 2020/11/11 16:59
 	 * @since v1.0
 	 */
-	void copyUserDtoToSysUser(UserDTO userDTO, @MappingTarget SysUser user);
+	void copyResourceDtoToSysResource(ResourceDTO resourceDTO, @MappingTarget SysResource sysResource);
+
 }

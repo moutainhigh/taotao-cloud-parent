@@ -166,7 +166,11 @@ public enum ResultEnum implements BaseEnum {
     /**
      * 商品不存在
      */
-    PRODUCT_NOT_EXIST(500027, "商品不存在");
+    PRODUCT_NOT_EXIST(500027, "商品不存在"),
+	/**
+	 * 资源名称已存在
+	 */
+	RESOURCE_NAME_EXISTS_ERROR(500020, "资源名称已存在");
 
     /**
      * 返回码

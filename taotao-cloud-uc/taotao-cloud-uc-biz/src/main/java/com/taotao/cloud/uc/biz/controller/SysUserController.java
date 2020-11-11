@@ -61,13 +61,7 @@ public class SysUserController {
 	@PreAuthorize("hasAuthority('sys:user:add')")
 	@PostMapping
 	public Result<AddUserVO> saveUser(@Validated @RequestBody UserDTO userDTO) {
-		String phone = userDTO.getPhone();
-		Boolean isExists = sysUserService.existsByPhone(phone);
-		if (isExists) {
-			throw new BusinessException(ResultEnum.USER_PHONE_EXISTS_ERROR);
-		}
 		SysUser sysUser = UserMapper.INSTANCE.userDtoToSysUser(userDTO);
-
 		SysUser result = sysUserService.saveUser(sysUser);
 		AddUserVO addUserVO = UserMapper.INSTANCE.sysUserToAddUserVO(result);
 		return Result.succeed(addUserVO);
@@ -81,7 +75,6 @@ public class SysUserController {
 									 @Validated @RequestBody UserDTO userDTO) {
 		SysUser user = sysUserService.findUserInfoById(id);
 		UserMapper.INSTANCE.copyUserDtoToSysUser(userDTO, user);
-
 		SysUser updateUser = sysUserService.updateUser(user);
 		UserVO result = UserMapper.INSTANCE.sysUserToUserVO(updateUser);
 		return Result.succeed(result);
