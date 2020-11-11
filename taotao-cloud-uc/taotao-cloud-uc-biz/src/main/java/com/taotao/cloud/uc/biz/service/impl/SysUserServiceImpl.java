@@ -5,21 +5,16 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.core.utils.AuthUtil;
 import com.taotao.cloud.uc.api.dto.user.RestPasswordUserDTO;
-import com.taotao.cloud.uc.api.dto.user.UserDTO;
 import com.taotao.cloud.uc.api.dto.user.UserRoleDTO;
 import com.taotao.cloud.uc.api.query.user.UserPageQuery;
 import com.taotao.cloud.uc.api.query.user.UserQuery;
-import com.taotao.cloud.uc.api.vo.user.AddUserVO;
-import com.taotao.cloud.uc.api.vo.user.UserVO;
 import com.taotao.cloud.uc.biz.entity.QSysUser;
 import com.taotao.cloud.uc.biz.entity.SysUser;
 import com.taotao.cloud.uc.biz.repository.SysUserRepository;
 import com.taotao.cloud.uc.biz.service.ISysUserRoleService;
 import com.taotao.cloud.uc.biz.service.ISysUserService;
-import com.taotao.cloud.uc.biz.utils.SysUserUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,161 +36,149 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class SysUserServiceImpl implements ISysUserService {
-    private final SysUserRepository sysUserRepository;
-    private final ISysUserRoleService sysUserRoleService;
+	private final SysUserRepository sysUserRepository;
+	private final ISysUserRoleService sysUserRoleService;
+	private final static QSysUser SYS_USER = QSysUser.sysUser;
 
-    private final static QSysUser SYS_USER = QSysUser.sysUser;
+	private final static String DEFAULT_PASSWORD = "123456";
+	private final static String DEFAULT_USERNAME = "admin";
 
-    private final static String DEFAULT_PASSWORD = "123456";
-    private final static String DEFAULT_USERNAME = "admin";
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public SysUser saveUser(SysUser sysUser) {
+		String nickname = sysUser.getNickname();
+		if (StrUtil.isBlank(nickname)) {
+			sysUser.setNickname(DEFAULT_USERNAME);
+		}
+		String username = sysUser.getUsername();
+		if (StrUtil.isBlank(username)) {
+			sysUser.setUsername(DEFAULT_USERNAME);
+		}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public AddUserVO saveUser(UserDTO userDto) {
-        String phone = userDto.getPhone();
-        BooleanExpression phonePredicate = SYS_USER.phone.eq(phone);
-        Boolean exists = sysUserRepository.exists(phonePredicate);
-        if (exists) {
-            throw new BusinessException(ResultEnum.USER_PHONE_EXISTS_ERROR);
-        }
-        String nickname = userDto.getNickname();
-        if (StrUtil.isBlank(nickname)) {
-            userDto.setNickname(DEFAULT_USERNAME);
-        }
-        String username = userDto.getUsername();
-        if (StrUtil.isBlank(username)) {
-            userDto.setUsername(DEFAULT_USERNAME);
-        }
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+		return sysUserRepository.save(sysUser);
+	}
 
-        SysUser sysUser = new SysUser();
-        BeanUtil.copyIgnoredNull(userDto, sysUser);
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public SysUser updateUser(SysUser sysUser) {
+		return sysUserRepository.save(sysUser);
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        sysUser.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
-        SysUser save = sysUserRepository.save(sysUser);
+		// 此处修改用户角色
+		// userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getId, sysUser.getId()));
+		// List<SysUserRole> userRoles = userAddDto.getRoleList().stream().map(item -> {
+		//     SysUserRole sysUserRole = new SysUserRole();
+		//     sysUserRole.setRoleId(item);
+		//     sysUserRole.setUserId(sysUser.getId());
+		//     return sysUserRole;
+		// }).collect(Collectors.toList());
+		//
+		// return userRoleService.saveBatch(userRoles);
+	}
 
-        return AddUserVO.builder()
-                .phone(save.getPhone())
-                .password(DEFAULT_PASSWORD)
-                .username(save.getUsername())
-                .build();
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean removeUser(Long id) {
+		sysUserRepository.deleteById(id);
+		return true;
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updateUser(Long id, UserDTO userDTO) {
-        Optional<SysUser> optionalSysUser = sysUserRepository.findById(id);
-        SysUser sysUser = optionalSysUser.orElseThrow(() -> new BusinessException(ResultEnum.USER_NOT_EXIST));
+	@Override
+	public Page<SysUser> findUserPage(Pageable page, UserPageQuery userQuery) {
+		BooleanExpression predicate = SYS_USER.delFlag.eq(false);
+		Optional.ofNullable(userQuery.getNickname())
+			.ifPresent(nickname -> predicate.and(SYS_USER.nickname.like(nickname)));
+		Optional.ofNullable(userQuery.getUsername())
+			.ifPresent(username -> predicate.and(SYS_USER.username.like(username)));
+		Optional.ofNullable(userQuery.getPhone())
+			.ifPresent(phone -> predicate.and(SYS_USER.phone.eq(phone)));
+		Optional.ofNullable(userQuery.getEmail())
+			.ifPresent(email -> predicate.and(SYS_USER.email.eq(email)));
+		Optional.ofNullable(userQuery.getDeptId())
+			.ifPresent(deptId -> predicate.and(SYS_USER.deptId.eq(deptId)));
+		Optional.ofNullable(userQuery.getJobId())
+			.ifPresent(jobId -> predicate.and(SYS_USER.jobId.eq(jobId)));
 
-        BeanUtil.copyIgnoredNull(userDTO, sysUser);
-        sysUserRepository.save(sysUser);
+		OrderSpecifier<LocalDateTime> createDatetimeDesc = SYS_USER.createTime.desc();
+		return sysUserRepository.findAll(predicate, page, createDatetimeDesc);
+	}
 
-        // 此处修改用户角色
-        // userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getId, sysUser.getId()));
-        // List<SysUserRole> userRoles = userAddDto.getRoleList().stream().map(item -> {
-        //     SysUserRole sysUserRole = new SysUserRole();
-        //     sysUserRole.setRoleId(item);
-        //     sysUserRole.setUserId(sysUser.getId());
-        //     return sysUserRole;
-        // }).collect(Collectors.toList());
-        //
-        // return userRoleService.saveBatch(userRoles);
-        return true;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean restPass(Long id, RestPasswordUserDTO restPasswordDTO) {
+		String restPasswordPhone = restPasswordDTO.getPhone();
+		SysUser sysUser = findUserInfoById(id);
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean removeUser(Long id) {
-        sysUserRepository.deleteById(id);
-        return true;
-    }
+		String phone = sysUser.getPhone();
+		if (!Objects.equals(restPasswordPhone, phone)) {
+			throw new BusinessException(ResultEnum.USER_PHONE_INCONSISTENT_ERROR);
+		}
+		BCryptPasswordEncoder passwordEncoder = AuthUtil.getPasswordEncoder();
 
-    @Override
-    public Page<SysUser> findUserPage(Pageable page, UserPageQuery userQuery) {
-        BooleanExpression predicate = SYS_USER.delFlag.eq(false);
-        Optional.ofNullable(userQuery.getNickname())
-                .ifPresent(nickname -> predicate.and(SYS_USER.nickname.like(nickname)));
-        Optional.ofNullable(userQuery.getUsername())
-                .ifPresent(username -> predicate.and(SYS_USER.username.like(username)));
-        Optional.ofNullable(userQuery.getPhone())
-                .ifPresent(phone -> predicate.and(SYS_USER.phone.eq(phone)));
-        Optional.ofNullable(userQuery.getEmail())
-                .ifPresent(email -> predicate.and(SYS_USER.email.eq(email)));
-        Optional.ofNullable(userQuery.getDeptId())
-                .ifPresent(deptId -> predicate.and(SYS_USER.deptId.eq(deptId)));
-        Optional.ofNullable(userQuery.getJobId())
-                .ifPresent(jobId -> predicate.and(SYS_USER.jobId.eq(jobId)));
+		String oldPassword = restPasswordDTO.getOldPassword();
+		String password = sysUser.getPassword();
+		if (!AuthUtil.validatePass(oldPassword, password)) {
+			throw new BusinessException(ResultEnum.USERNAME_OR_PASSWORD_ERROR);
+		}
 
-        OrderSpecifier<LocalDateTime> createDatetimeDesc = SYS_USER.createTime.desc();
-        return sysUserRepository.findAll(predicate, page, createDatetimeDesc);
-    }
+		String newPassword = restPasswordDTO.getNewPassword();
+		return sysUserRepository.updatePassword(id, passwordEncoder.encode(newPassword));
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean restPass(Long id, RestPasswordUserDTO restPasswordDTO) {
-        String restPasswordPhone = restPasswordDTO.getPhone();
-        Optional<SysUser> optionalSysUser = sysUserRepository.findById(id);
-        SysUser sysUser = optionalSysUser.orElseThrow(() -> new BusinessException(ResultEnum.USER_NOT_EXIST));
+	@Override
+	public SysUser findUserInfoById(Long userId) {
+		Optional<SysUser> optionalSysUser = sysUserRepository.findById(userId);
+		return optionalSysUser.orElseThrow(() -> new BusinessException(ResultEnum.USER_NOT_EXIST));
+	}
 
-        String phone = sysUser.getPhone();
-        if (!Objects.equals(restPasswordPhone, phone)) {
-            throw new BusinessException(ResultEnum.USER_PHONE_INCONSISTENT_ERROR);
-        }
-        BCryptPasswordEncoder passwordEncoder = AuthUtil.getPasswordEncoder();
+	@Override
+	public SysUser findUserInfoByUsername(String username) {
+		BooleanExpression expression = SYS_USER.username.eq(username);
+		return sysUserRepository.fetchOne(expression);
+	}
 
-        String oldPassword = restPasswordDTO.getOldPassword();
-        String password = sysUser.getPassword();
-        if (!AuthUtil.validatePass(oldPassword, password)) {
-            throw new BusinessException(ResultEnum.USERNAME_OR_PASSWORD_ERROR);
-        }
+	@Override
+	public Boolean existsByPhone(String phone) {
+		BooleanExpression phonePredicate = SYS_USER.phone.eq(phone);
+		return sysUserRepository.exists(phonePredicate);
+	}
 
-        String newPassword = restPasswordDTO.getNewPassword();
-        return sysUserRepository.updatePassword(id, passwordEncoder.encode(newPassword));
-    }
+	@Override
+	public Boolean existsById(Long id) {
+		BooleanExpression phonePredicate = SYS_USER.id.eq(id);
+		return sysUserRepository.exists(phonePredicate);
+	}
 
-    @Override
-    public UserVO findUserInfoById(Long userId) {
-        Optional<SysUser> optionalSysUser = sysUserRepository.findById(userId);
-        SysUser sysUser = optionalSysUser.orElseThrow(() -> new BusinessException(ResultEnum.USER_NOT_EXIST));
-        return SysUserUtil.copy(sysUser);
-    }
+	@Override
+	public List<SysUser> findUserList(UserQuery userQuery) {
+		BooleanExpression predicate = SYS_USER.delFlag.eq(false);
+		Optional.ofNullable(userQuery.getNickname())
+			.ifPresent(nickname -> predicate.and(SYS_USER.nickname.like(nickname)));
+		Optional.ofNullable(userQuery.getUsername())
+			.ifPresent(username -> predicate.and(SYS_USER.username.like(username)));
+		Optional.ofNullable(userQuery.getPhone())
+			.ifPresent(phone -> predicate.and(SYS_USER.phone.eq(phone)));
+		Optional.ofNullable(userQuery.getEmail())
+			.ifPresent(email -> predicate.and(SYS_USER.email.eq(email)));
+		Optional.ofNullable(userQuery.getType())
+			.ifPresent(type -> predicate.and(SYS_USER.type.eq(type)));
+		Optional.ofNullable(userQuery.getSex())
+			.ifPresent(sex -> predicate.and(SYS_USER.sex.eq(sex)));
+		Optional.ofNullable(userQuery.getDeptId())
+			.ifPresent(deptId -> predicate.and(SYS_USER.deptId.eq(deptId)));
+		Optional.ofNullable(userQuery.getJobId())
+			.ifPresent(jobId -> predicate.and(SYS_USER.jobId.eq(jobId)));
+		return sysUserRepository.fetch(predicate);
+	}
 
-    @Override
-    public UserVO findUserInfoByUsername(String username) {
-        BooleanExpression expression = SYS_USER.username.eq(username);
-        SysUser sysUser = sysUserRepository.fetchOne(expression);
-        return SysUserUtil.copy(sysUser);
-    }
-
-    @Override
-    public List<SysUser> findUserList(UserQuery userQuery) {
-        BooleanExpression predicate = SYS_USER.delFlag.eq(false);
-        Optional.ofNullable(userQuery.getNickname())
-                .ifPresent(nickname -> predicate.and(SYS_USER.nickname.like(nickname)));
-        Optional.ofNullable(userQuery.getUsername())
-                .ifPresent(username -> predicate.and(SYS_USER.username.like(username)));
-        Optional.ofNullable(userQuery.getPhone())
-                .ifPresent(phone -> predicate.and(SYS_USER.phone.eq(phone)));
-        Optional.ofNullable(userQuery.getEmail())
-                .ifPresent(email -> predicate.and(SYS_USER.email.eq(email)));
-        Optional.ofNullable(userQuery.getType())
-                .ifPresent(type -> predicate.and(SYS_USER.type.eq(type)));
-        Optional.ofNullable(userQuery.getSex())
-                .ifPresent(sex -> predicate.and(SYS_USER.sex.eq(sex)));
-        Optional.ofNullable(userQuery.getDeptId())
-                .ifPresent(deptId -> predicate.and(SYS_USER.deptId.eq(deptId)));
-        Optional.ofNullable(userQuery.getJobId())
-                .ifPresent(jobId -> predicate.and(SYS_USER.jobId.eq(jobId)));
-        return sysUserRepository.fetch(predicate);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean saveUserRoles(UserRoleDTO userRoleDTO) {
-        Long userId = userRoleDTO.getUserId();
-        findUserInfoById(userId);
-        return sysUserRoleService.saveUserRoles(userId, userRoleDTO.getRoleIds());
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateUserRoles(UserRoleDTO userRoleDTO) {
+		Long userId = userRoleDTO.getUserId();
+		findUserInfoById(userId);
+		return sysUserRoleService.saveUserRoles(userId, userRoleDTO.getRoleIds());
+	}
 
 
 //    @Override

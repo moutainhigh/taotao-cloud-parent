@@ -30,6 +30,7 @@ buildscript {
         okhttpVersion = '3.14.8'
         userAgentUtilsVersion = '1.21'
         xxlJobVersion = '2.2.0'
+        mapstructVersion = "1.4.1.Final"
     }
     repositories {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -116,6 +117,7 @@ allprojects {
             dependency "com.squareup.okhttp3:okhttp:${okhttpVersion}"
             dependency "eu.bitwalker:UserAgentUtils:${userAgentUtilsVersion}"
             dependency "com.xuxueli:xxl-job-core:${xxlJobVersion}"
+            dependency "org.mapstruct:mapstruct:${mapstructVersion}"
         }
     }
 }

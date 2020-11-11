@@ -40,6 +40,7 @@ include 'taotao-cloud-storm'
 include 'taotao-cloud-netty'
 include 'taotao-cloud-recommend'
 include 'taotao-cloud-hudi'
+include 'taotao-cloud-opencv'
 
 /* 售后模块 */
 include 'taotao-cloud-aftersale'

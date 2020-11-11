@@ -25,9 +25,9 @@ import com.taotao.cloud.uc.biz.entity.SysUser;
  * @since v1.0
  */
 public class SysUserUtil {
-    public static UserVO copy(SysUser user) {
-        UserVO vo = UserVO.builder().build();
-        BeanUtil.copyIncludeNull(user, vo);
-        return vo;
-    }
+	public static UserVO copy(SysUser user) {
+		UserVO vo = UserVO.builder().build();
+		BeanUtil.copyIncludeNull(user, vo);
+		return vo;
+	}
 }

@@ -15,18 +15,26 @@
  */
 package com.taotao.cloud.data.jpa.entity;
 
-import com.taotao.cloud.common.enums.DelFlagEnum;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 /**
@@ -45,34 +53,34 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "bigint not null comment 'id'")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", columnDefinition = "bigint not null comment 'id'")
+	private Long id;
 
-    @CreatedBy
-    @Column(name = "create_by", columnDefinition = "bigint comment '创建人'")
-    private Long createBy;
+	@CreatedBy
+	@Column(name = "create_by", columnDefinition = "bigint comment '创建人'")
+	private Long createBy;
 
-    @LastModifiedBy
-    @Column(name = "last_modified_by", columnDefinition = "bigint comment '最后修改人'")
-    private Long lastModifiedBy;
+	@LastModifiedBy
+	@Column(name = "last_modified_by", columnDefinition = "bigint comment '最后修改人'")
+	private Long lastModifiedBy;
 
-    @CreatedDate
-    @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP comment '创建时间'")
-    private LocalDateTime createTime;
+	@CreatedDate
+	@Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '创建时间'")
+	private LocalDateTime createTime;
 
-    @LastModifiedDate
-    @Column(name = "last_modified_time", nullable = false, columnDefinition = "TIMESTAMP comment '最后修改时间'")
-    private LocalDateTime lastModifiedTime;
+	@LastModifiedDate
+	@Column(name = "last_modified_time", nullable = false, columnDefinition = "TIMESTAMP comment '最后修改时间'")
+	private LocalDateTime lastModifiedTime;
 
-    @Version
-    @Builder.Default
-    @Column(name = "version", nullable = false, columnDefinition = "int not null default 1 comment '版本号'")
-    private int version = 1;
+	@Version
+	@Builder.Default
+	@Column(name = "version", nullable = false, columnDefinition = "int not null default 1 comment '版本号'")
+	private int version = 1;
 
-    @Builder.Default
-    @Column(name = "del_flag", nullable = false, columnDefinition = "tinyint(1) NOT NULL DEFAULT 0 comment '是否删除 0-正常 1-删除'")
-    private Boolean delFlag = false;
+	@Builder.Default
+	@Column(name = "del_flag", nullable = false, columnDefinition = "tinyint(1) NOT NULL DEFAULT 0 comment '是否删除 0-正常 1-删除'")
+	private Boolean delFlag = false;
 
 }

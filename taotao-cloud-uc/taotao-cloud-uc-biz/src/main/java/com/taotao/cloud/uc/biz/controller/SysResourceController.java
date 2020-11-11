@@ -100,7 +100,7 @@ public class SysResourceController {
 
     @ApiOperation("查询所有资源列表")
     @SysOperateLog(description = "查询所有资源列表")
-    //@PreAuthorize("hasAuthority('sys:resource:list')")
+    @PreAuthorize("hasAuthority('sys:resource:list')")
     @GetMapping
     public Result<List<ResourceVO>> findAllResources() {
         List<SysResource> pages = resourceService.findAllResources();
@@ -111,7 +111,7 @@ public class SysResourceController {
 
     @ApiOperation("根据角色id获取资源列表")
     @SysOperateLog(description = "根据角色id获取资源列表")
-    //@PreAuthorize("hasAuthority('sys:resource:info:roleId')")
+    @PreAuthorize("hasAuthority('sys:resource:info:roleId')")
     @SentinelResource(value = "findResourceByRoleId", blockHandler = "findResourceByRoleIdException")
     @GetMapping("/info/roleId")
     public Result<List<ResourceVO>> findResourceByRoleId(@NotNull(message = "角色id不能为空")
@@ -122,11 +122,6 @@ public class SysResourceController {
         List<ResourceVO> collect = roles.stream().filter(Objects::nonNull)
                 .map(SysResourceUtil::copy).collect(Collectors.toList());
         return Result.succeed(collect);
-    }
-
-    public Result<List<ResourceVO>> findResourceByRoleIdException(Long roleId, BlockException e) {
-        LogUtil.error("findResourceByRoleIdException错误   {}", e);
-        return Result.failed(new ArrayList<>());
     }
 
     @ApiOperation("根据角色id列表获取角色列表")
@@ -157,7 +152,7 @@ public class SysResourceController {
 
     @ApiOperation("根据角色code列表获取角色列表")
     @SysOperateLog(description = "根据角色cde列表获取角色列表")
-    //@PreAuthorize("hasAuthority('sys:resource:info:codes')")
+    @PreAuthorize("hasAuthority('sys:resource:info:codes')")
     @GetMapping("/info/codes")
     public Result<List<ResourceVO>> findResourceByCodes(@NotNull(message = "角色cde列表不能为空")
                                                         @RequestParam(value = "codes") Set<String> codes) {
@@ -166,7 +161,6 @@ public class SysResourceController {
                 .map(SysResourceUtil::copy).collect(Collectors.toList());
         return Result.succeed(collect);
     }
-
 
     @ApiOperation("根据parentId获取角色列表")
     @SysOperateLog(description = "根据parentId获取角色列表")
@@ -182,7 +176,7 @@ public class SysResourceController {
 
     @ApiOperation("获取当前用户菜单列表")
     @SysOperateLog(description = "获取当前用户菜单列表")
-    //@PreAuthorize("hasAuthority('sys:resource:current:user')")
+    @PreAuthorize("hasAuthority('sys:resource:current:user')")
     @GetMapping("/info/current/user")
     public Result<List<ResourceVO>> findCurrentUserResource() {
         Set<String> roleCodes = SecurityUtil.getUser().getRoles();
@@ -194,7 +188,7 @@ public class SysResourceController {
 
     @ApiOperation("获取当前用户树形菜单列表")
     @SysOperateLog(description = "获取当前用户树形菜单列表")
-    //@PreAuthorize("hasAuthority('sys:resource:current:user:tree')")
+    // @PreAuthorize("hasAuthority('sys:resource:current:user:tree')")
     @GetMapping("/info/current/user/tree")
     public Result<List<ResourceTree>> findCurrentUserResourceTree(@RequestParam(value = "parentId") Long parentId) {
         Set<String> roleCodes = SecurityUtil.getUser().getRoles();
@@ -210,7 +204,7 @@ public class SysResourceController {
     @ApiOperation("获取树形菜单集合 1.false-非懒加载，查询全部 " +
             "2.true-懒加载，根据parentId查询 2.1 父节点为空，则查询parentId=0")
     @SysOperateLog(description = "获取树形菜单集合")
-    //@PreAuthorize("hasAuthority('sys:resource:info:tree')")
+    @PreAuthorize("hasAuthority('sys:resource:info:tree')")
     @GetMapping("/info/tree")
     @SentinelResource(value = "findResourceTree", blockHandler = "testSeataException")
     public Result<List<ResourceTree>> findResourceTree(@RequestParam(value = "lazy") boolean lazy,
