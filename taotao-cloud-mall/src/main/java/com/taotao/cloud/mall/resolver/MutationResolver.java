@@ -15,10 +15,10 @@
  */
 package com.taotao.cloud.mall.resolver;
 
-import com.taotao.cloud.manager.entity.AddUserInput;
-import com.taotao.cloud.manager.entity.Article;
-import com.taotao.cloud.manager.entity.Result;
-import com.taotao.cloud.manager.entity.User;
+import com.taotao.cloud.mall.entity.AddUserInput;
+import com.taotao.cloud.mall.entity.Article;
+import com.taotao.cloud.mall.entity.Result;
+import com.taotao.cloud.mall.entity.User;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.apache.logging.log4j.LogManager;

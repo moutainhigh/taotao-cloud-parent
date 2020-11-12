@@ -15,8 +15,8 @@
  */
 package com.taotao.cloud.mall.resolver;
 
-import com.taotao.cloud.manager.entity.Article;
-import com.taotao.cloud.manager.entity.User;
+import com.taotao.cloud.mall.entity.Article;
+import com.taotao.cloud.mall.entity.User;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

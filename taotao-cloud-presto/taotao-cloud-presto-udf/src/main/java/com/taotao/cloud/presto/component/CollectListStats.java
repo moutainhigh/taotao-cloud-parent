@@ -41,7 +41,7 @@ public class CollectListStats {
         deserialize(serialized);
     }
 
-    void addCollectList(Integer id, String key, int value) {
+    public void addCollectList(Integer id, String key, int value) {
         if (collectContainer.containsKey(id)) {
             Map<String, Integer> tmpMap = collectContainer.get(id);
             if (tmpMap.containsKey(key)) {
@@ -63,7 +63,7 @@ public class CollectListStats {
     }
 
     //[{id:1,{"aaa":3,"fadf":6},{}]
-    Slice getCollectResult() {
+	public Slice getCollectResult() {
         Slice jsonSlice = null;
         try {
             StringBuilder jsonStr = new StringBuilder();
@@ -155,7 +155,7 @@ public class CollectListStats {
         return INSTANCE_SIZE + contentEstimatedSize;
     }
 
-    void mergeWith(CollectListStats other) {
+    public void mergeWith(CollectListStats other) {
         if (other == null) {
             return;
         }
