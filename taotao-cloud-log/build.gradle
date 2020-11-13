@@ -1,0 +1,9 @@
+archivesBaseName = 'taotao-cloud-log'
+
+jar.enabled = false
+bootJar.enabled = false
+description("日志模块")
+
+dependencies {
+
+}

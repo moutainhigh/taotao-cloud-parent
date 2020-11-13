@@ -24,33 +24,50 @@ include 'taotao-cloud-starter:taotao-cloud-starter-shardingjdbc'
 include 'taotao-cloud-starter:taotao-cloud-starter-swagger'
 include 'taotao-cloud-starter:taotao-cloud-starter-zookeeper'
 
+//*************************************业务模块************************************
+
+/* 网关模块 */
 include 'taotao-cloud-gateway'
-include 'taotao-cloud-ws'
-include 'taotao-cloud-config'
-include 'taotao-cloud-code'
+
+/* 商城模块 */
 include 'taotao-cloud-mall'
+
+/* 后台管理模块 */
 include 'taotao-cloud-manager'
 
-include 'taotao-cloud-flink'
-include 'taotao-cloud-flume'
-include 'taotao-cloud-hbase'
-include 'taotao-cloud-scala'
-include 'taotao-cloud-spark'
-include 'taotao-cloud-storm'
-include 'taotao-cloud-netty'
-include 'taotao-cloud-recommend'
-include 'taotao-cloud-hudi'
-include 'taotao-cloud-opencv'
+/* 配置模块 */
+include 'taotao-cloud-config'
+
+/* 代码生成模块 */
+include 'taotao-cloud-code'
+
+/* websocket模块 */
+include 'taotao-cloud-ws'
+
+/* 认证模块 */
+include 'taotao-cloud-auth'
+include 'taotao-cloud-auth:taotao-cloud-auth-api'
+include 'taotao-cloud-auth:taotao-cloud-auth-biz'
+
+/* 用户模块 */
+include 'taotao-cloud-uc'
+include 'taotao-cloud-uc:taotao-cloud-uc-api'
+include 'taotao-cloud-uc:taotao-cloud-uc-biz'
+
+/* 订单模块 */
+include 'taotao-cloud-order'
+include 'taotao-cloud-order:taotao-cloud-order-api'
+include 'taotao-cloud-order:taotao-cloud-order-biz'
+
+/* 商品模块 */
+include 'taotao-cloud-product'
+include 'taotao-cloud-product:taotao-cloud-product-api'
+include 'taotao-cloud-product:taotao-cloud-product-biz'
 
 /* 售后模块 */
 include 'taotao-cloud-aftersale'
 include 'taotao-cloud-aftersale:taotao-cloud-aftersale-api'
 include 'taotao-cloud-aftersale:taotao-cloud-aftersale-biz'
-
-/* 认证中心 */
-include 'taotao-cloud-auth'
-include 'taotao-cloud-auth:taotao-cloud-auth-api'
-include 'taotao-cloud-auth:taotao-cloud-auth-biz'
 
 /* 客服模块 */
 include 'taotao-cloud-customer'
@@ -62,10 +79,10 @@ include 'taotao-cloud-logistics'
 include 'taotao-cloud-logistics:taotao-cloud-logistics-api'
 include 'taotao-cloud-logistics:taotao-cloud-logistics-biz'
 
-/* 用户模块 */
-include 'taotao-cloud-uc'
-include 'taotao-cloud-uc:taotao-cloud-uc-api'
-include 'taotao-cloud-uc:taotao-cloud-uc-biz'
+/* 日志模块 */
+include 'taotao-cloud-log'
+include 'taotao-cloud-log:taotao-cloud-log-api'
+include 'taotao-cloud-log:taotao-cloud-log-biz'
 
 /* 搜索模块 */
 include 'taotao-cloud-search'
@@ -87,16 +104,6 @@ include 'taotao-cloud-mail'
 include 'taotao-cloud-mail:taotao-cloud-mail-api'
 include 'taotao-cloud-mail:taotao-cloud-mail-biz'
 
-/* 订单模块 */
-include 'taotao-cloud-order'
-include 'taotao-cloud-order:taotao-cloud-order-api'
-include 'taotao-cloud-order:taotao-cloud-order-biz'
-
-/* 商品模块 */
-include 'taotao-cloud-product'
-include 'taotao-cloud-product:taotao-cloud-product-api'
-include 'taotao-cloud-product:taotao-cloud-product-biz'
-
 /* 秒杀模块 */
 include 'taotao-cloud-seckill'
 include 'taotao-cloud-seckill:taotao-cloud-seckill-api'
@@ -112,6 +119,8 @@ include 'taotao-cloud-dfs'
 include 'taotao-cloud-dfs:taotao-cloud-dfs-api'
 include 'taotao-cloud-dfs:taotao-cloud-dfs-biz'
 
+//*************************************大数据模块************************************
+
 /* hadoop模块 */
 include 'taotao-cloud-hadoop'
 include 'taotao-cloud-hadoop:taotao-cloud-hadoop-hdfs'
@@ -126,6 +135,36 @@ include 'taotao-cloud-hive:taotao-cloud-hive-udf'
 include 'taotao-cloud-presto'
 include 'taotao-cloud-presto:taotao-cloud-presto-api'
 include 'taotao-cloud-presto:taotao-cloud-presto-udf'
+
+/* flink模块 */
+include 'taotao-cloud-flink'
+
+/* flume模块 */
+include 'taotao-cloud-flume'
+
+/* hbase模块 */
+include 'taotao-cloud-hbase'
+
+/* scala模块 */
+include 'taotao-cloud-scala'
+
+/* spark模块 */
+include 'taotao-cloud-spark'
+
+/* storm模块 */
+include 'taotao-cloud-storm'
+
+/* netty模块 */
+include 'taotao-cloud-netty'
+
+/* 推荐模块 */
+include 'taotao-cloud-recommend'
+
+/* hudi模块 */
+include 'taotao-cloud-hudi'
+
+/* opencv模块 */
+include 'taotao-cloud-opencv'
 
 /* demo模块 */
 include 'taotao-cloud-demo'
