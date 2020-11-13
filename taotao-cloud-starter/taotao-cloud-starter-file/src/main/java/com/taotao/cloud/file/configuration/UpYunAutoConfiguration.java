@@ -15,14 +15,12 @@
  */
 package com.taotao.cloud.file.configuration;
 
-import com.luhuiguo.fastdfs.domain.StorePath;
 import com.taotao.cloud.common.utils.LogUtil;
-import com.taotao.cloud.file.canstants.FileCanstant;
-import com.taotao.cloud.file.component.AbstractFileUpload;
+import com.taotao.cloud.file.base.AbstractFileUpload;
+import com.taotao.cloud.file.constant.FileConstant;
 import com.taotao.cloud.file.exception.FileUploadException;
 import com.taotao.cloud.file.pojo.FileInfo;
 import com.taotao.cloud.file.propeties.UpYunProperties;
-import com.taotao.cloud.file.util.FileUtil;
 import main.java.com.UpYun;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -41,110 +39,113 @@ import java.io.InputStream;
  * @date 2020/10/26 10:28
  * @since v1.0
  */
-@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileCanstant.DFS_UPYUN)
+@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileConstant.DFS_UPYUN)
 public class UpYunAutoConfiguration {
-    private final UpYunProperties properties;
+	private final UpYunProperties properties;
 
-    public UpYunAutoConfiguration(UpYunProperties properties) {
-        super();
-        Assert.notNull(properties, "UpYunProperties为null");
-        this.properties = properties;
-    }
+	public UpYunAutoConfiguration(UpYunProperties properties) {
+		super();
+		Assert.notNull(properties, "UpYunProperties为null");
+		this.properties = properties;
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public UpYun upYun() {
-        // 创建实例
-        UpYun upyun = new UpYun(properties.getBucketName(), properties.getUserName(), properties.getPassword());
-        // 可选属性1，是否开启 debug 模式，默认不开启
-        upyun.setDebug(false);
-        // 可选属性2，超时时间，默认 30s
-        upyun.setTimeout(30);
-        return upyun;
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public UpYun upYun() {
+		// 创建实例
+		UpYun upyun = new UpYun(properties.getBucketName(), properties.getUserName(), properties.getPassword());
+		// 可选属性1，是否开启 debug 模式，默认不开启
+		upyun.setDebug(false);
+		// 可选属性2，超时时间，默认 30s
+		upyun.setTimeout(30);
+		return upyun;
+	}
 
-    @Service
-    public class UpYunFileUpload extends AbstractFileUpload {
-        private final UpYun upyun;
+	@Bean
+	public UpYunFileUpload fileUpload(UpYun upyun){
+		return new UpYunFileUpload(upyun);
+	}
 
-        public UpYunFileUpload(UpYun upyun) {
-            super();
-            this.upyun = upyun;
-        }
+	public class UpYunFileUpload extends AbstractFileUpload {
+		private final UpYun upyun;
 
-        @Override
-        protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo) throws Exception {
-            boolean bFlag;
-            InputStream inputStream = file.getInputStream();
-            String fileName = fileInfo.getName();
-            String filePath = properties.getDomain() + "/" + properties.getBucketName() + "/" + UpYun.md5(fileName);
-            try {
-                byte[] buffer;
+		public UpYunFileUpload(UpYun upyun) {
+			super();
+			this.upyun = upyun;
+		}
 
-                ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
-                byte[] b = new byte[1000];
-                int n;
-                while ((n = inputStream.read(b)) != -1) {
-                    bos.write(b, 0, n);
-                }
-                inputStream.close();
-                bos.close();
-                buffer = bos.toByteArray();
+		@Override
+		protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo)  {
+			boolean bFlag;
+			try {
+				InputStream inputStream = file.getInputStream();
+				String fileName = fileInfo.getName();
+				String filePath = properties.getDomain() + "/" + properties.getBucketName() + "/" + UpYun.md5(fileName);
+				byte[] buffer;
 
-                bFlag = upyun.writeFile(filePath, buffer);
-            } catch (Exception e) {
-                LogUtil.error("[UpYun]文件上传失败:", e);
-                throw new FileUploadException("[UpYun]文件上传失败");
-            }
+				ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+				byte[] b = new byte[1000];
+				int n;
+				while ((n = inputStream.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				inputStream.close();
+				bos.close();
+				buffer = bos.toByteArray();
 
-            if (!bFlag) {
-                throw new FileUploadException("[UpYun]文件上传失败");
-            }
-            fileInfo.setUrl(filePath);
-            return fileInfo;
-        }
+				bFlag = upyun.writeFile(filePath, buffer);
+				fileInfo.setUrl(filePath);
+			} catch (Exception e) {
+				LogUtil.error("[UpYun]文件上传失败:", e);
+				throw new FileUploadException("[UpYun]文件上传失败");
+			}
+			if (!bFlag) {
+				throw new FileUploadException("[UpYun]文件上传失败");
+			}
+			return fileInfo;
+		}
 
-        @Override
-        protected FileInfo uploadFile(File file, FileInfo fileInfo) throws Exception {
-            boolean bFlag;
-            InputStream inputStream = new FileInputStream(file);
-            String fileName = fileInfo.getName();
-            String filePath = properties.getDomain() + "/" + properties.getBucketName() + "/" + UpYun.md5(fileName);
-            try {
-                byte[] buffer;
+		@Override
+		protected FileInfo uploadFile(File file, FileInfo fileInfo) {
+			boolean bFlag;
+			try {
+				InputStream inputStream = new FileInputStream(file);
+				String fileName = fileInfo.getName();
+				String filePath = properties.getDomain() + "/" + properties.getBucketName() + "/" + UpYun.md5(fileName);
+				byte[] buffer;
 
-                ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
-                byte[] b = new byte[1000];
-                int n;
-                while ((n = inputStream.read(b)) != -1) {
-                    bos.write(b, 0, n);
-                }
-                inputStream.close();
-                bos.close();
-                buffer = bos.toByteArray();
+				ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+				byte[] b = new byte[1000];
+				int n;
+				while ((n = inputStream.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				inputStream.close();
+				bos.close();
+				buffer = bos.toByteArray();
 
-                bFlag = upyun.writeFile(filePath, buffer);
-            } catch (Exception e) {
-                LogUtil.error("[UpYun]文件上传失败:", e);
-                throw new FileUploadException("[UpYun]文件上传失败");
-            }
+				bFlag = upyun.writeFile(filePath, buffer);
+				fileInfo.setUrl(filePath);
+			} catch (Exception e) {
+				LogUtil.error("[UpYun]文件上传失败:", e);
+				throw new FileUploadException("[UpYun]文件上传失败");
+			}
 
-            if (!bFlag) {
-                throw new FileUploadException("[UpYun]文件上传失败");
-            }
-            fileInfo.setUrl(filePath);
-            return fileInfo;
-        }
+			if (!bFlag) {
+				throw new FileUploadException("[UpYun]文件上传失败");
+			}
+			return fileInfo;
+		}
 
-        @Override
-        public FileInfo delete(FileInfo fileInfo) {
-            try {
-                upyun.deleteFile(fileInfo.getUrl());
-            } catch (Exception e) {
-                LogUtil.error("[UpYun]文件删除失败:", e);
-                throw new FileUploadException("[UpYun]文件删除失败");
-            }
-            return fileInfo;
-        }
-    }
+		@Override
+		public FileInfo delete(FileInfo fileInfo) {
+			try {
+				upyun.deleteFile(fileInfo.getUrl());
+			} catch (Exception e) {
+				LogUtil.error("[UpYun]文件删除失败:", e);
+				throw new FileUploadException("[UpYun]文件删除失败");
+			}
+			return fileInfo;
+		}
+	}
 }

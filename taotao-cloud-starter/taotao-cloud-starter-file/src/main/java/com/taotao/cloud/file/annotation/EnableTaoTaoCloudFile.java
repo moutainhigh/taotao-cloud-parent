@@ -15,7 +15,9 @@
  */
 package com.taotao.cloud.file.annotation;
 
+import com.taotao.cloud.file.base.FileUpload;
 import com.taotao.cloud.file.component.TaotaoCloudImportSelector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 
@@ -33,8 +35,8 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({TaotaoCloudImportSelector.class})
 @ConditionalOnProperty(name = "taotao.cloud.file.enabled", havingValue = "true")
+@Import({TaotaoCloudImportSelector.class})
 public @interface EnableTaoTaoCloudFile {
 
 }

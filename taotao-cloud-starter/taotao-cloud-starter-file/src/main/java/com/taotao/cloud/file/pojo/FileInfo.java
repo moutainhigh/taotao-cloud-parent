@@ -2,60 +2,53 @@ package com.taotao.cloud.file.pojo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * @classname: FileInfo
- * @author: zhaojiacan
- * @description: file实体类
- * @date: 2020/6/2 16:40
- * @version:1.0
+ * file实体类
+ *
+ * @author dengtao
+ * @date 2020/11/12 15:54
+ * @since v1.0
  */
 @Data
 public class FileInfo {
 
-    /**
-     * 文件标识id
-     */
-    private String id;
+	/**
+	 * 原始文件名
+	 */
+	private String originalFileName;
 
-    /**
-     * 原始文件名
-     */
-    private String name;
+	/**
+	 * 编码之后文件名称
+	 */
+	private String name;
 
-    /**
-     * 是否图片
-     */
-    private Boolean isImg;
+	/**
+	 * 文件md5
+	 */
+	private String fileMd5;
 
-    /**
-     * 上传文件类型
-     */
-    private String contentType;
+	/**
+	 * 是否图片
+	 */
+	private Boolean isImg;
 
-    /**
-     * 上传文件具体类型
-     */
-    private String fileType;
+	/**
+	 * contentType
+	 */
+	private String contentType;
 
-    /**
-     * 文件大小
-     */
-    private long size;
+	/**
+	 * 上传文件类型
+	 */
+	private String fileType;
 
-    /**
-     * oss访问路径
-     */
-    private String url;
+	/**
+	 * 文件大小
+	 */
+	private long size;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
+	/**
+	 * 访问路径
+	 */
+	private String url;
 }

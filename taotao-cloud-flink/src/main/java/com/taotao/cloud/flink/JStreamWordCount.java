@@ -46,12 +46,7 @@ public class JStreamWordCount {
 			}
 		});
 
-		DataStream<Tuple2<String, Integer>> dst = dso.map(new MapFunction<String, Tuple2<String, Integer>>() {
-			@Override
-			public Tuple2<String, Integer> map(String value) throws Exception {
-				return Tuple2.of(value, 1);
-			}
-		});
+		DataStream<Tuple2<String, Integer>> dst = dso.map((MapFunction<String, Tuple2<String, Integer>>) value -> Tuple2.of(value, 1));
 
 		KeyedStream<Tuple2<String, Integer>, String> kst = dst.keyBy(new KeySelector<Tuple2<String, Integer>, String>() {
 			@Override

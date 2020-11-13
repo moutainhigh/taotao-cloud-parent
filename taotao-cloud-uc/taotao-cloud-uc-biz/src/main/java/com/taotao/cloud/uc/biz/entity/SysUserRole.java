@@ -20,7 +20,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_sys_user_role")
-@org.hibernate.annotations.Table(appliesTo = "sys_user_role", comment = "用户-角色第三方表")
+@org.hibernate.annotations.Table(appliesTo = "tt_sys_user_role", comment = "用户-角色第三方表")
 public class SysUserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

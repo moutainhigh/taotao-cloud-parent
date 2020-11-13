@@ -26,9 +26,9 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_sys_dict_item")
-@org.hibernate.annotations.Table(appliesTo = "sys_dict_item", comment = "字典项表")
-@SQLDelete(sql = "update sys_dict_item set del_flag = 1 where id = ?")
-@Where(clause = "del_flag = 1")
+@org.hibernate.annotations.Table(appliesTo = "tt_sys_dict_item", comment = "字典项表")
+// @SQLDelete(sql = "update sys_dict_item set del_flag = 1 where id = ?")
+// @Where(clause = "del_flag = 1")
 public class SysDictItem extends BaseEntity {
 
     /**

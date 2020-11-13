@@ -40,7 +40,6 @@ public class SentinelAutoConfigure {
     @Bean
     @ConditionalOnClass(HttpServletRequest.class)
     public BlockExceptionHandler blockExceptionHandler() {
-        LogUtil.info("-------------");
         return (request, response, e) -> {
             LogUtil.error("WebmvcHandler Sentinel调用失败: {0}", e);
             Result<String> result = Result.failed(e.getMessage());

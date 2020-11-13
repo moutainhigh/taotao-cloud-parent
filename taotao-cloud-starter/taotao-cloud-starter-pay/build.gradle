@@ -6,5 +6,4 @@ bootJar.enabled = false
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
-
 }

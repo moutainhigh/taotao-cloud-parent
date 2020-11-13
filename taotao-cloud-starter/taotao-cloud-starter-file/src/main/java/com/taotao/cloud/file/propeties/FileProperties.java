@@ -1,7 +1,9 @@
 package com.taotao.cloud.file.propeties;
 
-import com.taotao.cloud.file.canstants.FileCanstant;
+import com.taotao.cloud.file.constant.FileConstant;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
@@ -16,15 +18,14 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @RefreshScope
 @ConfigurationProperties(prefix = "taotao.cloud.file")
 public class FileProperties {
+	/**
+	 * 是否开启
+	 */
+	private Boolean enabled = false;
 
-    /**
-     * 是否开启
-     */
-    private final Boolean enabled = false;
-
-    /**
-     * 类型
-     */
-    private final String type = FileCanstant.DFS_ALIYUN;
+	/**
+	 * 类型
+	 */
+	private String type = FileConstant.DFS_ALIYUN;
 
 }

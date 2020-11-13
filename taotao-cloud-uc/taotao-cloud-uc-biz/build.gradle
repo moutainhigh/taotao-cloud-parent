@@ -35,6 +35,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-test'
 
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
+
     implementation "org.mapstruct:mapstruct"
 
     annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"

@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_sys_dict")
-@org.hibernate.annotations.Table(appliesTo = "sys_dict", comment = "字典表")
+@org.hibernate.annotations.Table(appliesTo = "tt_sys_dict", comment = "字典表")
 public class SysDict extends BaseEntity {
 
     /**

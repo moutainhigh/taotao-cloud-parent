@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_sys_resource")
-@org.hibernate.annotations.Table(appliesTo = "sys_resource", comment = "资源表")
+@org.hibernate.annotations.Table(appliesTo = "tt_sys_resource", comment = "资源表")
 public class SysResource extends BaseEntity {
 
 	/**

@@ -15,8 +15,7 @@
  */
 package com.taotao.cloud.file.configuration;
 
-import com.taotao.cloud.file.canstants.FileCanstant;
-import com.taotao.cloud.file.propeties.NginxProperties;
+import com.taotao.cloud.file.constant.FileConstant;
 import com.taotao.cloud.file.propeties.QCloudProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.util.Assert;
@@ -26,15 +25,17 @@ import org.springframework.util.Assert;
  * @date 2020/10/26 10:28
  * @since v1.0
  */
-@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileCanstant.DFS_QCLOUD)
+@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileConstant.DFS_QCLOUD)
 public class QCloudAutoConfiguration {
 
-    private final QCloudProperties properties;
+	private final QCloudProperties properties;
 
-    public QCloudAutoConfiguration(QCloudProperties properties) {
-        super();
-        Assert.notNull(properties, "QCloudProperties为null");
-        this.properties = properties;
-    }
+	public QCloudAutoConfiguration(QCloudProperties properties) {
+		super();
+		Assert.notNull(properties, "QCloudProperties为null");
+		this.properties = properties;
+	}
+
+
 
 }

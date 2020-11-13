@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_sys_user")
-@org.hibernate.annotations.Table(appliesTo = "sys_user", comment = "后台管理用户表")
+@org.hibernate.annotations.Table(appliesTo = "tt_sys_user", comment = "后台管理用户表")
 public class SysUser extends BaseEntity {
 
     /**

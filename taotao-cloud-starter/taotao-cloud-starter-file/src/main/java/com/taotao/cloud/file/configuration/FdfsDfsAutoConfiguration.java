@@ -15,12 +15,13 @@
  */
 package com.taotao.cloud.file.configuration;
 
+import com.aliyun.oss.OSS;
 import com.luhuiguo.fastdfs.conn.*;
 import com.luhuiguo.fastdfs.domain.StorePath;
 import com.luhuiguo.fastdfs.service.*;
 import com.taotao.cloud.common.utils.LogUtil;
-import com.taotao.cloud.file.canstants.FileCanstant;
-import com.taotao.cloud.file.component.AbstractFileUpload;
+import com.taotao.cloud.file.base.AbstractFileUpload;
+import com.taotao.cloud.file.constant.FileConstant;
 import com.taotao.cloud.file.exception.FileUploadException;
 import com.taotao.cloud.file.pojo.FileInfo;
 import com.taotao.cloud.file.propeties.FastdfsProperties;
@@ -39,107 +40,111 @@ import java.io.File;
  * @date 2020/10/26 10:28
  * @since v1.0
  */
-@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileCanstant.DFS_FASTDFS)
+@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileConstant.DFS_FASTDFS)
 public class FdfsDfsAutoConfiguration {
-    private final FastdfsProperties properties;
+	private final FastdfsProperties properties;
 
-    public FdfsDfsAutoConfiguration(FastdfsProperties properties) {
-        super();
-        Assert.notNull(properties, "FastdfsProperties为null");
-        this.properties = properties;
-    }
+	public FdfsDfsAutoConfiguration(FastdfsProperties properties) {
+		super();
+		Assert.notNull(properties, "FastdfsProperties为null");
+		this.properties = properties;
+	}
 
-    @Bean
-    public PooledConnectionFactory pooledConnectionFactory() {
-        PooledConnectionFactory pooledConnectionFactory = new PooledConnectionFactory();
-        pooledConnectionFactory.setSoTimeout(properties.getSoTimeout());
-        pooledConnectionFactory.setConnectTimeout(properties.getConnectTimeout());
-        return pooledConnectionFactory;
-    }
+	@Bean
+	public PooledConnectionFactory pooledConnectionFactory() {
+		PooledConnectionFactory pooledConnectionFactory = new PooledConnectionFactory();
+		pooledConnectionFactory.setSoTimeout(properties.getSoTimeout());
+		pooledConnectionFactory.setConnectTimeout(properties.getConnectTimeout());
+		return pooledConnectionFactory;
+	}
 
 
-    @Bean
-    @ConfigurationProperties(prefix = "taotao.cloud.file.fastdfs.pool")
-    public ConnectionPoolConfig connectionPoolConfig() {
-        return new ConnectionPoolConfig();
-    }
+	@Bean
+	@ConfigurationProperties(prefix = "taotao.cloud.file.fastdfs.pool")
+	public ConnectionPoolConfig connectionPoolConfig() {
+		return new ConnectionPoolConfig();
+	}
 
-    @Bean
-    public FdfsConnectionPool fdfsConnectionPool(PooledConnectionFactory pooledConnectionFactory,
-                                                 ConnectionPoolConfig connectionPoolConfig) {
-        return new FdfsConnectionPool(pooledConnectionFactory, connectionPoolConfig);
-    }
+	@Bean
+	public FdfsConnectionPool fdfsConnectionPool(PooledConnectionFactory pooledConnectionFactory,
+												 ConnectionPoolConfig connectionPoolConfig) {
+		return new FdfsConnectionPool(pooledConnectionFactory, connectionPoolConfig);
+	}
 
-    @Bean
-    public TrackerConnectionManager trackerConnectionManager(FdfsConnectionPool fdfsConnectionPool) {
-        return new TrackerConnectionManager(fdfsConnectionPool, properties.getTrackerList());
-    }
+	@Bean
+	public TrackerConnectionManager trackerConnectionManager(FdfsConnectionPool fdfsConnectionPool) {
+		return new TrackerConnectionManager(fdfsConnectionPool, properties.getTrackerList());
+	}
 
-    @Bean
-    public TrackerClient trackerClient(TrackerConnectionManager trackerConnectionManager) {
-        return new DefaultTrackerClient(trackerConnectionManager);
-    }
+	@Bean
+	public TrackerClient trackerClient(TrackerConnectionManager trackerConnectionManager) {
+		return new DefaultTrackerClient(trackerConnectionManager);
+	}
 
-    @Bean
-    public ConnectionManager connectionManager(FdfsConnectionPool fdfsConnectionPool) {
-        return new ConnectionManager(fdfsConnectionPool);
-    }
+	@Bean
+	public ConnectionManager connectionManager(FdfsConnectionPool fdfsConnectionPool) {
+		return new ConnectionManager(fdfsConnectionPool);
+	}
 
-    @Bean
-    public FastFileStorageClient fastFileStorageClient(TrackerClient trackerClient,
-                                                       ConnectionManager connectionManager) {
-        return new DefaultFastFileStorageClient(trackerClient, connectionManager);
-    }
+	@Bean
+	public FastFileStorageClient fastFileStorageClient(TrackerClient trackerClient,
+													   ConnectionManager connectionManager) {
+		return new DefaultFastFileStorageClient(trackerClient, connectionManager);
+	}
 
-    @Bean
-    public AppendFileStorageClient appendFileStorageClient(TrackerClient trackerClient,
-                                                           ConnectionManager connectionManager) {
-        return new DefaultAppendFileStorageClient(trackerClient, connectionManager);
-    }
+	@Bean
+	public AppendFileStorageClient appendFileStorageClient(TrackerClient trackerClient,
+														   ConnectionManager connectionManager) {
+		return new DefaultAppendFileStorageClient(trackerClient, connectionManager);
+	}
 
-    @Service
-    public static class FastDfsFileUpload extends AbstractFileUpload {
+	@Bean
+	public FastDfsFileUpload fileUpload(FastFileStorageClient fastFileStorageClient){
+		return new FastDfsFileUpload(fastFileStorageClient);
+	}
 
-        private final FastFileStorageClient fastFileStorageClient;
+	public static class FastDfsFileUpload extends AbstractFileUpload {
 
-        public FastDfsFileUpload(FastFileStorageClient fastFileStorageClient) {
-            super();
-            this.fastFileStorageClient = fastFileStorageClient;
-        }
+		private final FastFileStorageClient fastFileStorageClient;
 
-        @Override
-        protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo) throws Exception {
-            try {
-                StorePath storePath = fastFileStorageClient.uploadFile(file.getBytes(), fileInfo.getName());
-                fileInfo.setUrl(storePath.getFullPath());
-                return fileInfo;
-            } catch (Exception e) {
-                LogUtil.error("[fastdfs]文件上传失败:", e);
-                throw new FileUploadException("[fastdfs]文件上传失败");
-            }
-        }
+		public FastDfsFileUpload(FastFileStorageClient fastFileStorageClient) {
+			super();
+			this.fastFileStorageClient = fastFileStorageClient;
+		}
 
-        @Override
-        protected FileInfo uploadFile(File file, FileInfo fileInfo) throws Exception {
-            try {
-                StorePath storePath = fastFileStorageClient.uploadFile(FileUtil.getFileByteArray(file), fileInfo.getName());
-                fileInfo.setUrl(storePath.getFullPath());
-                return fileInfo;
-            } catch (Exception e) {
-                LogUtil.error("[fastdfs]文件上传失败:", e);
-                throw new FileUploadException("[fastdfs]文件上传失败");
-            }
-        }
+		@Override
+		protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo) {
+			try {
+				StorePath storePath = fastFileStorageClient.uploadFile(file.getBytes(), fileInfo.getName());
+				fileInfo.setUrl(storePath.getFullPath());
+				return fileInfo;
+			} catch (Exception e) {
+				LogUtil.error("[fastdfs]文件上传失败:", e);
+				throw new FileUploadException("[fastdfs]文件上传失败");
+			}
+		}
 
-        @Override
-        public FileInfo delete(FileInfo fileInfo) {
-            try {
-                fastFileStorageClient.deleteFile(fileInfo.getUrl());
-            } catch (Exception e) {
-                LogUtil.error("[fastdfs]文件删除失败:", e);
-                throw new FileUploadException("[fastdfs]文件删除失败");
-            }
-            return fileInfo;
-        }
-    }
+		@Override
+		protected FileInfo uploadFile(File file, FileInfo fileInfo)  {
+			try {
+				StorePath storePath = fastFileStorageClient.uploadFile(FileUtil.getFileByteArray(file), fileInfo.getName());
+				fileInfo.setUrl(storePath.getFullPath());
+				return fileInfo;
+			} catch (Exception e) {
+				LogUtil.error("[fastdfs]文件上传失败:", e);
+				throw new FileUploadException("[fastdfs]文件上传失败");
+			}
+		}
+
+		@Override
+		public FileInfo delete(FileInfo fileInfo) {
+			try {
+				fastFileStorageClient.deleteFile(fileInfo.getUrl());
+			} catch (Exception e) {
+				LogUtil.error("[fastdfs]文件删除失败:", e);
+				throw new FileUploadException("[fastdfs]文件删除失败");
+			}
+			return fileInfo;
+		}
+	}
 }

@@ -15,8 +15,15 @@
  */
 package com.taotao.cloud.file.component;
 
-import com.taotao.cloud.file.configuration.*;
+import com.taotao.cloud.file.configuration.AliyunOssAutoConfiguration;
+import com.taotao.cloud.file.configuration.FdfsDfsAutoConfiguration;
+import com.taotao.cloud.file.configuration.LocalAutoConfiguration;
+import com.taotao.cloud.file.configuration.NginxAutoConfiguration;
+import com.taotao.cloud.file.configuration.QCloudAutoConfiguration;
+import com.taotao.cloud.file.configuration.QiniuAutoConfiguration;
+import com.taotao.cloud.file.configuration.UpYunAutoConfiguration;
 import org.springframework.context.annotation.ImportSelector;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.type.AnnotationMetadata;
 
 import java.util.function.Predicate;
@@ -27,24 +34,26 @@ import java.util.function.Predicate;
  * @since v1.0
  */
 public class TaotaoCloudImportSelector implements ImportSelector {
-    private static final String[] IMPORTS = {
-            AliyunOssAutoConfiguration.class.getName(),
-            FdfsDfsAutoConfiguration.class.getName(),
-            LocalAutoConfiguration.class.getName(),
-            NginxAutoConfiguration.class.getName(),
-            QiniuAutoConfiguration.class.getName(),
-            QCloudAutoConfiguration.class.getName(),
-            QiniuAutoConfiguration.class.getName(),
-            UpYunAutoConfiguration.class.getName()
-    };
 
-    @Override
-    public String[] selectImports(AnnotationMetadata annotationMetadata) {
-        return IMPORTS;
-    }
+	private static final String[] IMPORTS = {
+		AliyunOssAutoConfiguration.class.getName(),
+		FdfsDfsAutoConfiguration.class.getName(),
+		LocalAutoConfiguration.class.getName(),
+		NginxAutoConfiguration.class.getName(),
+		QiniuAutoConfiguration.class.getName(),
+		QCloudAutoConfiguration.class.getName(),
+		QiniuAutoConfiguration.class.getName(),
+		UpYunAutoConfiguration.class.getName()
+	};
 
-    @Override
-    public Predicate<String> getExclusionFilter() {
-        return null;
-    }
+
+	@Override
+	public String[] selectImports(AnnotationMetadata annotationMetadata) {
+		return IMPORTS;
+	}
+
+	@Override
+	public Predicate<String> getExclusionFilter() {
+		return null;
+	}
 }

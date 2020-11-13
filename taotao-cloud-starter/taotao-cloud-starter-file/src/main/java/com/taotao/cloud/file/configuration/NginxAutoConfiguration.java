@@ -16,13 +16,14 @@
 package com.taotao.cloud.file.configuration;
 
 import com.taotao.cloud.common.utils.LogUtil;
-import com.taotao.cloud.file.canstants.FileCanstant;
-import com.taotao.cloud.file.component.AbstractFileUpload;
+import com.taotao.cloud.file.base.AbstractFileUpload;
+import com.taotao.cloud.file.constant.FileConstant;
 import com.taotao.cloud.file.exception.FileUploadException;
 import com.taotao.cloud.file.pojo.FileInfo;
 import com.taotao.cloud.file.propeties.NginxProperties;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,79 +36,83 @@ import java.io.FileInputStream;
  * @date 2020/10/26 10:28
  * @since v1.0
  */
-@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileCanstant.DFS_NGINX)
+@ConditionalOnProperty(name = "taotao.cloud.file.type", havingValue = FileConstant.DFS_NGINX)
 public class NginxAutoConfiguration {
 
-    private final NginxProperties properties;
+	private final NginxProperties properties;
 
-    public NginxAutoConfiguration(NginxProperties properties) {
-        super();
-        Assert.notNull(properties, "NginxProperties为null");
-        this.properties = properties;
-    }
+	public NginxAutoConfiguration(NginxProperties properties) {
+		super();
+		Assert.notNull(properties, "NginxProperties为null");
+		this.properties = properties;
+	}
 
-    @Service
-    public class NginxUpload extends AbstractFileUpload {
-        @Override
-        protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo) {
-            try {
-                String f = properties.getUploadPath() + "/" + fileInfo.getName();
-                f = f.substring(0, f.lastIndexOf("/"));
-                File localFile = new File(f);
-                try {
-                    if (!localFile.exists() && !localFile.isDirectory()) {
-                        localFile.mkdirs();
-                    }
-                    FileUtils.copyInputStreamToFile(file.getInputStream(), new File(f));
-                    // file.transferTo(new File(config.getNginxUploadPath() + path));
-                } catch (Exception e) {
-                    LogUtil.error("[nginx]文件上传错误:", e);
-                    throw new FileUploadException("[nginx]文件上传错误");
-                }
-                String s = properties.getDownPath() + "/" + fileInfo.getName();
-                fileInfo.setUrl(s);
-                return fileInfo;
-            } catch (Exception e) {
-                LogUtil.error("[nginx]文件上传失败:", e);
-                throw new FileUploadException("[nginx]文件上传失败");
-            }
-        }
+	@Bean
+	public NginxUpload fileUpload(){
+		return new NginxUpload();
+	}
 
-        @Override
-        protected FileInfo uploadFile(File file, FileInfo fileInfo) throws Exception {
-            try {
-                String f = properties.getUploadPath() + "/" + fileInfo.getName();
-                f = f.substring(0, f.lastIndexOf("/"));
-                File localFile = new File(f);
-                try {
-                    if (!localFile.exists() && !localFile.isDirectory()) {
-                        localFile.mkdirs();
-                    }
-                    FileUtils.copyInputStreamToFile(new FileInputStream(file), new File(f));
-                    // file.transferTo(new File(config.getNginxUploadPath() + path));
-                } catch (Exception e) {
-                    LogUtil.error("[nginx]文件上传错误:", e);
-                    throw new FileUploadException("[nginx]文件上传错误");
-                }
-                String s = properties.getDownPath() + "/" + fileInfo.getName();
-                fileInfo.setUrl(s);
-                return fileInfo;
-            } catch (Exception e) {
-                LogUtil.error("[nginx]文件上传失败:", e);
-                throw new FileUploadException("[nginx]文件上传失败");
-            }
-        }
+	public class NginxUpload extends AbstractFileUpload {
+		@Override
+		protected FileInfo uploadFile(MultipartFile file, FileInfo fileInfo) {
+			try {
+				String f = properties.getUploadPath() + "/" + fileInfo.getName();
+				f = f.substring(0, f.lastIndexOf("/"));
+				File localFile = new File(f);
+				try {
+					if (!localFile.exists() && !localFile.isDirectory()) {
+						localFile.mkdirs();
+					}
+					FileUtils.copyInputStreamToFile(file.getInputStream(), new File(f));
+					// file.transferTo(new File(config.getNginxUploadPath() + path));
+				} catch (Exception e) {
+					LogUtil.error("[nginx]文件上传错误:", e);
+					throw new FileUploadException("[nginx]文件上传错误");
+				}
+				String s = properties.getDownPath() + "/" + fileInfo.getName();
+				fileInfo.setUrl(s);
+				return fileInfo;
+			} catch (Exception e) {
+				LogUtil.error("[nginx]文件上传失败:", e);
+				throw new FileUploadException("[nginx]文件上传失败");
+			}
+		}
 
-        @Override
-        public FileInfo delete(FileInfo fileInfo) {
-            try {
-                FileUtils.forceDelete(new File(properties.getUploadPath() + "/" + fileInfo.getName()));
-            } catch (Exception e) {
-                LogUtil.error("[nginx]文件删除失败:", e);
-                throw new FileUploadException("[nginx]文件删除失败");
-            }
-            return fileInfo;
-        }
-    }
+		@Override
+		protected FileInfo uploadFile(File file, FileInfo fileInfo)  {
+			try {
+				String f = properties.getUploadPath() + "/" + fileInfo.getName();
+				f = f.substring(0, f.lastIndexOf("/"));
+				File localFile = new File(f);
+				try {
+					if (!localFile.exists() && !localFile.isDirectory()) {
+						localFile.mkdirs();
+					}
+					FileUtils.copyInputStreamToFile(new FileInputStream(file), new File(f));
+					// file.transferTo(new File(config.getNginxUploadPath() + path));
+				} catch (Exception e) {
+					LogUtil.error("[nginx]文件上传错误:", e);
+					throw new FileUploadException("[nginx]文件上传错误");
+				}
+				String s = properties.getDownPath() + "/" + fileInfo.getName();
+				fileInfo.setUrl(s);
+				return fileInfo;
+			} catch (Exception e) {
+				LogUtil.error("[nginx]文件上传失败:", e);
+				throw new FileUploadException("[nginx]文件上传失败");
+			}
+		}
+
+		@Override
+		public FileInfo delete(FileInfo fileInfo) {
+			try {
+				FileUtils.forceDelete(new File(properties.getUploadPath() + "/" + fileInfo.getName()));
+			} catch (Exception e) {
+				LogUtil.error("[nginx]文件删除失败:", e);
+				throw new FileUploadException("[nginx]文件删除失败");
+			}
+			return fileInfo;
+		}
+	}
 
 }

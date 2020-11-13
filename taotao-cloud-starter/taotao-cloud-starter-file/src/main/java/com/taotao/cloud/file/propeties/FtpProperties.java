@@ -5,11 +5,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * @author Yihy
- * @version V1.0
- * @Package cc.yihy.storage
- * @Description:
- * @date 2017/6/27 15:31
+ * ftpProperties
+ *
+ * @author dengtao
+ * @date 2020/10/26 09:39
+ * @since v1.0
  */
 @Data
 @RefreshScope

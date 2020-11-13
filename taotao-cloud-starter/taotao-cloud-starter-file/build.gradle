@@ -17,9 +17,8 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.13.0'
     implementation 'com.luhuiguo:fastdfs-client:0.4.0'
     implementation 'commons-net:commons-net:3.6'
-    implementation 'com.upyun:java-sdk:3.13'
 
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
-    //annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }

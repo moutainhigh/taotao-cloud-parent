@@ -26,8 +26,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @since v1.0
  */
 @EnableConfigurationProperties({
-        AliyunOssProperties.class,
         FileProperties.class,
+        AliyunOssProperties.class,
         FastdfsProperties.class,
         LocalProperties.class,
         NginxProperties.class,
@@ -36,4 +36,5 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
         FtpProperties.class,
         UpYunProperties.class})
 public class PropertiesAutoConfiguration {
+
 }

@@ -6,6 +6,14 @@ server:
     buffer-size: 2048
     direct-buffers: true
 
+jasypt:
+  encryptor:
+    password: taotao-cloud
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+#    property:
+#      prefix: "ENC@["
+#      suffix: "]"
+
 seata:
   enabled: true
   service:
@@ -68,8 +76,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:p6spy:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
-    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:ENC(RGAhmAvQZI2/69eo8rl5bSwPXjXkMTk8M0QuL5vlVM/epApayMBFzdlLpomy8kDk)}
+    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:ENC(y9HJzgk9hlfH3n3kh/UMI1n+V4E5R3pb2K4JyKT58qBg7CLq1xvGALRi7X1tL21F)}
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     hikari:
       auto-commit: true
@@ -290,14 +298,14 @@ taotao:
         enabled: true
         ignore:
           # 忽略认证的地址
-          http-urls: >
-            /api-docs,
-            /user/info/username,
-            /resource/test/seata,
-            /role/info/userId,
-            /resource/info/codes,
-            /member/info/security,
-            /user
+          http-urls:
+            - /api-docs
+            - /user/info/username
+            - /resource/test/seata
+            - /role/info/userId
+            - /resource/info/codes
+            - /member/info/security
+            - /user
     swagger:
       enabled: true
       title: 用户中心

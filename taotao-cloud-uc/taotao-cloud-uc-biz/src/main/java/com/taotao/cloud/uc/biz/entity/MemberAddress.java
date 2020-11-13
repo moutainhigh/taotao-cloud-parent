@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_uc_member_address")
-@org.hibernate.annotations.Table(appliesTo = "uc_member_address", comment = "会员收货地址")
+@org.hibernate.annotations.Table(appliesTo = "tt_uc_member_address", comment = "会员收货地址")
 public class MemberAddress extends BaseEntity {
 
     /**

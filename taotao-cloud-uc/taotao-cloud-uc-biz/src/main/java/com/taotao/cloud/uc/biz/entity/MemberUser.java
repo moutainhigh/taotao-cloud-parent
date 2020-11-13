@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_uc_member_user")
-@org.hibernate.annotations.Table(appliesTo = "uc_member_user", comment = "会员(c端用户)表")
+@org.hibernate.annotations.Table(appliesTo = "tt_uc_member_user", comment = "会员(c端用户)表")
 public class MemberUser extends BaseEntity {
 
     /**

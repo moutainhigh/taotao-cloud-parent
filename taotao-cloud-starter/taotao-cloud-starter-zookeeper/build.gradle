@@ -6,7 +6,6 @@ bootJar.enabled = false
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
 
-
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

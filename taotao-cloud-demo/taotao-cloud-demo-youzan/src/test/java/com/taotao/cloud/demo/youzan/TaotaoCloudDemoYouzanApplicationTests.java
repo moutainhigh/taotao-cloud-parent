@@ -6,12 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TaotaoCloudDemoYouzanApplicationTests {
 
-    @Autowired
-    private YouzanTest youzanTest;
-
-    @Test
-    void contextLoads() throws SDKException {
-        youzanTest.getYouZanUserInfo();;
-    }
+    // @Autowired
+    // private YouzanTest youzanTest;
+	//
+    // @Test
+    // void contextLoads() throws SDKException {
+    //     youzanTest.getYouZanUserInfo();;
+    // }
 
 }

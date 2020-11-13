@@ -11,6 +11,7 @@ import com.taotao.cloud.seata.annotation.EnableTaoTaoCloudSeata;
 import com.taotao.cloud.security.annotation.EnableTaoTaoCloudOauth2ResourceServer;
 import com.taotao.cloud.sentinel.annotation.EnableTaoTaoCloudSentinel;
 import com.taotao.cloud.swagger.annotation.EnableTaoTaoCloudSwagger2;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTaoTaoCloudRedis
 @EnableTaoTaoCloudSeata
 @EnableTaoTaoCloudSentinel
+@EnableEncryptableProperties
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableDiscoveryClient
 @SpringBootApplication

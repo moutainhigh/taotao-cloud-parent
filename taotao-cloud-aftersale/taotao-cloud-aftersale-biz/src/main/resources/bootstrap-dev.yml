@@ -1,10 +1,47 @@
 server:
-  port: 9600
+  port: 9100
   http2:
     enabled: true
   undertow:
     buffer-size: 2048
     direct-buffers: true
+
+jasypt:
+  encryptor:
+    password: taotao-cloud
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+#    property:
+#      prefix: "ENC@["
+#      suffix: "]"
+
+seata:
+  enabled: true
+  service:
+    grouplist:
+      default: 127.0.0.1:8091
+    vgroup-mapping:
+      my_test_tx_group: default
+  application-id: taotao-cloud-aftersale-center
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace: bbeb253d-aaa8-4a75-9d0b-27931232439f
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      namespace: bbeb253d-aaa8-4a75-9d0b-27931232439f
+      username: nacos
+      password: nacos
+      cluster: default
 
 spring:
   main:
@@ -22,11 +59,25 @@ spring:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
         file-extension: yml
+    sentinel:
+      enabled: true
+      eager: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: taotao-cloud-aftersale-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:127.0.0.1}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8717}
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:p6spy:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
-    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+    url: jdbc:p6spy:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-aftersale-center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:ENC(RGAhmAvQZI2/69eo8rl5bSwPXjXkMTk8M0QuL5vlVM/epApayMBFzdlLpomy8kDk)}
+    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:ENC(y9HJzgk9hlfH3n3kh/UMI1n+V4E5R3pb2K4JyKT58qBg7CLq1xvGALRi7X1tL21F)}
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     hikari:
       auto-commit: true
@@ -247,14 +298,14 @@ taotao:
         enabled: true
         ignore:
           # 忽略认证的地址
-          http-urls: >
-            /api-docs,
-            /user/info/username,
-            /resource/test/seata,
-            /role/info/userId,
-            /resource/info/codes,
-            /member/info/security,
-            /user
+          http-urls:
+            - /api-docs
+            - /user/info/username
+            - /resource/test/seata
+            - /role/info/userId
+            - /resource/info/codes
+            - /member/info/security
+            - /user
     swagger:
       enabled: true
       title: 用户中心
@@ -266,7 +317,7 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
-      base-package: com.taotao.cloud.uc.biz.controller
+      base-package: com.taotao.cloud.aftersale.biz.controller
       host: ${spring.cloud.client.ip-address}:${server.port}
     ribbon:
       isolation:
