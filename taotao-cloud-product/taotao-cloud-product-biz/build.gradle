@@ -20,6 +20,8 @@ dependencies {
     implementation project(':taotao-cloud-uc:taotao-cloud-uc-api')
     implementation project(':taotao-cloud-product:taotao-cloud-product-api')
 
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
+
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation('com.alibaba.cloud:spring-cloud-alibaba-seata:2.2.0.RELEASE') {

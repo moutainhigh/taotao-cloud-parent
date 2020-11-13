@@ -11,6 +11,8 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-log')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-redis')
 
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
+
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix"
     implementation "org.springframework.cloud:spring-cloud-starter-gateway"
 
