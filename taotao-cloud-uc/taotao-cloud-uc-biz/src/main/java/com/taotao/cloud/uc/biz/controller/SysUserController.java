@@ -1,6 +1,6 @@
 package com.taotao.cloud.uc.biz.controller;
 
-import com.taotao.cloud.common.enums.ResultEnum;
+import com.google.common.base.Joiner;
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
@@ -86,6 +86,7 @@ public class SysUserController {
 	@GetMapping("/exists/phone")
 	public Result<Boolean> existsByPhone(@NotBlank(message = "手机号码不能为空")
 										 @RequestParam(value = "phone") String phone) {
+		Joiner
 		Boolean result = sysUserService.existsByPhone(phone);
 		return Result.succeed(result);
 	}

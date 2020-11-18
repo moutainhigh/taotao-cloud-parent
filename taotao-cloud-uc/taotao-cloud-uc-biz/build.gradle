@@ -21,6 +21,7 @@ dependencies {
     implementation project(':taotao-cloud-order:taotao-cloud-order-api')
     implementation project(':taotao-cloud-product:taotao-cloud-product-api')
 
+    // alibaba
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation('com.alibaba.cloud:spring-cloud-alibaba-seata:2.2.0.RELEASE') {
@@ -28,25 +29,33 @@ dependencies {
     }
     implementation 'io.seata:seata-spring-boot-starter:1.3.0'
 
+    // QueryDSL
+    annotationProcessor 'com.querydsl:querydsl-apt:4.3.1:jpa'
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // mapstruct
+    implementation "org.mapstruct:mapstruct"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
+
+    // jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
+
+    // spring boot
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
-    implementation 'org.springframework.boot:spring-boot-starter-test'
-
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
-
-    implementation "org.mapstruct:mapstruct"
-
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
-    annotationProcessor 'com.querydsl:querydsl-apt:4.3.1:jpa'
-    annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    implementation 'org.springframework.cloud:spring-cloud-context'
-    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    runtime 'org.springframework.boot:spring-boot-starter-undertow'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // spring cloud
+    implementation 'org.springframework.cloud:spring-cloud-context'
+    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 
 //    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 //    runtime 'io.micrometer:micrometer-registry-prometheus'
@@ -57,13 +66,6 @@ dependencies {
 //    }
 //    implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')
 //    implementation project(':taotao-cloud-starter:taotao-cloud-starter-elk')
-
-
-//    关键地方(开启annotationProcessor)
-//    annotationProcessor('com.querydsl:querydsl-apt:4.4.0:jpa',
-//            'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final',
-//            'javax.annotation:javax.annotation-api:1.3.2',
-//            'org.projectlombok:lombok')
 }
 
 shadowJar {

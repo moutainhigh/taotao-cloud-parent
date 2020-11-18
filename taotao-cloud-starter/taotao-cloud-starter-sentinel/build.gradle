@@ -7,9 +7,11 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-core')
 
-    compile "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
-    implementation "com.alibaba.csp:sentinel-datasource-nacos"
+    compile ('com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'){
+        exclude group: 'com.fasterxml.jackson.dataformat', module: 'jackson-dataformat-xml'
+    }
 
+    implementation "com.alibaba.csp:sentinel-datasource-nacos"
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework:spring-web'
     implementation 'org.springframework:spring-webflux'

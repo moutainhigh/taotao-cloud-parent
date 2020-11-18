@@ -15,11 +15,14 @@
  */
 package com.taotao.cloud.manager.resolver;
 
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.manager.entity.Article;
 import com.taotao.cloud.manager.entity.User;
+import com.taotao.cloud.order.api.feign.RemoteOrderService;
+import com.taotao.cloud.product.api.feign.RemoteProductService;
+import com.taotao.cloud.uc.api.feign.RemoteUserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -35,14 +38,16 @@ import java.util.List;
 @Component
 public class QueryResolver implements GraphQLQueryResolver {
 
-	private static final Logger logger = LogManager.getLogger(QueryResolver.class);
-
-	// @Resource
-	// private UserService userService;
+	@Autowired
+	private RemoteUserService remoteUserService;
+	@Autowired
+	private RemoteProductService remoteProductService;
+	@Autowired
+	private RemoteOrderService remoteOrderService;
 
 	public User user(String nickname) {
-		logger.info("Query Resolver ==> user");
-		logger.info("params: nickname:{}", nickname);
+		LogUtil.info("Query Resolver ==> user");
+		LogUtil.info("params: nickname:{}", nickname);
 		User user = new User();
 		user.setId("1");
 		user.setNickname("addUserByInput");
@@ -51,7 +56,7 @@ public class QueryResolver implements GraphQLQueryResolver {
 	}
 
 	public List<User> users() {
-		logger.info("Query Resolver ==> users");
+		LogUtil.info("Query Resolver ==> users");
 		User user = new User();
 		user.setId("1");
 		user.setNickname("users");

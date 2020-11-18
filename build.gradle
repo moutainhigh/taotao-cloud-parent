@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.3.3.RELEASE'
-        springCloudVersion = 'Hoxton.SR8'
+        springBootVersion = '2.3.5.RELEASE'
+        springCloudVersion = 'Hoxton.SR9'
         springCloudAlibabaVersion = '2.2.1.RELEASE'
 
         swaggerVersion = '2.9.2'
@@ -10,17 +10,20 @@ buildscript {
         swaggerButlerVersion = '2.0.1'
         swaggerModelsVersion = '1.5.21'
         swaggerBootstrapUiVersion = '1.9.6'
-        knife4jVersion = '2.0.2'
+
+        commonsIoVersion = '2.6'
+        commonsCollectionsVersion = '3.2.2'
+        commonsCollections4Version = '4.4'
+
         mysqlVersion = '8.0.20'
         mybatisPlusStarterVersion = '3.4.0'
+
+        knife4jVersion = '2.0.2'
         lombokVersion = '1.18.12'
         hutoolVersion = '5.1.4'
         servletApiVersion = '4.0.1'
         easyCaptchaVersion = '1.6.2'
         transmittableVersion = '2.11.4'
-        commonsIoVersion = '2.6'
-        commonsCollectionsVersion = '3.2.2'
-        commonsCollections4Version = '4.4'
         qiniuJavaSdkVersion = '7.2.28'
         fastdfsClientVersion = '1.26.7'
         aliyunSdkOssVersion = '3.8.1'
@@ -83,34 +86,37 @@ allprojects {
         }
 
         dependencies {
-            dependency "commons-collections:commons-collections:${commonsCollectionsVersion}"
             dependency "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+
+            dependency "commons-collections:commons-collections:${commonsCollectionsVersion}"
             dependency "commons-io:commons-io:${commonsIoVersion}"
             dependency "commons-lang:commons-lang:${commonsIoVersion}"
 
-            dependency "org.projectlombok:lombok:${lombokVersion}"
-            dependency "mysql:mysql-connector-java:${mysqlVersion}"
-            dependency "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
-
-            dependency "cn.hutool:hutool-all:${hutoolVersion}"
+            dependency "com.google.code.gson:gson:2.8.5"
+            dependency "com.google.guava:guava:29.0-jre"
 
             dependency "io.springfox:springfox-swagger2:${swaggerVersion}"
             dependency "io.springfox:springfox-bean-validators:${swaggerVersion}"
             dependency "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-            dependency "com.github.xiaoymin:swagger-bootstrap-ui:${swaggerBootstrapUiVersion}"
             dependency "com.zyplayer:swagger-mg-ui:${swaggerMgUiVersion}"
             dependency "io.swagger:swagger-models:${swaggerModelsVersion}"
             dependency "com.github.xiaoymin:knife4j-spring-ui:${knife4jVersion}"
+            dependency "com.github.xiaoymin:swagger-bootstrap-ui:${swaggerBootstrapUiVersion}"
+
+            dependency "mysql:mysql-connector-java:${mysqlVersion}"
             dependency "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusStarterVersion}"
             dependency "com.baomidou:mybatis-plus-extension:${mybatisPlusStarterVersion}"
-            dependency "javax.servlet:javax.servlet-api:${servletApiVersion}"
-            dependency "com.alibaba:transmittable-thread-local:${transmittableVersion}"
-            dependency "com.google.code.gson:gson:2.8.5"
-            dependency "com.google.guava:guava:29.0-jre"
+
             dependency "com.qiniu:qiniu-java-sdk:${qiniuJavaSdkVersion}"
             dependency "com.aliyun.oss:aliyun-sdk-oss:${aliyunSdkOssVersion}"
             dependency "com.github.tobato:fastdfs-client:${fastdfsClientVersion}"
             dependency "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+
+            dependency "org.projectlombok:lombok:${lombokVersion}"
+            dependency "cn.hutool:hutool-all:${hutoolVersion}"
+            dependency "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
+            dependency "javax.servlet:javax.servlet-api:${servletApiVersion}"
+            dependency "com.alibaba:transmittable-thread-local:${transmittableVersion}"
 
             dependency "org.javassist:javassist:${javassistVersion}"
             dependency "com.github.qcloudsms:qcloudsms:${qcloudsmsVersion}"

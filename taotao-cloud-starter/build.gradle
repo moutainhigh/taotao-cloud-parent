@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-starter'
 
 jar.enabled = false
 bootJar.enabled = false
-description("starter模块")
 
 dependencies {
 
