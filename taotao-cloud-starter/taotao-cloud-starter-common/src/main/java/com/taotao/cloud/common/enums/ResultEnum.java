@@ -190,7 +190,11 @@ public enum ResultEnum implements BaseEnum {
 	/**
 	 * 支付信息不存在
 	 */
-	PAY_FLOW_NOT_EXIST(500033, "支付信息不存在");
+	PAY_FLOW_NOT_EXIST(500033, "支付信息不存在"),
+	/**
+	 * 会员用户信息不存在
+	 */
+	MEMBER_NOT_EXIST(500034, "会员用户信息不存在");
 
 	/**
 	 * 返回码

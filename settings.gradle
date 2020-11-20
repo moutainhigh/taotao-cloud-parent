@@ -119,6 +119,11 @@ include 'taotao-cloud-dfs'
 include 'taotao-cloud-dfs:taotao-cloud-dfs-api'
 include 'taotao-cloud-dfs:taotao-cloud-dfs-biz'
 
+/* 会员模块 */
+include 'taotao-cloud-member'
+include 'taotao-cloud-member:taotao-cloud-member-api'
+include 'taotao-cloud-member:taotao-cloud-member-biz'
+
 //*************************************大数据模块************************************
 
 /* hadoop模块 */
