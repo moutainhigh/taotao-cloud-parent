@@ -58,4 +58,14 @@ public interface ServiceNameConstant {
 	 * 客服服务
 	 */
 	String TAOTAO_CLOUD_CUSTOMER_CENTER = "taotao-cloud-customer-center";
+
+	/**
+	 * 物流服务
+	 */
+	String TAOTAO_CLOUD_LOGISTICS_CENTER = "taotao-cloud-logistics-center";
+
+	/**
+	 * 邮件服务
+	 */
+	String TAOTAO_CLOUD_MAIL_CENTER = "taotao-cloud-mail-center";
 }

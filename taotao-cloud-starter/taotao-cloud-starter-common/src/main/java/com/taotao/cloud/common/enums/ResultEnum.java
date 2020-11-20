@@ -23,207 +23,219 @@ package com.taotao.cloud.common.enums;
  * @since v1.0
  */
 public enum ResultEnum implements BaseEnum {
-    /**
-     * 请求成功
-     */
-    SUCCESS(200, "请求成功"),
-    /**
-     * 登录成功
-     */
-    LOGIN_SUCCESS(200, "登录成功"),
-    /**
-     * 退出成功
-     */
-    LOGOUT_SUCCESS(200, "退出成功"),
-    /**
-     * 请求错误
-     */
-    BAD_REQUEST(400, "请求错误"),
-    /**
-     * 尚未登录 认证失败
-     */
-    UNAUTHORIZED(401, "用户未认证"),
-    /**
-     * 权限不足
-     */
-    FORBIDDEN(403, "权限不足"),
-    /**
-     * 请求不存在
-     */
-    REQUEST_NOT_FOUND(404, "请求不存在"),
-    /**
-     * 系统错误
-     */
-    ERROR(500, "系统错误"),
-    /**
-     * 用户名或密码错误
-     */
-    USERNAME_OR_PASSWORD_ERROR(500000, "用户名或密码错误"),
-    /**
-     * 用户不存在
-     */
-    USER_NOT_EXIST(500001, "用户不存在"),
-    /**
-     * 用户已被禁用
-     */
-    USER_DISABLE(500002, "账号已被禁用"),
-    /**
-     * 账号已删除
-     */
-    USER_DELETED(500003, "账号已删除"),
-    /**
-     * 验证码错误
-     */
-    VERIFY_CODE_ERROR(500004, "验证码错误"),
-    /**
-     * 验证码异常
-     */
-    CODE_ERROR(500007, "验证码异常"),
-    /**
-     * 获取验证码的值失败
-     */
-    CODE_GET_ERROR(500008, "获取验证码的值失败"),
-    /**
-     * 验证码的值不能为空
-     */
-    CODE_VALUE_NOT_NULL(500009, "验证码的值不能为空"),
-    /**
-     * 验证码不存在
-     */
-    CODE_NOT_FOUND(500010, "验证码不存在"),
-    /**
-     * 验证码已过期
-     */
-    CODE_IS_EXPIRED(500011, "验证码已过期"),
-    /**
-     * 验证码不匹配
-     */
-    CODE_NOT_MATCH(500012, "验证码不匹配"),
-    /**
-     * 验证码发送异常
-     */
-    CODE_SEND_ERROR(500013, "验证码发送错误"),
-    /**
-     * 参数认证错误
-     */
-    ILLEGAL_ARGUMENT_ERROR(500014, "参数认证错误"),
-    /**
-     * 参数校验错误
-     */
-    VERIFY_ARGUMENT_ERROR(500015, "参数校验错误"),
-    /**
-     * 消息发送错误
-     */
-    MESSAGE_SEND_ERROR(500015, "消息发送错误"),
-    /**
-     * 不支持当前请求方法
-     */
-    METHOD_NOT_SUPPORTED_ERROR(500016, "不支持当前请求方法"),
-    /**
-     * 不支持当前媒体类型
-     */
-    MEDIA_TYPE_NOT_SUPPORTED_ERROR(500017, "不支持当前媒体类型"),
-    /**
-     * sql错误
-     */
-    SQL_ERROR(500018, "sql错误"),
-    /**
-     * 字典code已存在
-     */
-    DICT_CODE_REPEAT_ERROR(500019, "字典code已存在"),
-    /**
-     * 用户手机已存在
-     */
-    USER_PHONE_EXISTS_ERROR(500020, "用户手机已存在"),
-    /**
-     * 用户手机不一致
-     */
-    USER_PHONE_INCONSISTENT_ERROR(500021, "用户手机不一致"),
-    /**
-     * 字典数据不存在
-     */
-    DICT_NOT_EXIST(500022, "字典数据不存在"),
-    /**
-     * 会员昵称已存在
-     */
-    MEMBER_NICKNAME_EXIST(500023, "昵称已存在"),
-    /**
-     * 会员手机已存在
-     */
-    MEMBER_PHONE_EXIST(500023, "手机已存在"),
-    /**
-     * 用户认证失败
-     */
-    USER_UNAUTHORIZED_ERROR(500024, "用户认证失败"),
-    /**
-     * 角色不存在
-     */
-    ROLE_NOT_EXIST(500025, "角色不存在"),
-    /**
-     * 资源不存在
-     */
-    RESOURCE_NOT_EXIST(500026, "资源不存在"),
-    /**
-     * 商品不存在
-     */
-    PRODUCT_NOT_EXIST(500027, "商品不存在"),
+	/**
+	 * 请求成功
+	 */
+	SUCCESS(200, "请求成功"),
+	/**
+	 * 登录成功
+	 */
+	LOGIN_SUCCESS(200, "登录成功"),
+	/**
+	 * 退出成功
+	 */
+	LOGOUT_SUCCESS(200, "退出成功"),
+	/**
+	 * 请求错误
+	 */
+	BAD_REQUEST(400, "请求错误"),
+	/**
+	 * 尚未登录 认证失败
+	 */
+	UNAUTHORIZED(401, "用户未认证"),
+	/**
+	 * 权限不足
+	 */
+	FORBIDDEN(403, "权限不足"),
+	/**
+	 * 请求不存在
+	 */
+	REQUEST_NOT_FOUND(404, "请求不存在"),
+	/**
+	 * 系统错误
+	 */
+	ERROR(500, "系统错误"),
+	/**
+	 * 用户名或密码错误
+	 */
+	USERNAME_OR_PASSWORD_ERROR(500000, "用户名或密码错误"),
+	/**
+	 * 用户不存在
+	 */
+	USER_NOT_EXIST(500001, "用户不存在"),
+	/**
+	 * 用户已被禁用
+	 */
+	USER_DISABLE(500002, "账号已被禁用"),
+	/**
+	 * 账号已删除
+	 */
+	USER_DELETED(500003, "账号已删除"),
+	/**
+	 * 验证码错误
+	 */
+	VERIFY_CODE_ERROR(500004, "验证码错误"),
+	/**
+	 * 验证码异常
+	 */
+	CODE_ERROR(500007, "验证码异常"),
+	/**
+	 * 获取验证码的值失败
+	 */
+	CODE_GET_ERROR(500008, "获取验证码的值失败"),
+	/**
+	 * 验证码的值不能为空
+	 */
+	CODE_VALUE_NOT_NULL(500009, "验证码的值不能为空"),
+	/**
+	 * 验证码不存在
+	 */
+	CODE_NOT_FOUND(500010, "验证码不存在"),
+	/**
+	 * 验证码已过期
+	 */
+	CODE_IS_EXPIRED(500011, "验证码已过期"),
+	/**
+	 * 验证码不匹配
+	 */
+	CODE_NOT_MATCH(500012, "验证码不匹配"),
+	/**
+	 * 验证码发送异常
+	 */
+	CODE_SEND_ERROR(500013, "验证码发送错误"),
+	/**
+	 * 参数认证错误
+	 */
+	ILLEGAL_ARGUMENT_ERROR(500014, "参数认证错误"),
+	/**
+	 * 参数校验错误
+	 */
+	VERIFY_ARGUMENT_ERROR(500015, "参数校验错误"),
+	/**
+	 * 消息发送错误
+	 */
+	MESSAGE_SEND_ERROR(500015, "消息发送错误"),
+	/**
+	 * 不支持当前请求方法
+	 */
+	METHOD_NOT_SUPPORTED_ERROR(500016, "不支持当前请求方法"),
+	/**
+	 * 不支持当前媒体类型
+	 */
+	MEDIA_TYPE_NOT_SUPPORTED_ERROR(500017, "不支持当前媒体类型"),
+	/**
+	 * sql错误
+	 */
+	SQL_ERROR(500018, "sql错误"),
+	/**
+	 * 字典code已存在
+	 */
+	DICT_CODE_REPEAT_ERROR(500019, "字典code已存在"),
+	/**
+	 * 用户手机已存在
+	 */
+	USER_PHONE_EXISTS_ERROR(500020, "用户手机已存在"),
+	/**
+	 * 用户手机不一致
+	 */
+	USER_PHONE_INCONSISTENT_ERROR(500021, "用户手机不一致"),
+	/**
+	 * 字典数据不存在
+	 */
+	DICT_NOT_EXIST(500022, "字典数据不存在"),
+	/**
+	 * 会员昵称已存在
+	 */
+	MEMBER_NICKNAME_EXIST(500023, "昵称已存在"),
+	/**
+	 * 会员手机已存在
+	 */
+	MEMBER_PHONE_EXIST(500023, "手机已存在"),
+	/**
+	 * 用户认证失败
+	 */
+	USER_UNAUTHORIZED_ERROR(500024, "用户认证失败"),
+	/**
+	 * 角色不存在
+	 */
+	ROLE_NOT_EXIST(500025, "角色不存在"),
+	/**
+	 * 资源不存在
+	 */
+	RESOURCE_NOT_EXIST(500026, "资源不存在"),
+	/**
+	 * 商品不存在
+	 */
+	PRODUCT_NOT_EXIST(500027, "商品不存在"),
 	/**
 	 * 资源名称已存在
 	 */
-	RESOURCE_NAME_EXISTS_ERROR(500020, "资源名称已存在"),
+	RESOURCE_NAME_EXISTS_ERROR(500028, "资源名称已存在"),
 	/**
 	 * 文件不存在
 	 */
-	FILE_NOT_EXIST(500021, "文件不存在");
+	FILE_NOT_EXIST(500029, "文件不存在"),
+	/**
+	 * 会员登录日志不存在
+	 */
+	MEMBER_LOGIN_NOT_EXIST(500030, "会员登录日志不存在"),
+	/**
+	 * 物流公司不存在
+	 */
+	EXPRESS_COMPANY_NOT_EXIST(500031, "物流公司不存在"),
+	/**
+	 * 邮件信息不存在
+	 */
+	EMIAL_NOT_EXIST(500032, "邮件信息不存在");
 
-    /**
-     * 返回码
-     */
-    private Integer code;
+	/**
+	 * 返回码
+	 */
+	private Integer code;
 
-    /**
-     * 描述
-     */
-    private final String message;
+	/**
+	 * 描述
+	 */
+	private final String message;
 
-    ResultEnum(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+	ResultEnum(Integer code, String message) {
+		this.code = code;
+		this.message = message;
+	}
 
-    /**
-     * 根据返回码得到描述信息
-     *
-     * @param code code
-     * @author dengtao
-     * @date 2020/4/29 15:35
-     */
-    public static String getMessageByCode(int code) {
-        for (ResultEnum result : ResultEnum.values()) {
-            if (result.getCode() == code) {
-                return result.getMessage();
-            }
-        }
-        return null;
-    }
+	/**
+	 * 根据返回码得到描述信息
+	 *
+	 * @param code code
+	 * @author dengtao
+	 * @date 2020/4/29 15:35
+	 */
+	public static String getMessageByCode(int code) {
+		for (ResultEnum result : ResultEnum.values()) {
+			if (result.getCode() == code) {
+				return result.getMessage();
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public String getNameByCode(int code) {
-        for (ResultEnum result : ResultEnum.values()) {
-            if (result.getCode() == code) {
-                return result.name().toLowerCase();
-            }
-        }
-        return null;
-    }
+	@Override
+	public String getNameByCode(int code) {
+		for (ResultEnum result : ResultEnum.values()) {
+			if (result.getCode() == code) {
+				return result.name().toLowerCase();
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public Integer getCode() {
-        return code;
-    }
+	@Override
+	public Integer getCode() {
+		return code;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
 }

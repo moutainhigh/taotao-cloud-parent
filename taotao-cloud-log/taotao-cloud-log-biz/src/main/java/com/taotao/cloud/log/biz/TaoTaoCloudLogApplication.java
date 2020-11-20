@@ -34,8 +34,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class TaoTaoCloudLogApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(TaoTaoCloudLogApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(TaoTaoCloudLogApplication.class, args);
+	}
 
 }
