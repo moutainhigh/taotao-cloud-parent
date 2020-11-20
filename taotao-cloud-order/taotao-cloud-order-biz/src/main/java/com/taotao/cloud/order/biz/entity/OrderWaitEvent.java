@@ -1,11 +1,14 @@
 package com.taotao.cloud.order.biz.entity;
 
 import com.taotao.cloud.data.jpa.entity.BaseEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -23,7 +26,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 //@Entity
-@Table(name = "order_wait_event")
+@Table(name = "tt_order_wait_event")
 @org.hibernate.annotations.Table(appliesTo = "order_wait_event", comment = "订单定时任务处理表")
 public class OrderWaitEvent extends BaseEntity {
 

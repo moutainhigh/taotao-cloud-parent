@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 //@Entity
-@Table(name = "order_refund_pay_seq")
+@Table(name = "tt_order_refund_pay_seq")
 @org.hibernate.annotations.Table(appliesTo = "order_refund_pay_seq", comment = "退款流水表")
 public class OrderRefundPaySeq extends BaseEntity {
 

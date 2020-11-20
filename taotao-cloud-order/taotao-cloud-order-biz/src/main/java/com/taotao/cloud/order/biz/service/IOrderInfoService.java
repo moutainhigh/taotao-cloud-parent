@@ -2,7 +2,7 @@ package com.taotao.cloud.order.biz.service;
 
 
 import com.taotao.cloud.order.api.dto.OrderDTO;
-import com.taotao.cloud.order.biz.entity.OrderInfo;
+import com.taotao.cloud.order.biz.entity.Order;
 
 /**
  * 订单管理service
@@ -12,8 +12,8 @@ import com.taotao.cloud.order.biz.entity.OrderInfo;
  */
 public interface IOrderInfoService {
 
-    OrderInfo findOrderInfoByCode(String code);
+    Order findOrderInfoByCode(String code);
 
-    OrderInfo saveOrder(OrderDTO orderDTO);
+    Order saveOrder(OrderDTO orderDTO);
 }
 

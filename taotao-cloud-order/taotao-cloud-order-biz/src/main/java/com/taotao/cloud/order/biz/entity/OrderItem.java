@@ -25,8 +25,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "order_item")
-@org.hibernate.annotations.Table(appliesTo = "order_item", comment = "订单明细表")
+@Table(name = "tt_order_item")
+@org.hibernate.annotations.Table(appliesTo = "tt_order_item", comment = "订单明细表")
 public class OrderItem extends BaseEntity {
 
     /**

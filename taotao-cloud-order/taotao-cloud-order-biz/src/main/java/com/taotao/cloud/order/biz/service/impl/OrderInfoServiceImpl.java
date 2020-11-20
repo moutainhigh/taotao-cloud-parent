@@ -9,8 +9,7 @@ package com.taotao.cloud.order.biz.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.order.api.dto.OrderDTO;
-import com.taotao.cloud.order.biz.entity.OrderInfo;
-import com.taotao.cloud.order.biz.entity.QOrderInfo;
+import com.taotao.cloud.order.biz.entity.Order;
 import com.taotao.cloud.order.biz.repository.OrderInfoRepository;
 import com.taotao.cloud.order.biz.service.IOrderInfoService;
 import lombok.AllArgsConstructor;
@@ -28,20 +27,20 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class OrderInfoServiceImpl implements IOrderInfoService {
 
-    private final OrderInfoRepository orderInfoRepository;
-    private final static QOrderInfo ORDER_INFO = QOrderInfo.orderInfo;
+	private final OrderInfoRepository orderInfoRepository;
+	private final static QOrderInfo ORDER_INFO = QOrderInfo.orderInfo;
 
-    @Override
-    public OrderInfo findOrderInfoByCode(String code) {
-        BooleanExpression expression = ORDER_INFO.delFlag.eq(false).and(ORDER_INFO.code.eq(code));
-        return orderInfoRepository.fetchOne(expression);
-    }
+	@Override
+	public Order findOrderInfoByCode(String code) {
+		BooleanExpression expression = ORDER_INFO.delFlag.eq(false).and(ORDER_INFO.code.eq(code));
+		return orderInfoRepository.fetchOne(expression);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public OrderInfo saveOrder(OrderDTO orderDTO) {
-        OrderInfo orderInfo = OrderInfo.builder().build();
-        BeanUtil.copyIgnoredNull(orderDTO, orderInfo);
-        return orderInfoRepository.saveAndFlush(orderInfo);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Order saveOrder(OrderDTO orderDTO) {
+		Order order = Order.builder().build();
+		BeanUtil.copyIgnoredNull(orderDTO, order);
+		return orderInfoRepository.saveAndFlush(order);
+	}
 }

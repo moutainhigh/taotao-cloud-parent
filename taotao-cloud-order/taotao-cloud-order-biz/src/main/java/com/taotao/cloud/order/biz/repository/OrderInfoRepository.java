@@ -16,7 +16,7 @@
 package com.taotao.cloud.order.biz.repository;
 
 import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
-import com.taotao.cloud.order.biz.entity.OrderInfo;
+import com.taotao.cloud.order.biz.entity.Order;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,8 +27,8 @@ import javax.persistence.EntityManager;
  * @since v1.0
  */
 @Repository
-public class OrderInfoRepository extends BaseJpaRepository<OrderInfo, Long> {
+public class OrderInfoRepository extends BaseJpaRepository<Order, Long> {
     public OrderInfoRepository(EntityManager em) {
-        super(OrderInfo.class, em);
+        super(Order.class, em);
     }
 }
