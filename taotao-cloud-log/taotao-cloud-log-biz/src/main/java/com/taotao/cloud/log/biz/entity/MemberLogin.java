@@ -30,8 +30,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_log_member_login")
-@org.hibernate.annotations.Table(appliesTo = "tt_log_member_login", comment = "会员登录日志表")
+@Table(name = "tt_member_login")
+@org.hibernate.annotations.Table(appliesTo = "tt_member_login", comment = "会员登录日志表")
 public class MemberLogin extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;

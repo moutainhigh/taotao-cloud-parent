@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@Entity
 @Table(name = "tt_order_refund_request")
-@org.hibernate.annotations.Table(appliesTo = "order_refund_request", comment = "售后申请表")
+@org.hibernate.annotations.Table(appliesTo = "tt_order_refund_request", comment = "售后申请表")
 public class OrderRefundRequest extends BaseEntity {
 
     /**

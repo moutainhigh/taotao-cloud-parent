@@ -2,7 +2,6 @@ package com.taotao.cloud.logistics.biz.entity;
 
 import com.taotao.cloud.data.jpa.entity.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 /**
  * 物流公司表
@@ -30,8 +28,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_logistics_express_company")
-@org.hibernate.annotations.Table(appliesTo = "tt_logistics_express_company", comment = "物流公司表")
+@Table(name = "tt_express_company")
+@org.hibernate.annotations.Table(appliesTo = "tt_express_company", comment = "物流公司表")
 public class ExpressCompany extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;

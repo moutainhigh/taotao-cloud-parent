@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 //@Entity
-@Table(name = "product_moments")
-@org.hibernate.annotations.Table(appliesTo = "product_moments", comment = "商品信息扩展表")
+@Table(name = "tt_product_moments")
+@org.hibernate.annotations.Table(appliesTo = "tt_product_moments", comment = "商品信息扩展表")
 public class ProductMoments extends BaseEntity {
 
     private Long productId;

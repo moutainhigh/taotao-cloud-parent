@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@Entity
 @Table(name = "tt_order_wait_event")
-@org.hibernate.annotations.Table(appliesTo = "order_wait_event", comment = "订单定时任务处理表")
+@org.hibernate.annotations.Table(appliesTo = "tt_order_wait_event", comment = "订单定时任务处理表")
 public class OrderWaitEvent extends BaseEntity {
 
     /**

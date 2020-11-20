@@ -30,8 +30,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_aftersale_withdraw")
-@org.hibernate.annotations.Table(appliesTo = "tt_aftersale_withdraw", comment = "提现申请表")
+@Table(name = "tt_withdraw")
+@org.hibernate.annotations.Table(appliesTo = "tt_withdraw", comment = "提现申请表")
 public class Withdraw extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;

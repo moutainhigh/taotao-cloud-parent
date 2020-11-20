@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_product")
-@org.hibernate.annotations.Table(appliesTo = "product", comment = "商品信息表")
+@org.hibernate.annotations.Table(appliesTo = "tt_product", comment = "商品信息表")
 public class Product extends BaseEntity {
 
     /**

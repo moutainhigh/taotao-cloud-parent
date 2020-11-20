@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "tt_order_overtime")
-@org.hibernate.annotations.Table(appliesTo = "order_overtime", comment = "订单超时信息表")
+@org.hibernate.annotations.Table(appliesTo = "tt_order_overtime", comment = "订单超时信息表")
 public class OrderOvertime extends BaseEntity {
 
     /**

@@ -29,8 +29,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_customer_chatbot")
-@org.hibernate.annotations.Table(appliesTo = "tt_customer_chatbot", comment = "机器人客服表")
+@Table(name = "tt_chatbot")
+@org.hibernate.annotations.Table(appliesTo = "tt_chatbot", comment = "机器人客服表")
 public class Chatbot extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;

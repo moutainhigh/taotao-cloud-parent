@@ -26,8 +26,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_uc_company")
-@org.hibernate.annotations.Table(appliesTo = "tt_uc_company", comment = "公司表")
+@Table(name = "tt_company")
+@org.hibernate.annotations.Table(appliesTo = "tt_company", comment = "公司表")
 public class Company extends BaseEntity {
 
     private static final long serialVersionUID = -8206387430513096669L;

@@ -29,8 +29,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tt_mail_email")
-@org.hibernate.annotations.Table(appliesTo = "tt_mail_email", comment = "邮件信息表")
+@Table(name = "tt_email")
+@org.hibernate.annotations.Table(appliesTo = "tt_email", comment = "邮件信息表")
 public class Email extends BaseEntity {
 
 	private static final long serialVersionUID = 6887296988458221221L;

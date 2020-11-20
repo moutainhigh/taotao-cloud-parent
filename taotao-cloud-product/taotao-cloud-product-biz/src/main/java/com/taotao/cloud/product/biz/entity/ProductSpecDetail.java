@@ -19,8 +19,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 //@Entity
-@Table(name = "product_spec_detail")
-@org.hibernate.annotations.Table(appliesTo = "product_spec_detail", comment = "商品信息扩展表")
+@Table(name = "tt_product_spec_detail")
+@org.hibernate.annotations.Table(appliesTo = "tt_product_spec_detail", comment = "商品信息扩展表")
 public class ProductSpecDetail extends BaseEntity {
 
     private Product product;

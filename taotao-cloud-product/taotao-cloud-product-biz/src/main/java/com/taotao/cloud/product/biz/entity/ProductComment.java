@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 //@Entity
-@Table(name = "product_comment")
-@org.hibernate.annotations.Table(appliesTo = "product_comment", comment = "商品评论表")
+@Table(name = "tt_product_comment")
+@org.hibernate.annotations.Table(appliesTo = "tt_product_comment", comment = "商品评论表")
 public class ProductComment extends BaseEntity {
 
     private String productSpecName;
