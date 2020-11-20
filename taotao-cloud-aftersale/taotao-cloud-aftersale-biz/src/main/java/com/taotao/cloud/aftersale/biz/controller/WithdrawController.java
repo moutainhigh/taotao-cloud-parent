@@ -15,10 +15,19 @@
  */
 package com.taotao.cloud.aftersale.biz.controller;
 
+import com.taotao.cloud.aftersale.api.vo.WithdrawVO;
+import com.taotao.cloud.aftersale.biz.entity.Withdraw;
+import com.taotao.cloud.aftersale.biz.mapper.WithdrawMapper;
 import com.taotao.cloud.aftersale.biz.service.IWithdrawService;
+import com.taotao.cloud.core.model.Result;
+import com.taotao.cloud.log.annotation.SysOperateLog;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +44,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/withdraw")
 @Api(value = "提现申请管理API", tags = {"提现申请管理API"})
 public class WithdrawController {
+
 	private final IWithdrawService withdrawService;
+
+	@ApiOperation("根据id查询提现申请信息")
+	@SysOperateLog(description = "根据id查询提现申请信息")
+	@PreAuthorize("hasAuthority('withdraw:info:id')")
+	@GetMapping("/info/id/{id:[0-9]*}")
+	public Result<WithdrawVO> findWithdrawById(@PathVariable(value = "id") Long id) {
+		Withdraw withdraw = withdrawService.findWithdrawById(id);
+		WithdrawVO vo = WithdrawMapper.INSTANCE.withdrawToWithdrawVO(withdraw);
+		return Result.succeed(vo);
+	}
+
 }

@@ -29,37 +29,54 @@ import java.lang.reflect.Method;
  * @since v1.0
  */
 public class EnumValueValidator implements ConstraintValidator<EnumValue, Integer> {
-    private Class<? extends Enum> enumClass;
-    private static final String METHOD_NAME = "toEnum";
+	private Class<? extends Enum> enumClass;
+	private static final String METHOD_NAME = "toEnum";
 
-    //这个方法做一些初始化校验
-    @Override
-    public void initialize(EnumValue constraintAnnotation) {
-        enumClass = constraintAnnotation.value();
-        try {
-            // 先判断该enum是否实现了toEnum方法
-            enumClass.getDeclaredMethod(METHOD_NAME, int.class);
-        } catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException("the enum class has not toEnum method", e);
-        }
-    }
+	/**
+	 * 初始化校验
+	 *
+	 * @param constraintAnnotation constraintAnnotation
+	 * @return void
+	 * @author dengtao
+	 * @date 2020/11/20 上午9:13
+	 * @since v1.0
+	 */
+	@Override
+	public void initialize(EnumValue constraintAnnotation) {
+		enumClass = constraintAnnotation.value();
+		try {
+			// 先判断该enum是否实现了toEnum方法
+			enumClass.getDeclaredMethod(METHOD_NAME, int.class);
+		} catch (NoSuchMethodException e) {
+			throw new IllegalArgumentException("the enum class has not toEnum method", e);
+		}
+	}
 
 
-    // 这个方法写具体的校验逻辑：校验数字是否属于指定枚举类型的范围
-    @Override
-    public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
-        Method declareMethod;
-        try {
-            declareMethod = enumClass.getDeclaredMethod(METHOD_NAME, int.class);
-        } catch (NoSuchMethodException e) {
-            return false;
-        }
-        try {
-            declareMethod.invoke(null, value);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * 具体的校验逻辑：校验数字是否属于指定枚举类型的范围
+	 *
+	 * @param value                      value
+	 * @param constraintValidatorContext constraintValidatorContext
+	 * @return boolean
+	 * @author dengtao
+	 * @date 2020/11/20 上午9:14
+	 * @since v1.0
+	 */
+	@Override
+	public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
+		Method declareMethod;
+		try {
+			declareMethod = enumClass.getDeclaredMethod(METHOD_NAME, int.class);
+		} catch (NoSuchMethodException e) {
+			return false;
+		}
+		try {
+			declareMethod.invoke(null, value);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 }
 

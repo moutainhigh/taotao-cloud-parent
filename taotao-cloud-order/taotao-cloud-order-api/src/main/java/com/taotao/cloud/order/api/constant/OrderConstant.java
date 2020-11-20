@@ -1,4 +1,4 @@
-package com.taotao.cloud.common.constant;
+package com.taotao.cloud.order.api.constant;
 
 /**
  * <p>

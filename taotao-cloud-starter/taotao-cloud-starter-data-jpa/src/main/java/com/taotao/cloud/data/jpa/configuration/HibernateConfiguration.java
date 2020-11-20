@@ -32,7 +32,10 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hibernate.cfg.AvailableSettings.*;
+import static org.hibernate.cfg.AvailableSettings.DIALECT;
+import static org.hibernate.cfg.AvailableSettings.IMPLICIT_NAMING_STRATEGY;
+import static org.hibernate.cfg.AvailableSettings.JDBC_TIME_ZONE;
+import static org.hibernate.cfg.AvailableSettings.PHYSICAL_NAMING_STRATEGY;
 
 /**
  * Hibernate 自动配置
@@ -43,49 +46,50 @@ import static org.hibernate.cfg.AvailableSettings.*;
  */
 @EnableJpaAuditing
 public class HibernateConfiguration {
-    private final JpaProperties jpaProperties;
 
-    public HibernateConfiguration(@Autowired final JpaProperties jpaProperties) {
-        this.jpaProperties = jpaProperties;
-    }
+	private final JpaProperties jpaProperties;
 
-    @Bean
-    JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setShowSql(true);
-        hibernateJpaVendorAdapter.setGenerateDdl(true); //Auto creating scheme when true
-        hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);//Database type
-        return hibernateJpaVendorAdapter;
-    }
+	public HibernateConfiguration(@Autowired final JpaProperties jpaProperties) {
+		this.jpaProperties = jpaProperties;
+	}
 
-    @Bean
-    @ConditionalOnBean(DataSource.class)
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            final DataSource dataSource,
-            final JpaVendorAdapter jpaVendorAdapter
-            // final MultiTenantConnectionProvider multiTenantConnectionProvider,
-            // final CurrentTenantIdentifierResolver currentTenantIdentifierResolver
-    ) {
-        final Map<String, Object> newJpaProperties = new HashMap<>(jpaProperties.getProperties());
-        // newJpaProperties.put(MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
-        // newJpaProperties.put(
-        //         MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
-        // newJpaProperties.put(
-        //         MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
-        newJpaProperties.put(
-                IMPLICIT_NAMING_STRATEGY, SpringImplicitNamingStrategy.class.getName());
-        newJpaProperties.put(
-                PHYSICAL_NAMING_STRATEGY, SpringPhysicalNamingStrategy.class.getName());
-        newJpaProperties.put(DIALECT, MySQL8Dialect.class.getName());
-        newJpaProperties.put(JDBC_TIME_ZONE, "Asia/Shanghai");
+	@Bean
+	JpaVendorAdapter jpaVendorAdapter() {
+		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+		hibernateJpaVendorAdapter.setShowSql(true);
+		hibernateJpaVendorAdapter.setGenerateDdl(true); //Auto creating scheme when true
+		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);//Database type
+		return hibernateJpaVendorAdapter;
+	}
 
-        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean =
-                new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setJpaPropertyMap(newJpaProperties);
-        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactoryBean.setPackagesToScan("com.taotao.cloud.*.biz.entity", "com.taotao.cloud.*.entity");
-        entityManagerFactoryBean.setPersistenceUnitName("default");
-        return entityManagerFactoryBean;
-    }
+	@Bean
+	@ConditionalOnBean(DataSource.class)
+	LocalContainerEntityManagerFactoryBean entityManagerFactory(
+		final DataSource dataSource,
+		final JpaVendorAdapter jpaVendorAdapter
+		// final MultiTenantConnectionProvider multiTenantConnectionProvider,
+		// final CurrentTenantIdentifierResolver currentTenantIdentifierResolver
+	) {
+		final Map<String, Object> newJpaProperties = new HashMap<>(jpaProperties.getProperties());
+		// newJpaProperties.put(MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
+		// newJpaProperties.put(
+		//         MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
+		// newJpaProperties.put(
+		//         MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
+		newJpaProperties.put(
+			IMPLICIT_NAMING_STRATEGY, SpringImplicitNamingStrategy.class.getName());
+		newJpaProperties.put(
+			PHYSICAL_NAMING_STRATEGY, SpringPhysicalNamingStrategy.class.getName());
+		newJpaProperties.put(DIALECT, MySQL8Dialect.class.getName());
+		newJpaProperties.put(JDBC_TIME_ZONE, "Asia/Shanghai");
+
+		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean =
+			new LocalContainerEntityManagerFactoryBean();
+		entityManagerFactoryBean.setDataSource(dataSource);
+		entityManagerFactoryBean.setJpaPropertyMap(newJpaProperties);
+		entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+		entityManagerFactoryBean.setPackagesToScan("com.taotao.cloud.*.biz.entity", "com.taotao.cloud.*.entity");
+		entityManagerFactoryBean.setPersistenceUnitName("default");
+		return entityManagerFactoryBean;
+	}
 }

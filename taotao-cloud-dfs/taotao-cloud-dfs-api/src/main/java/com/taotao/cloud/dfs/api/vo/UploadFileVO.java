@@ -13,22 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.customer.biz.repository;
+package com.taotao.cloud.dfs.api.vo;
 
-import com.taotao.cloud.customer.biz.entity.Customer;
-import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
-import org.springframework.stereotype.Repository;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 /**
  * @author dengtao
- * @date 2020/11/13 10:01
+ * @date 2020/11/12 17:10
  * @since v1.0
  */
-@Repository
-public class CustomerRepository extends BaseJpaRepository<Customer, Long> {
-	public CustomerRepository(EntityManager em) {
-		super(Customer.class, em);
-	}
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(value = "上传文件VO", description = "上传文件VO")
+public class UploadFileVO implements Serializable {
+	private static final long serialVersionUID = 5126530068827085130L;
+
+	@ApiModelProperty(value = "id")
+	private Long id;
+
+	@ApiModelProperty(value = "文件路径")
+	private String url;
 }

@@ -1,7 +1,7 @@
 package com.taotao.cloud.order.biz.entity;
 
 
-import com.taotao.cloud.common.constant.OrderConstant;
+import com.taotao.cloud.order.api.constant.OrderConstant;
 import com.taotao.cloud.data.jpa.entity.BaseEntity;
 import lombok.*;
 import lombok.experimental.Accessors;

@@ -2,8 +2,10 @@ package com.taotao.cloud.dfs.biz.controller;
 
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.dfs.api.vo.FileVo;
+import com.taotao.cloud.dfs.api.vo.FileVO;
+import com.taotao.cloud.dfs.api.vo.UploadFileVO;
 import com.taotao.cloud.dfs.biz.entity.File;
+import com.taotao.cloud.dfs.biz.mapper.FileMapper;
 import com.taotao.cloud.dfs.biz.service.FileService;
 import com.taotao.cloud.log.annotation.SysOperateLog;
 import io.swagger.annotations.Api;
@@ -12,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -42,12 +46,12 @@ public class FileController {
 	@SysOperateLog(description = "上传单个文件")
 	@PreAuthorize("hasAuthority('file:upload')")
 	@PostMapping(value = "/upload", headers = "content-type=multipart/form-data")
-	public Result<FileVo> upload(@RequestPart("file") MultipartFile file) {
+	public Result<UploadFileVO> upload(@RequestPart("file") MultipartFile file) {
 		if (file.isEmpty()) {
 			throw new BusinessException("文件不能为空");
 		}
 		File upload = fileService.upload(file);
-		FileVo result = FileVo.builder().id(upload.getId()).url(upload.getUrl()).build();
+		UploadFileVO result = UploadFileVO.builder().id(upload.getId()).url(upload.getUrl()).build();
 		return Result.succeed(result);
 	}
 
@@ -55,7 +59,7 @@ public class FileController {
 	@SysOperateLog(description = "上传多个文件")
 	@PreAuthorize("hasAuthority('file:multiple:upload')")
 	@PostMapping(value = "/multiple/upload", headers = "content-type=multipart/form-data")
-	public Result<List<FileVo>> uploadMultipleFiles(@RequestPart("files") MultipartFile[] files) {
+	public Result<List<UploadFileVO>> uploadMultipleFiles(@RequestPart("files") MultipartFile[] files) {
 		if (files.length == 0) {
 			throw new BusinessException("文件不能为空");
 		}
@@ -65,11 +69,21 @@ public class FileController {
 			.collect(Collectors.toList());
 
 		if (!CollectionUtils.isEmpty(uploads)) {
-			List<FileVo> result = uploads.stream().map(upload -> FileVo.builder().id(upload.getId()).url(upload.getUrl()).build()).collect(Collectors.toList());
+			List<UploadFileVO> result = uploads.stream().map(upload -> UploadFileVO.builder().id(upload.getId()).url(upload.getUrl()).build()).collect(Collectors.toList());
 			return Result.succeed(result);
 		}
 
 		throw new BusinessException("文件上传失败");
+	}
+
+	@ApiOperation("根据id查询文件信息")
+	@SysOperateLog(description = "根据id查询文件信息")
+	@PreAuthorize("hasAuthority('file:info:id')")
+	@GetMapping("/info/id/{id:[0-9]*}")
+	public Result<FileVO> findFileById(@PathVariable(value = "id") Long id) {
+		File file = fileService.findFileById(id);
+		FileVO vo = FileMapper.INSTANCE.fileToFileVO(file);
+		return Result.succeed(vo);
 	}
 
 	//

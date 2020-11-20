@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.customer.biz.service.impl;
+package com.taotao.cloud.dfs.biz.repository;
 
-import com.taotao.cloud.customer.biz.repository.CustomerRepository;
-import com.taotao.cloud.customer.biz.service.ICustomerService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
+import com.taotao.cloud.dfs.biz.entity.File;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
 
 /**
  * @author dengtao
- * @date 2020/11/13 10:00
+ * @date 2020/11/13 10:01
  * @since v1.0
  */
-@AllArgsConstructor
-@Service
-public class CustomerServiceImpl implements ICustomerService {
-	private final CustomerRepository customerRepository;
+@Repository
+public class FileRepository extends BaseJpaRepository<File, Long> {
+	public FileRepository(EntityManager em) {
+		super(File.class, em);
+	}
+
 }

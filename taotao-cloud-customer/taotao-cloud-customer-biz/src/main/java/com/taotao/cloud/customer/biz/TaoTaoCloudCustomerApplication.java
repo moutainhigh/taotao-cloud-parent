@@ -17,6 +17,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author dengtao
+ * @date 2020/11/20 上午10:43
+ * @since v1.0
+ */
 @EnableTaoTaoCloudSwagger2
 @EnableTaoTaoCloudOauth2ResourceServer
 @EnableTaoTaoCloudJPA
@@ -34,8 +39,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 public class TaoTaoCloudCustomerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(TaoTaoCloudCustomerApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(TaoTaoCloudCustomerApplication.class, args);
+	}
 
 }

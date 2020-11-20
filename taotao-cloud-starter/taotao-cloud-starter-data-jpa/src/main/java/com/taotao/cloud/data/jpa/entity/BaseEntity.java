@@ -53,6 +53,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", columnDefinition = "bigint not null comment 'id'")
@@ -71,7 +72,7 @@ public class BaseEntity {
 	private LocalDateTime createTime;
 
 	@LastModifiedDate
-	@Column(name = "last_modified_time", nullable = false, columnDefinition = "TIMESTAMP comment '最后修改时间'")
+	@Column(name = "last_modified_time", columnDefinition = "TIMESTAMP comment '最后修改时间'")
 	private LocalDateTime lastModifiedTime;
 
 	@Version

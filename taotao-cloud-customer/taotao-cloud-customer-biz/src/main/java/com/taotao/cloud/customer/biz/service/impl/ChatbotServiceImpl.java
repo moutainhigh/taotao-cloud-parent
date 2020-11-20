@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.customer.biz.controller;
+package com.taotao.cloud.customer.biz.service.impl;
 
-import com.taotao.cloud.customer.biz.service.ICustomerService;
-import io.swagger.annotations.Api;
+import com.taotao.cloud.customer.biz.entity.Chatbot;
+import com.taotao.cloud.customer.biz.repository.ChatbotRepository;
+import com.taotao.cloud.customer.biz.service.IChatbotService;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 /**
- * 客服表管理API
- *
  * @author dengtao
- * @date 2020/11/13 09:58
+ * @date 2020/11/13 10:00
  * @since v1.0
  */
-@Validated
-@RestController
+@Service
 @AllArgsConstructor
-@RequestMapping("/customer")
-@Api(value = "客服表管理API", tags = {"客服表管理API"})
-public class CustomerController {
-	private final ICustomerService customerService;
+public class ChatbotServiceImpl implements IChatbotService {
+
+	private final ChatbotRepository chatbotRepository;
+
+	@Override
+	public Chatbot findChatbotById(Long id) {
+		return chatbotRepository.getOne(id);
+	}
 }

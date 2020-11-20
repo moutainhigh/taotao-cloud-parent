@@ -1,11 +1,3 @@
-server:
-  port: 9800
-  http2:
-    enabled: true
-  undertow:
-    buffer-size: 2048
-    direct-buffers: true
-
 seata:
   enabled: true
   service:
@@ -36,10 +28,6 @@ seata:
       cluster: default
 
 spring:
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: taotao-cloud-auth-center
   thymeleaf:
     prefix: classpath:/views/
     suffix: .html

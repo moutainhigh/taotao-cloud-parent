@@ -30,7 +30,8 @@ import java.lang.reflect.Type;
  */
 @UtilityClass
 public class JsonUtil {
-    public JsonSerializer DEFAULT = new JsonSerializer();
+
+    public final JsonSerializer DEFAULT = new JsonSerializer();
 
     /**
      * 序列化

@@ -15,6 +15,7 @@
  */
 package com.taotao.cloud.aftersale.biz.service.impl;
 
+import com.taotao.cloud.aftersale.biz.entity.Withdraw;
 import com.taotao.cloud.aftersale.biz.repository.WithdrawRepository;
 import com.taotao.cloud.aftersale.biz.service.IWithdrawService;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,11 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class WithdrawServiceImpl implements IWithdrawService {
+
 	private final WithdrawRepository withdrawRepository;
+
+	@Override
+	public Withdraw findWithdrawById(Long id) {
+		return withdrawRepository.getOne(id);
+	}
 }

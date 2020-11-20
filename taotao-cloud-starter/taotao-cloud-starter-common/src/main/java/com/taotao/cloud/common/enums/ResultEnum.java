@@ -170,7 +170,11 @@ public enum ResultEnum implements BaseEnum {
 	/**
 	 * 资源名称已存在
 	 */
-	RESOURCE_NAME_EXISTS_ERROR(500020, "资源名称已存在");
+	RESOURCE_NAME_EXISTS_ERROR(500020, "资源名称已存在"),
+	/**
+	 * 文件不存在
+	 */
+	FILE_NOT_EXIST(500021, "文件不存在");
 
     /**
      * 返回码

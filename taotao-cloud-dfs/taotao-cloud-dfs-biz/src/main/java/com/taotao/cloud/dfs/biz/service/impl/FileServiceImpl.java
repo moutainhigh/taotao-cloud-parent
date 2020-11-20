@@ -1,18 +1,18 @@
 package com.taotao.cloud.dfs.biz.service.impl;
 
+import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.dfs.biz.entity.File;
+import com.taotao.cloud.dfs.biz.repository.FileRepository;
 import com.taotao.cloud.dfs.biz.service.FileService;
 import com.taotao.cloud.file.base.FileUpload;
 import com.taotao.cloud.file.exception.FileUploadException;
 import com.taotao.cloud.file.pojo.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
+import java.util.Optional;
 
 /**
  * 文件上传服务
@@ -23,7 +23,8 @@ import javax.inject.Inject;
  */
 @Service
 public class FileServiceImpl implements FileService {
-
+	@Autowired
+	private FileRepository fileRepository;
 	@Autowired
 	private FileUpload fileUpload;
 
@@ -31,11 +32,18 @@ public class FileServiceImpl implements FileService {
 	public File upload(MultipartFile file) {
 		try {
 			FileInfo upload = fileUpload.upload(file);
+
 			// 添加文件数据
 			return new File();
 		} catch (FileUploadException e) {
 			throw new BusinessException(e.getMessage());
 		}
+	}
+
+	@Override
+	public File findFileById(Long id) {
+		Optional<File> optionalFile = fileRepository.findById(id);
+		return optionalFile.orElseThrow(() -> new BusinessException(ResultEnum.FILE_NOT_EXIST));
 	}
 	//
 	// @Override

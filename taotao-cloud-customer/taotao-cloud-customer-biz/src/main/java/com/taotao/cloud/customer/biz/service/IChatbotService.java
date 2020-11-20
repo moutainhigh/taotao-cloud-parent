@@ -15,10 +15,22 @@
  */
 package com.taotao.cloud.customer.biz.service;
 
+import com.taotao.cloud.customer.biz.entity.Chatbot;
+
 /**
  * @author dengtao
  * @date 2020/11/13 09:59
  * @since v1.0
  */
-public interface ICustomerService {
+public interface IChatbotService {
+	/**
+	 * 根据id查询机器人客服信息
+	 *
+	 * @param id id
+	 * @return com.taotao.cloud.customer.biz.entity.Chatbot
+	 * @author dengtao
+	 * @date 2020/11/20 上午10:42
+	 * @since v1.0
+	 */
+	Chatbot findChatbotById(Long id);
 }

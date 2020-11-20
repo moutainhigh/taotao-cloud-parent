@@ -32,13 +32,14 @@ import java.time.format.DateTimeFormatter;
  * @since v1.0
  */
 public class TaotaoCloudJackson2ObjectMapperBuilderCustomizer {
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return customizer -> {
-            customizer.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(
-                    DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)));
-            customizer.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(
-                    DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)));
-        };
-    }
+
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+		return customizer -> {
+			customizer.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(
+				DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)));
+			customizer.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(
+				DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)));
+		};
+	}
 }

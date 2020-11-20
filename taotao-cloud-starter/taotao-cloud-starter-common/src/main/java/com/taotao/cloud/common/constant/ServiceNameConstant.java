@@ -24,28 +24,38 @@ package com.taotao.cloud.common.constant;
  */
 public interface ServiceNameConstant {
 
-    /**
-     * 认证中心服务
-     */
-    String TAOTAO_CLOUD_AUTH_CENTER = "taotao-cloud-auth-center";
+	/**
+	 * 认证中心服务
+	 */
+	String TAOTAO_CLOUD_AUTH_CENTER = "taotao-cloud-auth-center";
 
-    /**
-     * 用户服务
-     */
-    String TAOTAO_CLOUD_UC_CENTER = "taotao-cloud-uc-center";
+	/**
+	 * 用户服务
+	 */
+	String TAOTAO_CLOUD_UC_CENTER = "taotao-cloud-uc-center";
 
-    /**
-     * 文件服务
-     */
-    String TAOTAO_CLOUD_FILE_CENTER = "taotao-cloud-file-center";
+	/**
+	 * 文件服务
+	 */
+	String TAOTAO_CLOUD_FILE_CENTER = "taotao-cloud-file-center";
 
-    /**
-     * 订单服务
-     */
-    String TAOTAO_CLOUD_ORDER_CENTER = "taotao-cloud-order-center";
+	/**
+	 * 订单服务
+	 */
+	String TAOTAO_CLOUD_ORDER_CENTER = "taotao-cloud-order-center";
 
-    /**
-     * 商品服务
-     */
-    String TAOTAO_CLOUD_PRODUCT_CENTER = "taotao-cloud-product-center";
+	/**
+	 * 商品服务
+	 */
+	String TAOTAO_CLOUD_PRODUCT_CENTER = "taotao-cloud-product-center";
+
+	/**
+	 * 售后服务
+	 */
+	String TAOTAO_CLOUD_AFTERSALE_CENTER = "taotao-cloud-aftersale-center";
+
+	/**
+	 * 客服服务
+	 */
+	String TAOTAO_CLOUD_CUSTOMER_CENTER = "taotao-cloud-customer-center";
 }

@@ -22,6 +22,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * @author dengtao
  * @date 2020/11/12 17:10
@@ -32,11 +35,45 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "文件VO", description = "文件VO")
-public class FileVo {
+public class FileVO implements Serializable {
+	private static final long serialVersionUID = 5126530068827085130L;
 
 	@ApiModelProperty(value = "id")
 	private Long id;
 
-	@ApiModelProperty(value = "文件路径ø")
+	@ApiModelProperty(value = "业务ID")
+	private Long bizId;
+
+	@ApiModelProperty(value = "业务类型")
+	private String bizType;
+
+	@ApiModelProperty(value = "数据类型")
+	private String dataType;
+
+	@ApiModelProperty(value = "原始文件名")
+	private String originalFileName;
+
+	@ApiModelProperty(value = "文件访问链接")
 	private String url;
+
+	@ApiModelProperty(value = "文件md5值")
+	private String fileMd5;
+
+	@ApiModelProperty(value = "文件上传类型")
+	private String contextType;
+
+	@ApiModelProperty(value = "唯一文件名")
+	private String filename;
+
+	@ApiModelProperty(value = "后缀(没有.)")
+	private String ext;
+
+	@ApiModelProperty(value = "大小")
+	private Long size;
+
+	@ApiModelProperty(value = "创建时间")
+	private LocalDateTime createTime;
+
+	@ApiModelProperty(value = "最后修改时间")
+	private LocalDateTime lastModifiedTime;
 }

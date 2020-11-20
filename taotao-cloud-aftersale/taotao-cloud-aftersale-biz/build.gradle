@@ -27,16 +27,11 @@ dependencies {
     implementation "org.mapstruct:mapstruct"
     annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
 
-    // alibaba
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    implementation('com.alibaba.cloud:spring-cloud-alibaba-seata:2.2.0.RELEASE') {
-        exclude group: 'io.seata', module: 'seata-spring-boot-starter'
-    }
-    implementation 'io.seata:seata-spring-boot-starter:1.3.0'
+    // jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
 
     // spring boot
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
@@ -48,19 +43,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    // jasypt
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
-
     // spring cloud
     implementation 'org.springframework.cloud:spring-cloud-context'
     implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 
-//    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
-//    runtime 'io.micrometer:micrometer-registry-prometheus'
+    // spring cloud alibaba
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation('com.alibaba.cloud:spring-cloud-alibaba-seata:2.2.0.RELEASE') {
+        exclude group: 'io.seata', module: 'seata-spring-boot-starter'
+    }
+    implementation 'io.seata:seata-spring-boot-starter:1.3.0'
 
-//    implementation project(':taotao-cloud-starter:taotao-cloud-starter-shardingjdbc')
-//    implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')
-//    implementation project(':taotao-cloud-starter:taotao-cloud-starter-elk')
+    // implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    // runtime 'io.micrometer:micrometer-registry-prometheus'
+
+    // implementation project(':taotao-cloud-starter:taotao-cloud-starter-shardingjdbc')
+    // implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')
+    // implementation project(':taotao-cloud-starter:taotao-cloud-starter-elk')
 }
 
 shadowJar {

@@ -25,6 +25,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
  * @since v1.0
  */
 public class LbIsolationContextHolder {
+
     private static final ThreadLocal<String> VERSION_CONTEXT = new TransmittableThreadLocal<>();
 
     public static void setVersion(String version) {

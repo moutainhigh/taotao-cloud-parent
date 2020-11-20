@@ -25,6 +25,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
  * @since v1.0
  */
 public class TenantContextHolder {
+
     private static final ThreadLocal<String> CONTEXT = new TransmittableThreadLocal<>();
 
     public static void setTenant(String tenant) {

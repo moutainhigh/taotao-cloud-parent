@@ -15,10 +15,22 @@
  */
 package com.taotao.cloud.aftersale.biz.service;
 
+import com.taotao.cloud.aftersale.biz.entity.Withdraw;
+
 /**
  * @author dengtao
  * @date 2020/11/13 09:59
  * @since v1.0
  */
 public interface IWithdrawService {
+	/**
+	 * 根据id查询提现申请信息
+	 *
+	 * @param id id
+	 * @return com.taotao.cloud.aftersale.biz.entity.Withdraw
+	 * @author dengtao
+	 * @date 2020/11/20 上午9:46
+	 * @since v1.0
+	 */
+    Withdraw findWithdrawById(Long id);
 }
