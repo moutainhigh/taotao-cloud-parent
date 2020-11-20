@@ -9,6 +9,7 @@ dependencies {
 	implementation project(':taotao-cloud-starter:taotao-cloud-starter-redis')
 
 	implementation project(':taotao-cloud-uc:taotao-cloud-uc-api')
+	implementation project(':taotao-cloud-member:taotao-cloud-member-api')
 
 	implementation 'org.springframework.security:spring-security-core'
 	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'

@@ -17,8 +17,6 @@ package com.taotao.cloud.logistics.biz.service.impl;
 
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.log.biz.entity.MemberLogin;
-import com.taotao.cloud.log.biz.repository.MemberLoginRepository;
 import com.taotao.cloud.logistics.biz.entity.ExpressCompany;
 import com.taotao.cloud.logistics.biz.repository.ExpressCompanyRepository;
 import com.taotao.cloud.logistics.biz.service.IExpressCompanyService;

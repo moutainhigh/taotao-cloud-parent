@@ -32,11 +32,11 @@ spring:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
-#      config:
-#        enabled: false
-#        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
-#        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
-#        file-extension: yml
+    #      config:
+    #        enabled: false
+    #        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+    #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
+    #        file-extension: yml
     sentinel:
       enabled: true
       eager: true
@@ -119,6 +119,94 @@ spring:
           uri: lb://taotao-cloud-order-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/order/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-aftersale-center
+          uri: lb://taotao-cloud-aftersale-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/aftersale/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-customer-center
+          uri: lb://taotao-cloud-customer-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/customer/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-dfs-center
+          uri: lb://taotao-cloud-dfs-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/dfs/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-pay-center
+            uri: lb://taotao-cloud-pay-center
+            predicates:
+              - Path=${taotao.cloud.gateway.base-uri}/pay/**
+            filters:
+              - StripPrefix=3
+              - name: RequestRateLimiter
+                args:
+                  key-resolver: "#{@remoteAddrKeyResolver}"
+                  redis-rate-limiter.replenishRate: 1
+                  redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-log-center
+          uri: lb://taotao-cloud-log-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/log/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-member-center
+          uri: lb://taotao-cloud-member-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/member/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-mail-center
+          uri: lb://taotao-cloud-mail-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/mail/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
+        - id: taotao-cloud-logistics-center
+          uri: lb://taotao-cloud-logistics-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/logistics/**
           filters:
             - StripPrefix=3
             - name: RequestRateLimiter
@@ -211,7 +299,6 @@ taotao:
       prefix: /api/
       version: v1.0
       base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
-      #网关动态路由
       dynamic:
         route:
           enabled: false
@@ -219,7 +306,6 @@ taotao:
       log:
         trace:
           enabled: true
-      #swagger聚合
       swagger-agg:
         enabled: true
         api-docs-path: /api-docs
@@ -229,6 +315,14 @@ taotao:
           - taotao-cloud-auth-center
           - taotao-cloud-order-center
           - taotao-cloud-product-center
+          - taotao-cloud-aftersale-center
+          - taotao-cloud-customer-center
+          - taotao-cloud-dfs-center
+          - taotao-cloud-log-center
+          - taotao-cloud-logistics-center
+          - taotao-cloud-mail-center
+          - taotao-cloud-member-center
+          - taotao-cloud-pay-center
     oauth2:
       token:
         store:
@@ -255,7 +349,6 @@ taotao:
         auth:
           renew:
             enabled: true
-    # 日志模块
     log:
       type: logger
 

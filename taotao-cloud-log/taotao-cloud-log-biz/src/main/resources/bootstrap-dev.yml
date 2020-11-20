@@ -300,16 +300,10 @@ taotao:
           # 忽略认证的地址
           http-urls:
             - /api-docs
-            - /user/info/username
-            - /resource/test/seata
-            - /role/info/userId
-            - /resource/info/codes
-            - /member/info/security
-            - /user
     swagger:
       enabled: true
-      title: 用户中心
-      description: 用户中心接口文档
+      title: 日志中心
+      description: 日志中心接口文档
       version: 1.0
       license: Apache
       license-url: https://opensource.org/licenses/Apache-2.0Url
@@ -317,7 +311,7 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
-      base-package: com.taotao.cloud.aftersale.biz.controller
+      base-package: com.taotao.cloud.log.biz.controller
       host: ${spring.cloud.client.ip-address}:${server.port}
     ribbon:
       isolation:

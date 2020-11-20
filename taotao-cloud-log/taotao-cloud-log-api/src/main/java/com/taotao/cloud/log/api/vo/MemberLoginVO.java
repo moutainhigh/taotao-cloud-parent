@@ -54,7 +54,7 @@ public class MemberLoginVO implements Serializable {
 	private String loginIp;
 
 	@ApiModelProperty(value = "登录状态")
-	private Integer loginStatus = 0;
+	private Integer loginStatus;
 
 	@ApiModelProperty(value = "创建时间")
 	private LocalDateTime createTime;

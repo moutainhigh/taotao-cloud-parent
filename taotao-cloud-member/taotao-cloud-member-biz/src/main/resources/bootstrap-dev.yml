@@ -300,12 +300,6 @@ taotao:
           # 忽略认证的地址
           http-urls:
             - /api-docs
-            - /user/info/username
-            - /resource/test/seata
-            - /role/info/userId
-            - /resource/info/codes
-            - /member/info/security
-            - /user
     swagger:
       enabled: true
       title: 会员中心
