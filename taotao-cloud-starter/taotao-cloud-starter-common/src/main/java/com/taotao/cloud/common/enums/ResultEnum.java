@@ -186,7 +186,11 @@ public enum ResultEnum implements BaseEnum {
 	/**
 	 * 邮件信息不存在
 	 */
-	EMIAL_NOT_EXIST(500032, "邮件信息不存在");
+	EMIAL_NOT_EXIST(500032, "邮件信息不存在"),
+	/**
+	 * 支付信息不存在
+	 */
+	PAY_FLOW_NOT_EXIST(500033, "支付信息不存在");
 
 	/**
 	 * 返回码

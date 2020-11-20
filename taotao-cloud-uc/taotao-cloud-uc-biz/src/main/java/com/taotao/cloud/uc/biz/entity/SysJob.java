@@ -36,7 +36,7 @@ public class SysJob extends BaseEntity {
     /**
      * 部门id
      */
-    @Column(name = "dept_id", columnDefinition = "int not null comment '部门id'")
+    @Column(name = "dept_id", columnDefinition = "bigint not null comment '部门id'")
     private Long deptId;
 
     /**

@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.product.biz.utils;
+package com.taotao.cloud.pay.biz.repository;
 
-import com.taotao.cloud.common.utils.BeanUtil;
-import com.taotao.cloud.product.api.vo.ProductVO;
-import com.taotao.cloud.product.biz.entity.ProductInfo;
+import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
+import com.taotao.cloud.pay.biz.entity.PayFlow;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
 
 /**
  * @author dengtao
- * @date 2020/10/20 16:16
+ * @date 2020/11/13 10:01
  * @since v1.0
  */
-public class ProductUtil {
-    public static ProductVO copy(ProductInfo productInfo) {
-        ProductVO vo = ProductVO.builder().build();
-        BeanUtil.copyIncludeNull(productInfo, vo);
-        return vo;
-    }
+@Repository
+public class PayFlowRepository extends BaseJpaRepository<PayFlow, Long> {
+	public PayFlowRepository(EntityManager em) {
+		super(PayFlow.class, em);
+	}
+
 }

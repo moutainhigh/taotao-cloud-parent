@@ -14,23 +14,20 @@ import feign.hystrix.FallbackFactory;
  * @date 2020/4/29 21:43
  */
 public class RemoteProductFallbackImpl implements FallbackFactory<RemoteProductService> {
-    @Override
-    public RemoteProductService create(Throwable throwable) {
+	@Override
+	public RemoteProductService create(Throwable throwable) {
+		return new RemoteProductService() {
+			@Override
+			public Result<ProductVO> findProductInfoById(Long id) {
+				LogUtil.error("调用findProductInfoById异常：{}", id, throwable);
+				return Result.failed(null, 500);
+			}
 
-
-
-        return new RemoteProductService() {
-            @Override
-            public Result<ProductVO> findProductInfoById(Long id) {
-                LogUtil.error("调用findProductInfoById异常：{}", id, throwable);
-                return Result.failed(null, 500);
-            }
-
-            @Override
-            public Result<ProductVO> saveProduct(ProductDTO productDTO) {
-                LogUtil.error("调用saveProduct异常：{}", productDTO, throwable);
-                return Result.failed(null, 500);
-            }
-        };
-    }
+			@Override
+			public Result<ProductVO> saveProduct(ProductDTO productDTO) {
+				LogUtil.error("调用saveProduct异常：{}", productDTO, throwable);
+				return Result.failed(null, 500);
+			}
+		};
+	}
 }

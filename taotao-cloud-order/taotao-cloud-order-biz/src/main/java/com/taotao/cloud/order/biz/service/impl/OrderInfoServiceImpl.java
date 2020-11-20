@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderInfoServiceImpl implements IOrderInfoService {
 
 	private final OrderInfoRepository orderInfoRepository;
-	private final static QOrderInfo ORDER_INFO = QOrderInfo.orderInfo;
+	private final static QOrder ORDER_INFO = QOrder.orderInfo;
 
 	@Override
 	public Order findOrderInfoByCode(String code) {

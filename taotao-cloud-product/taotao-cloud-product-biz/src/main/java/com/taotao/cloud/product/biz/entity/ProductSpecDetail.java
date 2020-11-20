@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -24,7 +23,7 @@ import java.math.BigDecimal;
 @org.hibernate.annotations.Table(appliesTo = "product_spec_detail", comment = "商品信息扩展表")
 public class ProductSpecDetail extends BaseEntity {
 
-    private ProductInfo productInfo;
+    private Product product;
 
     private String shelfNum;
 

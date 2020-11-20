@@ -16,7 +16,7 @@
 package com.taotao.cloud.product.biz.repository;
 
 import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
-import com.taotao.cloud.product.biz.entity.ProductInfo;
+import com.taotao.cloud.product.biz.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,8 +29,8 @@ import javax.persistence.EntityManager;
  * @since v1.0
  */
 @Repository
-public class ProductInfoRepository extends BaseJpaRepository<ProductInfo, Long> {
-    public ProductInfoRepository(EntityManager em) {
-        super(ProductInfo.class, em);
+public class ProductRepository extends BaseJpaRepository<Product, Long> {
+    public ProductRepository(EntityManager em) {
+        super(Product.class, em);
     }
 }

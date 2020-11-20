@@ -10,9 +10,9 @@ import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.product.api.dto.ProductDTO;
-import com.taotao.cloud.product.biz.entity.ProductInfo;
-import com.taotao.cloud.product.biz.repository.ProductInfoRepository;
-import com.taotao.cloud.product.biz.service.IProductInfoService;
+import com.taotao.cloud.product.biz.entity.Product;
+import com.taotao.cloud.product.biz.repository.ProductRepository;
+import com.taotao.cloud.product.biz.service.IProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,21 +28,21 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
-public class ProductInfoServiceImpl implements IProductInfoService {
+public class ProductServiceImpl implements IProductService {
 
-    private final ProductInfoRepository productInfoRepository;
+    private final ProductRepository productRepository;
 
     @Override
-    public ProductInfo findProductInfoById(Long id) {
-        Optional<ProductInfo> optionalProductInfo = productInfoRepository.findById(id);
+    public Product findProductById(Long id) {
+        Optional<Product> optionalProductInfo = productRepository.findById(id);
         return optionalProductInfo.orElseThrow(() -> new BusinessException(ResultEnum.PRODUCT_NOT_EXIST));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ProductInfo saveProduct(ProductDTO productDTO) {
-        ProductInfo productInfo = ProductInfo.builder().build();
-        BeanUtil.copyIgnoredNull(productDTO, productInfo);
-        return productInfoRepository.saveAndFlush(productInfo);
+    public Product saveProduct(ProductDTO productDTO) {
+        Product product = Product.builder().build();
+        BeanUtil.copyIgnoredNull(productDTO, product);
+        return productRepository.saveAndFlush(product);
     }
 }

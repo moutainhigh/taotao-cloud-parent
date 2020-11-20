@@ -24,9 +24,9 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "product_info")
-@org.hibernate.annotations.Table(appliesTo = "product_info", comment = "商品信息表")
-public class ProductInfo extends BaseEntity {
+@Table(name = "tt_product")
+@org.hibernate.annotations.Table(appliesTo = "product", comment = "商品信息表")
+public class Product extends BaseEntity {
 
     /**
      * 商品名称

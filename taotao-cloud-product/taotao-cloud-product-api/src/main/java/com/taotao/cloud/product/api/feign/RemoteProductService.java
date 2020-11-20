@@ -17,13 +17,31 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author dengtao
  * @date 2020/5/2 16:42
  */
-@FeignClient(contextId = "remoteProductService", value = ServiceNameConstant.TAOTAO_CLOUD_PRODUCT_CENTER, fallbackFactory = RemoteProductFallbackImpl.class)
+@FeignClient(contextId = "RemoteProductService", value = ServiceNameConstant.TAOTAO_CLOUD_PRODUCT_CENTER, fallbackFactory = RemoteProductFallbackImpl.class)
 public interface RemoteProductService {
 
-    @GetMapping(value = "/product/id/{id}")
-    Result<ProductVO> findProductInfoById(@PathVariable("id") Long id);
+	/**
+	 * 根据id查询商品信息
+	 *
+	 * @param id id
+	 * @return com.taotao.cloud.core.model.Result<com.taotao.cloud.product.api.vo.ProductVO>
+	 * @author dengtao
+	 * @date 2020/11/20 下午3:23
+	 * @since v1.0
+	 */
+	@GetMapping(value = "/product/info/id/{id:[0-9]*}")
+	Result<ProductVO> findProductInfoById(@PathVariable("id") Long id);
 
-    @PostMapping(value = "/product")
-    Result<ProductVO> saveProduct(@RequestBody ProductDTO productDTO);
+	/**
+	 * 添加商品信息
+	 *
+	 * @param productDTO productDTO
+	 * @return com.taotao.cloud.core.model.Result<com.taotao.cloud.product.api.vo.ProductVO>
+	 * @author dengtao
+	 * @date 2020/11/20 下午3:23
+	 * @since v1.0
+	 */
+	@PostMapping(value = "/product")
+	Result<ProductVO> saveProduct(@RequestBody ProductDTO productDTO);
 }
 
