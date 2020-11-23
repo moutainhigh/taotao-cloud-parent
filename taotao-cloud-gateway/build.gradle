@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-gateway'
 
 jar.enabled = true
 bootJar.enabled = true
-description("网关模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')

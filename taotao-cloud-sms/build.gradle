@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-sms'
 
 jar.enabled = false
 bootJar.enabled = false
-description("短信模块")
 
 dependencies {
 

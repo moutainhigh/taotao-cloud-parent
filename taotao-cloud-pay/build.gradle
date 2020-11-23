@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-pay'
 
 jar.enabled = false
 bootJar.enabled = false
-description("支付模块")
 
 dependencies {
 

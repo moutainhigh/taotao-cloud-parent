@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-opencv'
 
 jar.enabled = true
 bootJar.enabled = true
-description("opencv模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')

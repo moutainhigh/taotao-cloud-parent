@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-customer'
 
 jar.enabled = false
 bootJar.enabled = false
-description("客服模块")
 
 dependencies {
 

@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-hudi'
 
 jar.enabled = true
 bootJar.enabled = false
-description("hudi模块")
 
 apply plugin: 'scala'
 
@@ -42,22 +41,6 @@ configurations {
     compile.exclude group: "xerces", module: "xercesImpl"
 }
 
-
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: "${mavenThirdparty}") {
-//                authentication(userName: "${mavenThirdpartyUserName}", password: "${mavenThirdpartyPwd}")
-//            }
-//            snapshotRepository(url: "${mavenSnapshot}") {
-//                authentication(userName: "${mavenSnapshotUserName}", password: "${mavenSnapshotPwd}")
-//            }
-//            pom.version = "$version"
-//            pom.artifactId = "$archivesBaseName"
-//            pom.groupId = "$project.group"
-//        }
-//    }
-//}
 
 shadowJar {
     mergeServiceFiles()

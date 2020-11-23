@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-config'
 
 jar.enabled = false
 bootJar.enabled = false
-description("配置模块")
 
 dependencies {
 

@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-demo'
 
 jar.enabled = false
 bootJar.enabled = false
-description("demo模块")
 
 dependencies {
 

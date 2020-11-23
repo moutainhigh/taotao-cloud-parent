@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-search'
 
 jar.enabled = false
 bootJar.enabled = false
-description("搜索模块")
 
 dependencies {
 

@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-mail'
 
 jar.enabled = false
 bootJar.enabled = false
-description("邮件模块")
 
 dependencies {
 

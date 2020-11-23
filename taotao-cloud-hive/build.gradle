@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-hive'
 
 jar.enabled = false
 bootJar.enabled = false
-description("hive模块")
 
 dependencies {
 

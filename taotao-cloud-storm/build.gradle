@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-storm'
 
 jar.enabled = false
 bootJar.enabled = false
-description("storm模块")
 
 dependencies {
 

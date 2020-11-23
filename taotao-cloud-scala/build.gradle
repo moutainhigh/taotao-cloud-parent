@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-scala'
 
 jar.enabled = false
 bootJar.enabled = false
-description("scala模块")
 
 apply plugin: 'scala'
 

@@ -2,7 +2,6 @@ archivesBaseName = 'taotao-cloud-code'
 
 jar.enabled = false
 bootJar.enabled = false
-description("代码生成模块")
 
 dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
