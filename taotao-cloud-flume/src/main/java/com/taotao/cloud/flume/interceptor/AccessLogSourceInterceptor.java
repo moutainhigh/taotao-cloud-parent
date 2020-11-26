@@ -25,8 +25,8 @@ import java.util.List;
  * @version v1.0.0
  * @date 2020/9/22 13:30
  */
-public class SourceInterceptor implements Interceptor {
-	private static final Logger logger = LoggerFactory.getLogger(SourceInterceptor.class);
+public class AccessLogSourceInterceptor implements Interceptor {
+	private static final Logger logger = LoggerFactory.getLogger(AccessLogSourceInterceptor.class);
 
 	@Override
 	public void initialize() {
@@ -91,7 +91,7 @@ public class SourceInterceptor implements Interceptor {
 
 		@Override
 		public Interceptor build() {
-			return new SourceInterceptor();
+			return new AccessLogSourceInterceptor();
 		}
 
 		@Override

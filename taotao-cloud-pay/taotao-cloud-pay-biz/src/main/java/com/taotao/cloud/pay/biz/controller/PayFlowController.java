@@ -16,7 +16,7 @@
 package com.taotao.cloud.pay.biz.controller;
 
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.pay.api.vo.PayFlowVO;
 import com.taotao.cloud.pay.biz.entity.PayFlow;
 import com.taotao.cloud.pay.biz.mapper.PayFlowMapper;
@@ -48,7 +48,7 @@ public class PayFlowController {
 	private final IPayFlowService payFlowService;
 
 	@ApiOperation("根据id查询支付信息")
-	@SysOperateLog(description = "根据id查询支付信息")
+	@RequestOperateLog(description = "根据id查询支付信息")
 	@PreAuthorize("hasAuthority('pag:flow:info:id')")
 	@GetMapping("/info/id/{id:[0-9]*}")
 	public Result<PayFlowVO> findPayFlowById(@PathVariable(value = "id") Long id) {

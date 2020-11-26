@@ -1,7 +1,7 @@
 package com.taotao.cloud.order.biz.controller;
 
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.order.api.dto.OrderDTO;
 import com.taotao.cloud.order.api.vo.OrderVO;
 import com.taotao.cloud.order.biz.entity.Order;
@@ -36,7 +36,7 @@ public class OrderInfoController {
 
 	@ApiOperation("获取订单信息")
 	@GetMapping("/info/{code}")
-	@SysOperateLog(description = "获取订单信息")
+	@RequestOperateLog(description = "获取订单信息")
 	@PreAuthorize("hasAuthority('order:info:code')")
 	public Result<OrderVO> findOrderInfoByCode(@PathVariable("code") String code) {
 		Order order = orderInfoService.findOrderInfoByCode(code);
@@ -46,7 +46,7 @@ public class OrderInfoController {
 
 	@ApiOperation("添加订单信息")
 	@PostMapping
-	@SysOperateLog(description = "添加订单信息")
+	@RequestOperateLog(description = "添加订单信息")
 	Result<OrderVO> saveOrder(@Validated @RequestBody OrderDTO orderDTO) {
 		Order order = orderInfoService.saveOrder(orderDTO);
 		OrderVO vo = OrderMapper.INSTANCE.orderToOrderVO(order);

@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.uc.api.dto.dictItem.DictItemDTO;
 import com.taotao.cloud.uc.api.query.dictItem.DictItemPageQuery;
 import com.taotao.cloud.uc.api.query.dictItem.DictItemQuery;
@@ -42,7 +42,7 @@ public class SysDictItemController {
     private final ISysDictItemService dictItemService;
 
     @ApiOperation("添加字典项详情")
-    @SysOperateLog(description = "添加字典项详情")
+    @RequestOperateLog(description = "添加字典项详情")
     @PreAuthorize("hasAuthority('sys:dictItem:add')")
     @PostMapping
     public Result<Boolean> save(@Validated @RequestBody DictItemDTO dictItemDTO) {
@@ -51,7 +51,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("更新字典项详情")
-    @SysOperateLog(description = "更新字典项详情")
+    @RequestOperateLog(description = "更新字典项详情")
     @PreAuthorize("hasAuthority('sys:dictItem:edit')")
     @PutMapping("/{id}")
     public Result<Boolean> updateById(@PathVariable(value = "id") Long id,
@@ -61,7 +61,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("根据id删除字典项详情")
-    @SysOperateLog(description = "根据id删除字典项详情")
+    @RequestOperateLog(description = "根据id删除字典项详情")
     @PreAuthorize("hasAuthority('sys:dictItem:del')")
     @DeleteMapping("/{id:[0-9]*}")
     public Result<Boolean> deleteById(@PathVariable("id") Long id) {
@@ -70,7 +70,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("分页查询字典详情")
-    @SysOperateLog(description = "分页查询字典详情")
+    @RequestOperateLog(description = "分页查询字典详情")
     @GetMapping("/page")
     public PageResult<DictItemVO> getPage(@Validated DictItemPageQuery dictItemPageQuery) {
         Pageable pageable = PageRequest.of(dictItemPageQuery.getCurrentPage(), dictItemPageQuery.getPageSize());
@@ -86,7 +86,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("查询字典详情")
-    @SysOperateLog(description = "查询字典详情")
+    @RequestOperateLog(description = "查询字典详情")
     @GetMapping("/info")
     public Result<List<DictItemVO>> getInfo(@Validated DictItemQuery dictItemQuery) {
         List<SysDictItem> itmes = dictItemService.getInfo(dictItemQuery);

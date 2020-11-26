@@ -17,13 +17,19 @@ ADD_PARTITION_SQL="
   alter table `taotao_cloud_access_log_transform` add partition (logday = "${exec_date}") location "/taotao/cloud/access/log/transform/${exec_date}"
 
   ALTER TABLE `taotao_cloud_access_log_parquet` DROP IF EXISTS PARTITION (logday = "${exec_date}");
-  alter table `taotao_cloud_access_log_parquet` add partition (logday = "${exec_date}") location "/taotao/cloud/access/log/sources/${exec_date}"
+  alter table `taotao_cloud_access_log_parquet` add partition (logday = "${exec_date}") location "/taotao/cloud/access/log/parquet/${exec_date}"
 
   ALTER TABLE `taotao_cloud_sys_log_source` DROP IF EXISTS PARTITION (logday = "${exec_date}");
   alter table `taotao_cloud_sys_log_source` add partition (logday = "${exec_date}") location "/taotao/cloud/sys/log/sources/${exec_date}"
 
   ALTER TABLE `taotao_cloud_sys_log_parquet` DROP IF EXISTS PARTITION (logday = "${exec_date}");
   alter table `taotao_cloud_sys_log_parquet` add partition (logday = "${exec_date}") location "/taotao/cloud/sys/log/parquet/${exec_date}"
+
+  ALTER TABLE `taotao_cloud_request_log_source` DROP IF EXISTS PARTITION (logday = "${exec_date}");
+  alter table `taotao_cloud_request_log_source` add partition (logday = "${exec_date}") location "/taotao/cloud/request/log/sources/${exec_date}"
+
+  ALTER TABLE `taotao_cloud_request_log_parquet` DROP IF EXISTS PARTITION (logday = "${exec_date}");
+  alter table `taotao_cloud_request_log_parquet` add partition (logday = "${exec_date}") location "/taotao/cloud/request/log/parquet/${exec_date}"
 
   ALTER TABLE `taotao_cloud_biz_order_log_parquet` DROP IF EXISTS PARTITION (logday = "${exec_date}");
   alter table `taotao_cloud_biz_order_log_parquet` add partition (logday = "${exec_date}") location "/taotao/cloud/biz/member/login/log/parquet/${exec_date}"

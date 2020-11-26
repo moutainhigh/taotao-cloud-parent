@@ -127,9 +127,9 @@ public class SecurityUtil {
      * @date 2020/10/15 15:55
      * @since v1.0
      */
-    public String getUserId() {
+    public Long getUserId() {
         SecurityUser user = getUser();
-        return Objects.isNull(user) ? "" : String.valueOf(user.getUserId());
+        return Objects.isNull(user) ? null : user.getUserId();
     }
 
     /**

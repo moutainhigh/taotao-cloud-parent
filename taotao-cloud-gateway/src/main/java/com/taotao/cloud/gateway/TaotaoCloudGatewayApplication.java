@@ -15,19 +15,12 @@
  */
 package com.taotao.cloud.gateway;
 
-import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler;
-import com.taotao.cloud.log.annotation.EnableTaoTaoCloudSysLog;
+import com.taotao.cloud.log.annotation.EnableTaoTaoCloudRequestLog;
 import com.taotao.cloud.redis.annotation.EnableTaoTaoCloudRedis;
 import com.taotao.cloud.security.annotation.EnableTaoTaoCloudOAuth2RedisTokenStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
-import org.springframework.http.codec.ServerCodecConfigurer;
-import org.springframework.web.reactive.result.view.ViewResolver;
-
-import java.util.Collections;
 
 /**
  * TaotaoCloudGatewayApplication
@@ -36,7 +29,7 @@ import java.util.Collections;
  * @date 2020/10/10 09:06
  * @since v1.0
  */
-@EnableTaoTaoCloudSysLog
+@EnableTaoTaoCloudRequestLog
 @EnableTaoTaoCloudRedis
 @EnableTaoTaoCloudOAuth2RedisTokenStore
 @SpringBootApplication

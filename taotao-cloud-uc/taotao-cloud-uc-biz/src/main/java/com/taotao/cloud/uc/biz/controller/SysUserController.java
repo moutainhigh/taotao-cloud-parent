@@ -5,7 +5,7 @@ import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.core.model.SecurityUser;
 import com.taotao.cloud.core.utils.SecurityUtil;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.uc.api.dto.user.RestPasswordUserDTO;
 import com.taotao.cloud.uc.api.dto.user.UserDTO;
 import com.taotao.cloud.uc.api.dto.user.UserRoleDTO;
@@ -56,7 +56,7 @@ public class SysUserController {
 	private final ISysUserService sysUserService;
 
 	@ApiOperation("保存(添加)用户")
-	@SysOperateLog(description = "保存(添加)用户")
+	@RequestOperateLog(description = "保存(添加)用户")
 	@PreAuthorize("hasAuthority('sys:user:add')")
 	@PostMapping
 	public Result<AddUserVO> saveUser(@Validated @RequestBody UserDTO userDTO) {
@@ -67,7 +67,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("更新用户")
-	@SysOperateLog(description = "更新用户")
+	@RequestOperateLog(description = "更新用户")
 	@PreAuthorize("hasAuthority('sys:user:update')")
 	@PutMapping("/{id:[0-9]*}")
 	public Result<UserVO> updateUser(@PathVariable(value = "id") Long id,
@@ -80,7 +80,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据手机号码查询用户是否存在")
-	@SysOperateLog(description = "根据手机号码查询用户是否存在")
+	@RequestOperateLog(description = "根据手机号码查询用户是否存在")
 	@PreAuthorize("hasAuthority('sys:user:exists:phone')")
 	@GetMapping("/exists/phone")
 	public Result<Boolean> existsByPhone(@NotBlank(message = "手机号码不能为空")
@@ -90,7 +90,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据用户id查询用户是否存在")
-	@SysOperateLog(description = "根据用户id查询用户是否存在")
+	@RequestOperateLog(description = "根据用户id查询用户是否存在")
 	@PreAuthorize("hasAuthority('sys:user:exists:id')")
 	@GetMapping("/exists/id")
 	public Result<Boolean> existsByPhone(@NotNull(message = "用户id不能为空")
@@ -100,7 +100,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据用户id删除用户")
-	@SysOperateLog(description = "根据用户id删除用户")
+	@RequestOperateLog(description = "根据用户id删除用户")
 	@PreAuthorize("hasAuthority('sys:user:delete')")
 	@DeleteMapping("/{id:[0-9]*}")
 	public Result<Boolean> deleteUser(@PathVariable(value = "id") Long id) {
@@ -109,7 +109,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("分页查询用户集合")
-	@SysOperateLog(description = "分页查询用户集合")
+	@RequestOperateLog(description = "分页查询用户集合")
 	@PreAuthorize("hasAuthority('sys:user:view:page')")
 	@GetMapping(value = "/page")
 	public PageResult<UserVO> findUserPage(@Validated UserPageQuery userQuery) {
@@ -121,7 +121,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("重置密码")
-	@SysOperateLog(description = "重置密码")
+	@RequestOperateLog(description = "重置密码")
 	@PreAuthorize("hasAuthority('sys:user:rest:password')")
 	@PutMapping("/rest/password/{id:[0-9]*}")
 	public Result<Boolean> restPass(@PathVariable(value = "id") Long id,
@@ -131,7 +131,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("获取当前登录人信息")
-	@SysOperateLog(description = "获取当前登录人信息")
+	@RequestOperateLog(description = "获取当前登录人信息")
 	@PreAuthorize("hasAuthority('sys:user:info:current')")
 	@GetMapping("/current/info")
 	public Result<UserVO> getCurrentUser() {
@@ -146,7 +146,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据id获取用户信息")
-	@SysOperateLog(description = "根据id获取用户信息")
+	@RequestOperateLog(description = "根据id获取用户信息")
 	@PreAuthorize("hasAuthority('sys:user:info:id')")
 	@GetMapping("/info/id/{id:[0-9]*}")
 	public Result<UserVO> findUserInfoById(@PathVariable(value = "id") Long id) {
@@ -156,7 +156,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据username获取用户信息")
-	@SysOperateLog(description = "根据username获取用户信息")
+	@RequestOperateLog(description = "根据username获取用户信息")
 	@PreAuthorize("hasAuthority('sys:user:info:username')")
 	@GetMapping("/info/username")
 	public Result<UserVO> findUserInfoByUsername(@NotBlank(message = "用户名称不能为空")
@@ -167,7 +167,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("查询用户集合")
-	@SysOperateLog(description = "查询用户集合")
+	@RequestOperateLog(description = "查询用户集合")
 	@PreAuthorize("hasAuthority('sys:user:info:list')")
 	@GetMapping("/info")
 	public Result<List<UserVO>> findUserList(@Validated UserQuery userQuery) {
@@ -177,7 +177,7 @@ public class SysUserController {
 	}
 
 	@ApiOperation("根据用户id更新角色信息(用户分配角色)")
-	@SysOperateLog(description = "根据用户id更新角色信息(用户分配角色)")
+	@RequestOperateLog(description = "根据用户id更新角色信息(用户分配角色)")
 	@PreAuthorize("hasAuthority('sys:user:role')")
 	@PutMapping("/role")
 	public Result<Boolean> updateUserRoles(@Validated @RequestBody UserRoleDTO userRoleDTO) {

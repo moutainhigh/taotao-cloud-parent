@@ -17,11 +17,11 @@ package com.taotao.cloud.log.component;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.core.annotation.EnableTaoTaoCloudAsync;
-import com.taotao.cloud.log.aspect.SysLogAspect;
-import com.taotao.cloud.log.listener.SysLogListener;
-import com.taotao.cloud.log.service.impl.KafkaSysLogServiceImpl;
-import com.taotao.cloud.log.service.impl.LoggerSysLogServiceImpl;
-import com.taotao.cloud.log.service.impl.RedisSysLogServiceImpl;
+import com.taotao.cloud.log.aspect.RequestLogAspect;
+import com.taotao.cloud.log.listener.RequestLogListener;
+import com.taotao.cloud.log.service.impl.KafkaRequestLogServiceImpl;
+import com.taotao.cloud.log.service.impl.LoggerRequestLogServiceImpl;
+import com.taotao.cloud.log.service.impl.RedisRequestLogServiceImpl;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -39,7 +39,7 @@ import org.springframework.context.annotation.Bean;
  */
 @Slf4j
 @EnableTaoTaoCloudAsync
-public class SysLogComponent implements InitializingBean {
+public class RequestLogComponent implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -47,32 +47,32 @@ public class SysLogComponent implements InitializingBean {
     }
 
     @Bean
-    public SysLogListener sysLogListener() {
-        return new SysLogListener();
+    public RequestLogListener sysLogListener() {
+        return new RequestLogListener();
     }
 
     @Bean
-    public SysLogAspect sysLogAspect(ApplicationEventPublisher publisher) {
-        return new SysLogAspect(publisher);
+    public RequestLogAspect sysLogAspect(ApplicationEventPublisher publisher) {
+        return new RequestLogAspect(publisher);
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "logger", matchIfMissing = true)
-    public LoggerSysLogServiceImpl loggerSysLogService() {
-        return new LoggerSysLogServiceImpl();
+    public LoggerRequestLogServiceImpl loggerSysLogService() {
+        return new LoggerRequestLogServiceImpl();
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "redis")
     @ConditionalOnBean(value = {RedisRepository.class})
-    public RedisSysLogServiceImpl redisSysLogService() {
-        return new RedisSysLogServiceImpl();
+    public RedisRequestLogServiceImpl redisSysLogService() {
+        return new RedisRequestLogServiceImpl();
     }
 
     @Bean
     @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "kafka")
-    public KafkaSysLogServiceImpl kafkaSysLogService() {
-        return new KafkaSysLogServiceImpl();
+    public KafkaRequestLogServiceImpl kafkaSysLogService() {
+        return new KafkaRequestLogServiceImpl();
     }
 
 }

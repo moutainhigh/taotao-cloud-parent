@@ -5,7 +5,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.uc.api.dto.dict.DictDTO;
 import com.taotao.cloud.uc.api.query.dict.DictPageQuery;
 import com.taotao.cloud.uc.api.vo.dict.DictVO;
@@ -42,7 +42,7 @@ public class SysDictController {
     private final ISysDictService dictService;
 
     @ApiOperation("添加字典信息")
-    @SysOperateLog(description = "添加字典信息")
+    @RequestOperateLog(description = "添加字典信息")
     @PreAuthorize("hasAuthority('sys:dict:save')")
     @PostMapping
     public Result<Boolean> save(@Validated @RequestBody DictDTO dictDTO) {
@@ -53,7 +53,7 @@ public class SysDictController {
     }
 
     @ApiOperation("根据id更新字典信息")
-    @SysOperateLog(description = "根据id更新字典信息")
+    @RequestOperateLog(description = "根据id更新字典信息")
     @PreAuthorize("hasAuthority('sys:dict:update')")
     @PutMapping("/{id:[0-9]*}")
     public Result<Boolean> updateById(@PathVariable(value = "id") Long id,
@@ -65,7 +65,7 @@ public class SysDictController {
     }
 
     @ApiOperation("根据code更新字典信息")
-    @SysOperateLog(description = "根据code更新字典信息")
+    @RequestOperateLog(description = "根据code更新字典信息")
     @PreAuthorize("hasAuthority('sys:dict:update')")
     @PutMapping("/code/{code}")
     public Result<Boolean> updateByCode(@PathVariable(value = "code") String code,
@@ -77,7 +77,7 @@ public class SysDictController {
     }
 
     @ApiOperation("查询所有字典集合")
-    @SysOperateLog(description = "查询所有字典集合")
+    @RequestOperateLog(description = "查询所有字典集合")
     @PreAuthorize("hasAuthority('sys:dipt:view')")
     @GetMapping
     public Result<List<DictVO>> getAll() {
@@ -92,7 +92,7 @@ public class SysDictController {
     }
 
     @ApiOperation("分页查询字典集合")
-    @SysOperateLog(description = "分页查询字典集合")
+    @RequestOperateLog(description = "分页查询字典集合")
     @PreAuthorize("hasAuthority('sys:dict:view')")
     @GetMapping("/page")
     public PageResult<DictVO> getPage(@Validated DictPageQuery dictPageQuery) {
@@ -109,7 +109,7 @@ public class SysDictController {
     }
 
     @ApiOperation("根据id删除字典")
-    @SysOperateLog(description = "根据id删除字典")
+    @RequestOperateLog(description = "根据id删除字典")
     @PreAuthorize("hasAuthority('sys:dict:del')")
     @DeleteMapping("/{id:[0-9]*}")
     public Result<Boolean> deleteById(@PathVariable(value = "id") Long id) {
@@ -118,7 +118,7 @@ public class SysDictController {
     }
 
     @ApiOperation("根据code删除字典")
-    @SysOperateLog(description = "根据code删除字典")
+    @RequestOperateLog(description = "根据code删除字典")
     @PreAuthorize("hasAuthority('sys:dict:del')")
     @DeleteMapping("/code/{code}")
     public Result<Boolean> deleteByCode(@PathVariable(value = "code") String code) {

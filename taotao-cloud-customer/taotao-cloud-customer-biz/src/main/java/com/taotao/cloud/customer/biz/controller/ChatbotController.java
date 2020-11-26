@@ -20,7 +20,7 @@ import com.taotao.cloud.customer.api.vo.ChatbotVO;
 import com.taotao.cloud.customer.biz.entity.Chatbot;
 import com.taotao.cloud.customer.biz.mapper.ChatbotMapper;
 import com.taotao.cloud.customer.biz.service.IChatbotService;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class ChatbotController {
 	private final IChatbotService chatbotService;
 
 	@ApiOperation("根据id查询机器人客服信息")
-	@SysOperateLog(description = "根据id查询机器人客服信息")
+	@RequestOperateLog(description = "根据id查询机器人客服信息")
 	@PreAuthorize("hasAuthority('chatbot:info:id')")
 	@GetMapping("/info/id/{id:[0-9]*}")
 	public Result<ChatbotVO> findChatbotById(@PathVariable(value = "id") Long id) {

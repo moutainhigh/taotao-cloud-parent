@@ -15,9 +15,9 @@
  */
 package com.taotao.cloud.log.listener;
 
-import com.taotao.cloud.log.event.SysLogEvent;
-import com.taotao.cloud.log.model.SysLog;
-import com.taotao.cloud.log.service.ISysLogService;
+import com.taotao.cloud.log.event.RequestLogEvent;
+import com.taotao.cloud.log.model.RequestLog;
+import com.taotao.cloud.log.service.IRequestLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -32,15 +32,16 @@ import javax.annotation.Resource;
  * @since v1.0
  */
 @Slf4j
-public class SysLogListener {
+public class RequestLogListener {
 
     @Resource
-    private ISysLogService sysLogService;
+    private IRequestLogService sysLogService;
 
     @Async
-    @EventListener(SysLogEvent.class)
-    public void saveSysLog(SysLogEvent event) {
-        SysLog sysLog = (SysLog) event.getSource();
-        sysLogService.save(sysLog);
+    @EventListener(RequestLogEvent.class)
+    public void saveRequestLog(RequestLogEvent event) {
+        RequestLog requestLog = (RequestLog) event.getSource();
+
+        sysLogService.save(requestLog);
     }
 }

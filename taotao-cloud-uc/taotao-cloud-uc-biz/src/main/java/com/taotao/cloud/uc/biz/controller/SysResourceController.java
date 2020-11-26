@@ -6,7 +6,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.core.utils.SecurityUtil;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.uc.api.dto.resource.ResourceDTO;
 import com.taotao.cloud.uc.api.query.resource.ResourcePageQuery;
 import com.taotao.cloud.uc.api.vo.resource.ResourceTree;
@@ -58,7 +58,7 @@ public class SysResourceController {
 	private final ISysResourceService resourceService;
 
 	@ApiOperation("添加资源")
-	@SysOperateLog(description = "添加资源")
+	@RequestOperateLog(description = "添加资源")
 	@PreAuthorize("hasAuthority('sys:resource:save')")
 	@PostMapping
 	public Result<ResourceVO> saveResource(@Valid @RequestBody ResourceDTO resourceDTO) {
@@ -69,7 +69,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据id删除资源")
-	@SysOperateLog(description = "根据id删除资源")
+	@RequestOperateLog(description = "根据id删除资源")
 	@PreAuthorize("hasAuthority('sys:resource:delete')")
 	@DeleteMapping("/{id:[0-9]*}")
 	public Result<Boolean> deleteResource(@PathVariable(value = "id") Long id) {
@@ -78,7 +78,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("修改资源")
-	@SysOperateLog(description = "修改资源")
+	@RequestOperateLog(description = "修改资源")
 	@PreAuthorize("hasAuthority('sys:resource:update')")
 	@PutMapping("/{id:[0-9]*}")
 	public Result<ResourceVO> updateResource(@PathVariable(value = "id") Long id,
@@ -91,7 +91,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据id查询资源是否存在")
-	@SysOperateLog(description = "根据id查询资源是否存在")
+	@RequestOperateLog(description = "根据id查询资源是否存在")
 	@PreAuthorize("hasAuthority('sys:resource:exists:phone')")
 	@GetMapping("/exists/id")
 	public Result<Boolean> existsByPhone(@NotNull(message = "资源id不能为空")
@@ -101,7 +101,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据名称查询资源是否存在")
-	@SysOperateLog(description = "根据名称查询资源是否存在")
+	@RequestOperateLog(description = "根据名称查询资源是否存在")
 	@PreAuthorize("hasAuthority('sys:resource:exists:phone')")
 	@GetMapping("/exists/name")
 	public Result<Boolean> existsByName(@NotBlank(message = "资源名称不能为空")
@@ -111,7 +111,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据id获取资源信息")
-	@SysOperateLog(description = "根据id获取资源信息")
+	@RequestOperateLog(description = "根据id获取资源信息")
 	@PreAuthorize("hasAuthority('sys:resource:info:id')")
 	@GetMapping("/info/id")
 	public Result<ResourceVO> findResourceById(@NotNull(message = "资源id不能为空")
@@ -122,7 +122,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据名称获取资源信息")
-	@SysOperateLog(description = "根据名称获取资源信息")
+	@RequestOperateLog(description = "根据名称获取资源信息")
 	@PreAuthorize("hasAuthority('sys:resource:info:name')")
 	@GetMapping("/info/name")
 	public Result<ResourceVO> findResourceByName(@NotBlank(message = "资源名称不能为空")
@@ -133,7 +133,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("分页查询资源集合")
-	@SysOperateLog(description = "分页查询资源集合")
+	@RequestOperateLog(description = "分页查询资源集合")
 	@PreAuthorize("hasAuthority('sys:resource:view:page')")
 	@GetMapping(value = "/page")
 	public PageResult<ResourceVO> findResourcePage(@Validated @NotNull ResourcePageQuery resourceQuery) {
@@ -145,7 +145,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("查询所有资源列表")
-	@SysOperateLog(description = "查询所有资源列表")
+	@RequestOperateLog(description = "查询所有资源列表")
 	@PreAuthorize("hasAuthority('sys:resource:list')")
 	@GetMapping
 	public Result<List<ResourceVO>> findAllResources() {
@@ -155,7 +155,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据角色id获取资源列表")
-	@SysOperateLog(description = "根据角色id获取资源列表")
+	@RequestOperateLog(description = "根据角色id获取资源列表")
 	@PreAuthorize("hasAuthority('sys:resource:info:roleId')")
 	@SentinelResource(value = "findResourceByRoleId", blockHandler = "findResourceByRoleIdException")
 	@GetMapping("/info/roleId")
@@ -169,7 +169,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据角色id列表获取角色列表")
-	@SysOperateLog(description = "根据角色id列表获取角色列表")
+	@RequestOperateLog(description = "根据角色id列表获取角色列表")
 	@PreAuthorize("hasAuthority('sys:resource:info:roleIds')")
 	@GetMapping("/info/roleIds")
 	public Result<List<ResourceVO>> findResourceByRoleIds(@NotNull(message = "用户id列表不能为空")
@@ -180,7 +180,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据角色code获取资源列表")
-	@SysOperateLog(description = "根据角色code获取资源列表")
+	@RequestOperateLog(description = "根据角色code获取资源列表")
 	@PreAuthorize("hasAuthority('sys:resource:info:code')")
 	@GetMapping("/info/code")
 	public Result<List<ResourceVO>> findResourceByCode(@NotNull(message = "角色code不能为空")
@@ -193,7 +193,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("根据角色code列表获取角色列表")
-	@SysOperateLog(description = "根据角色cde列表获取角色列表")
+	@RequestOperateLog(description = "根据角色cde列表获取角色列表")
 	@PreAuthorize("hasAuthority('sys:resource:info:codes')")
 	@GetMapping("/info/codes")
 	public Result<List<ResourceVO>> findResourceByCodes(@NotNull(message = "角色cde列表不能为空")
@@ -216,7 +216,7 @@ public class SysResourceController {
 	// }
 
 	@ApiOperation("获取当前用户菜单列表")
-	@SysOperateLog(description = "获取当前用户菜单列表")
+	@RequestOperateLog(description = "获取当前用户菜单列表")
 	@PreAuthorize("hasAuthority('sys:resource:current:user')")
 	@GetMapping("/info/current/user")
 	public Result<List<ResourceVO>> findCurrentUserResource() {
@@ -228,7 +228,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("获取当前用户树形菜单列表")
-	@SysOperateLog(description = "获取当前用户树形菜单列表")
+	@RequestOperateLog(description = "获取当前用户树形菜单列表")
 	@PreAuthorize("hasAuthority('sys:resource:current:user:tree')")
 	@GetMapping("/info/current/user/tree")
 	public Result<List<ResourceTree>> findCurrentUserResourceTree(@RequestParam(value = "parentId") Long parentId) {
@@ -244,7 +244,7 @@ public class SysResourceController {
 
 	@ApiOperation("获取树形菜单集合 1.false-非懒加载，查询全部 " +
 		"2.true-懒加载，根据parentId查询 2.1 父节点为空，则查询parentId=0")
-	@SysOperateLog(description = "获取树形菜单集合")
+	@RequestOperateLog(description = "获取树形菜单集合")
 	@PreAuthorize("hasAuthority('sys:resource:info:tree')")
 	@GetMapping("/info/tree")
 	@SentinelResource(value = "findResourceTree", blockHandler = "testSeataException")
@@ -255,7 +255,7 @@ public class SysResourceController {
 	}
 
 	@ApiOperation("测试分布式事务")
-	@SysOperateLog(description = "测试分布式事务")
+	@RequestOperateLog(description = "测试分布式事务")
 	@GetMapping("/test/seata")
 	@SentinelResource(value = "testSeata", blockHandler = "testSeataException")
 	public Result<Boolean> testSeata() {

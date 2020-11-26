@@ -15,7 +15,7 @@
  */
 package com.taotao.cloud.log;
 
-import com.taotao.cloud.log.properties.SysLogProperties;
+import com.taotao.cloud.log.properties.RequestLogProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
@@ -25,6 +25,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @date 2020/7/29 14:18
  * @since v1.0
  */
-@EnableConfigurationProperties({SysLogProperties.class})
+@EnableConfigurationProperties({RequestLogProperties.class})
 public class PropertiesAutoConfiguration {
 }

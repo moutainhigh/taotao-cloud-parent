@@ -13,33 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.properties;
+package com.taotao.cloud.log.annotation;
 
-import com.taotao.cloud.common.enums.LogTypeEnum;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import com.taotao.cloud.log.component.RequestLogComponent;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * 审计日志配置
+ * 开启syslog
  *
  * @author dengtao
- * @date 2020/5/2 11:19
+ * @date 2020/5/3 07:47
  * @since v1.0
  */
-@Data
-@RefreshScope
-@ConfigurationProperties(prefix = "taotao.cloud.log")
-public class SysLogProperties {
-
-    /**
-     * 是否开启审计日志
-     */
-    private Boolean enabled = false;
-
-    /**
-     * 日志记录类型(logger/redis/kafka)
-     */
-    private String type = LogTypeEnum.LOGGER.getName();
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({RequestLogComponent.class})
+public @interface EnableTaoTaoCloudRequestLog {
 
 }

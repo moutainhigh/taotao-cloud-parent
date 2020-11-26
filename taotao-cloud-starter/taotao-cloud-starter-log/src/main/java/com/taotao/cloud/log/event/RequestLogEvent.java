@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.service;
+package com.taotao.cloud.log.event;
 
-import com.taotao.cloud.log.model.SysLog;
+import com.taotao.cloud.log.model.RequestLog;
+import org.springframework.context.ApplicationEvent;
 
 /**
- * 日志接口
+ * 系统日志事件
  *
  * @author dengtao
- * @date 2020/5/2 11:18
+ * @date 2020/6/3 13:33
  * @since v1.0
  */
-public interface ISysLogService {
+public class RequestLogEvent extends ApplicationEvent {
 
-    /**
-     * 添加日志
-     *
-     * @param sysLog sysLog
-     * @author dengtao
-     * @date 2020/4/27 16:52
-     */
-    void save(SysLog sysLog);
+    public RequestLogEvent(RequestLog requestLog) {
+        super(requestLog);
+    }
 }

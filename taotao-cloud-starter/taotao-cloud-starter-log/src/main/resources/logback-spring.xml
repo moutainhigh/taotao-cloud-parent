@@ -65,28 +65,27 @@
                 <pattern>
                     <pattern>
                         {
-                        "applicationName": "${APP_NAME:-}",
-                        "serverIp": "${SERVER_IP:0.0.0.0}",
-                        "serverPort": "${SERVER_PORT:-}",
+                        "application_name": "${APP_NAME:-}",
+                        "trace_id": "%X{t-traceId:-}",
+                        "server_ip": "${SERVER_IP:0.0.0.0}",
+                        "server_port": "${SERVER_PORT:-}",
                         "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
                         "thread": "%thread",
                         "pid": "${PID:-}",
-                        "traceId": "%X{t-traceId:-}",
-                        "parentSpanId" : "%X{X-B3-ParentSpanId:-}",
-                        "spanId": "%X{X-B3-SpanId:-}",
+                        "parent_span_id" : "%X{X-B3-ParentSpanId:-}",
+                        "span_id": "%X{X-B3-SpanId:-}",
                         "exportable": "%X{X-Span-Export:-}",
                         "logger": "%logger",
                         "level": "%p",
                         "message": "%msg",
                         "host": "${SERVER_IP:0.0.0.0}",
-                        "serverName": "${APP_NAME:-}",
-                        "stackTrace": "%ex"
+                        "stack_trace": "%ex"
                         }
                     </pattern>
                 </pattern>
             </providers>
         </encoder>
-        <topic>taotao-cloud-sys-log-topic-${APP_NAME}</topic>
+        <topic>taotao-cloud-sys-log</topic>
         <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
         <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
         <producerConfig>bootstrap.servers=${BOOTSTRAP_SERVERS}</producerConfig>

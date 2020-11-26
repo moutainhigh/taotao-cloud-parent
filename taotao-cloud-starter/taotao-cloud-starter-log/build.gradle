@@ -20,6 +20,7 @@ dependencies {
 
     implementation "com.github.danielwegener:logback-kafka-appender:0.2.0-RC1"
     implementation "net.logstash.logback:logstash-logback-encoder:5.1"
+    implementation 'com.alibaba:fastjson:1.2.70'
 
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'

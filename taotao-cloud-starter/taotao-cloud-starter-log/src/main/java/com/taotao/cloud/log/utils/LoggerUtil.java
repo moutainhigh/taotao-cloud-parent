@@ -15,7 +15,7 @@
  */
 package com.taotao.cloud.log.utils;
 
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import lombok.experimental.UtilityClass;
 import org.aspectj.lang.JoinPoint;
 
@@ -54,7 +54,7 @@ public class LoggerUtil {
             if (method.getName().equals(methodName)) {
                 Class<?>[] clazzs = method.getParameterTypes();
                 if (clazzs.length == args.length) {
-                    description = method.getAnnotation(SysOperateLog.class).description();
+                    description = method.getAnnotation(RequestOperateLog.class).description();
                     break;
                 }
             }

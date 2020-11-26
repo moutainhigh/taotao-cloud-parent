@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.annotation;
+package com.taotao.cloud.log.service.impl;
 
-import com.taotao.cloud.log.component.SysLogComponent;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.taotao.cloud.log.model.RequestLog;
+import com.taotao.cloud.log.service.IRequestLogService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 开启syslog
+ * 审计日志实现类-logger
  *
  * @author dengtao
- * @date 2020/5/3 07:47
+ * @date 2020/5/2 11:18
  * @since v1.0
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({SysLogComponent.class})
-public @interface EnableTaoTaoCloudSysLog {
+@Slf4j
+public class LoggerRequestLogServiceImpl implements IRequestLogService {
 
+    @Override
+    public void save(RequestLog requestLog) {
+        log.info("本地日志记录成功：{}", requestLog);
+    }
 }

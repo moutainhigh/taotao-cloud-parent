@@ -15,9 +15,9 @@
  */
 package com.taotao.cloud.log.service.impl;
 
-import com.taotao.cloud.common.utils.GsonUtil;
-import com.taotao.cloud.log.model.SysLog;
-import com.taotao.cloud.log.service.ISysLogService;
+import com.alibaba.fastjson.JSON;
+import com.taotao.cloud.log.model.RequestLog;
+import com.taotao.cloud.log.service.IRequestLogService;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter;
  * @since v1.0
  */
 @Slf4j
-public class RedisSysLogServiceImpl implements ISysLogService {
+public class RedisRequestLogServiceImpl implements IRequestLogService {
 
     private final static String SYS_LOG = "sys:log:request:";
 
@@ -42,13 +42,13 @@ public class RedisSysLogServiceImpl implements ISysLogService {
     private RedisRepository redisRepository;
 
     @Override
-    public void save(SysLog sysLog) {
+    public void save(RequestLog requestLog) {
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault()).format(Instant.now());
-        Long index = redisRepository.leftPush(SYS_LOG + date, GsonUtil.toGson(sysLog));
+        Long index = redisRepository.leftPush(SYS_LOG + date, JSON.toJSONString(requestLog));
         if (index > 0) {
-            log.info("redis远程日志记录成功：{}", sysLog.getActionUrl());
+            log.info("redis远程日志记录成功：{}", requestLog);
         } else {
-            log.error("redis远程日志记录失败：{}", sysLog);
+            log.error("redis远程日志记录失败：{}", requestLog);
         }
     }
 }

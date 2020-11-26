@@ -25,9 +25,9 @@ import com.taotao.cloud.common.enums.LogOperateTypeEnum;
 import com.taotao.cloud.common.utils.AddrUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.utils.SecurityUtil;
-import com.taotao.cloud.log.event.SysLogEvent;
-import com.taotao.cloud.log.model.SysLog;
-import com.taotao.cloud.log.properties.SysLogProperties;
+import com.taotao.cloud.log.event.RequestLogEvent;
+import com.taotao.cloud.log.model.RequestLog;
+import com.taotao.cloud.log.properties.RequestLogProperties;
 import com.taotao.cloud.log.utils.LoggerUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,9 +46,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -66,35 +66,35 @@ import java.util.Objects;
 @Slf4j
 @Aspect
 @AllArgsConstructor
-public class SysLogAspect {
+public class RequestLogAspect {
 
 	@Value("${spring.application.name}")
 	private String applicationName;
 
 	@Resource
-	private SysLogProperties sysLogProperties;
+	private RequestLogProperties requestLogProperties;
 
 	private final ApplicationEventPublisher publisher;
 
 	/**
 	 * log实体类
 	 **/
-	private final TransmittableThreadLocal<SysLog> SYS_LOG_THREAD_LOCAL = new TransmittableThreadLocal<>();
+	private final TransmittableThreadLocal<RequestLog> SYS_LOG_THREAD_LOCAL = new TransmittableThreadLocal<>();
 
 	/**
 	 * 事件发布是由ApplicationContext对象管控的，我们发布事件前需要注入ApplicationContext对象调用publishEvent方法完成事件发布
 	 *
 	 * @param publisher publisher
 	 */
-	public SysLogAspect(ApplicationEventPublisher publisher) {
+	public RequestLogAspect(ApplicationEventPublisher publisher) {
 		this.publisher = publisher;
 	}
 
 	/***
 	 * 定义controller切入点拦截规则，拦截SysLog注解的方法
 	 */
-	@Pointcut("@annotation(com.taotao.cloud.log.annotation.SysOperateLog)")
-	public void sysLogAspect() {
+	@Pointcut("@annotation(com.taotao.cloud.log.annotation.RequestOperateLog)")
+	public void requestLogAspect() {
 
 	}
 
@@ -102,66 +102,65 @@ public class SysLogAspect {
 	 * 拦截控制层的操作日志
 	 * @param joinPoint joinPoint
 	 */
-	@Before(value = "sysLogAspect()")
+	@Before(value = "requestLogAspect()")
 	public void recordLog(JoinPoint joinPoint) throws Throwable {
-		if (sysLogProperties.getEnabled()) {
-			SysLog sysLog = new SysLog();
-			SYS_LOG_THREAD_LOCAL.set(sysLog);
+		if (requestLogProperties.getEnabled()) {
+			RequestLog requestLog = new RequestLog();
+			SYS_LOG_THREAD_LOCAL.set(requestLog);
 			ServletRequestAttributes attributes = (ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
 			RequestContextHolder.setRequestAttributes(attributes, true);
 			HttpServletRequest request = attributes.getRequest();
-			sysLog.setApplicationName(applicationName);
-			sysLog.setStartTime(LocalDateTime.now());
-			sysLog.setTraceId(MDC.get(CommonConstant.TRACE_ID));
-			sysLog.setRequestIp(AddrUtil.getRemoteAddr(request));
-			sysLog.setClientId(SecurityUtil.getClientId());
-			sysLog.setUserId(SecurityUtil.getUserId());
-			sysLog.setUserName(SecurityUtil.getUsername());
-			sysLog.setActionUrl(URLUtil.getPath(request.getRequestURI()));
-			sysLog.setRequestMethod(request.getMethod());
-			sysLog.setUa(request.getHeader("user-agent"));
+			requestLog.setApplicationName(applicationName);
+			requestLog.setStartTime(Timestamp.valueOf(LocalDateTime.now()).getTime());
+			requestLog.setTraceId(MDC.get(CommonConstant.TRACE_ID));
+			requestLog.setRequestIp(AddrUtil.getRemoteAddr(request));
+			requestLog.setClientId(SecurityUtil.getClientId());
+			requestLog.setUserId(SecurityUtil.getUserId());
+			requestLog.setUsername(SecurityUtil.getUsername());
+			requestLog.setActionUrl(URLUtil.getPath(request.getRequestURI()));
+			requestLog.setRequestMethod(request.getMethod());
+			requestLog.setUa(request.getHeader("user-agent"));
 			Object[] args = joinPoint.getArgs();
-			sysLog.setClassPath(joinPoint.getTarget().getClass().getName());
+			requestLog.setClasspath(joinPoint.getTarget().getClass().getName());
 			String name = joinPoint.getSignature().getName();
-			sysLog.setActionMethod(name);
+			requestLog.setActionMethod(name);
 
-			sysLog.setParams(Arrays.toString(args));
-			sysLog.setOperateType(LogUtil.getOperateType(name));
-			sysLog.setDescription(LoggerUtil.getControllerMethodDescription(joinPoint));
+			requestLog.setParams(Arrays.toString(args));
+			requestLog.setOperateType(LogUtil.getOperateType(name));
+			requestLog.setDescription(LoggerUtil.getControllerMethodDescription(joinPoint));
 		}
 	}
 
-	@AfterReturning(returning = "ret", pointcut = "sysLogAspect()")
+	@AfterReturning(returning = "ret", pointcut = "requestLogAspect()")
 	public void doAfterReturning(Object ret) {
-		SysLog sysLog = SYS_LOG_THREAD_LOCAL.get();
-		if (Objects.nonNull(sysLog)) {
+		RequestLog requestLog = SYS_LOG_THREAD_LOCAL.get();
+		if (Objects.nonNull(requestLog)) {
 			R r = Convert.convert(R.class, ret);
 			if (r.getCode() == HttpStatus.OK.value()) {
-				sysLog.setType(LogOperateTypeEnum.OPERATE_RECORD.getValue());
+				requestLog.setType(LogOperateTypeEnum.OPERATE_RECORD.getValue());
 			} else {
-				sysLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
-				sysLog.setExDetail(r.getMsg());
+				requestLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
+				requestLog.setExDetail(r.getMsg());
 			}
-			sysLog.setTenantId(TenantContextHolder.getTenant());
-			sysLog.setFinishTime(LocalDateTime.now());
+			requestLog.setTenantId(TenantContextHolder.getTenant());
+			requestLog.setFinishTime(Timestamp.valueOf(LocalDateTime.now()).getTime());
 			long endTime = Instant.now().toEpochMilli();
-			sysLog.setConsumingTime(endTime - sysLog.getStartTime().toInstant(ZoneOffset.of("+8")).toEpochMilli());
+			requestLog.setConsumingTime(endTime - requestLog.getStartTime());
 
-			publisher.publishEvent(new SysLogEvent(sysLog));
+			publisher.publishEvent(new RequestLogEvent(requestLog));
 			SYS_LOG_THREAD_LOCAL.remove();
 		}
 	}
 
-	@AfterThrowing(pointcut = "sysLogAspect()", throwing = "e")
+	@AfterThrowing(pointcut = "requestLogAspect()", throwing = "e")
 	public void doAfterThrowable(Throwable e) {
-		SysLog sysLog = SYS_LOG_THREAD_LOCAL.get();
-		if (Objects.nonNull(sysLog)) {
-			sysLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
-			sysLog.setExDetail(LogUtil.getStackTrace(e));
-			sysLog.setExDesc(e.getMessage());
-			publisher.publishEvent(new SysLogEvent(sysLog));
+		RequestLog requestLog = SYS_LOG_THREAD_LOCAL.get();
+		if (Objects.nonNull(requestLog)) {
+			requestLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
+			requestLog.setExDetail(LogUtil.getStackTrace(e));
+			requestLog.setExDesc(e.getMessage());
+			publisher.publishEvent(new RequestLogEvent(requestLog));
 			SYS_LOG_THREAD_LOCAL.remove();
 		}
 	}
-
 }

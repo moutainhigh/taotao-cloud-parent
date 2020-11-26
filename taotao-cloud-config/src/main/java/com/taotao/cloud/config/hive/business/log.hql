@@ -319,61 +319,107 @@ create external TABLE if not exists taotao_cloud_access_log_parquet
     stored as parquet
     location "/taotao/cloud/access/log/parquet";
 
+-- 系统请求日志源数据表
+create external TABLE if not exists taotao_cloud_request_log_source
+(
+    trace_id          string comment '请求日志id',
+    application_name  string comment '服务名称',
+    request_ip        string comment '请求IP',
+    type              int comment '操作类型 1 操作记录 2异常记录',
+    username          string comment '操作人name',
+    user_id           bigint comment '操作人ID',
+    client_id         string comment '客户端ID',
+    description       string comment '操作描述',
+    action_method     string comment '请求方法',
+    action_url        string comment '请求url',
+    params            string comment '请求参数',
+    ua                string comment '浏览器',
+    classpath         string comment '类路径',
+    request_method    string comment '请求方法',
+    operate_type      int comment '操作类型（1查询/获取，2添加，3修改，4删除）',
+    start_time        timestamp comment '开始时间',
+    finish_time       timestamp comment '完成时间',
+    consuming_time    bigint comment '消耗时间',
+    ex_detail         string comment '异常详情信息 堆栈信息',
+    ex_desc           string comment '异常描述 e.getMessage',
+    tenant_id         string comment '租户id'
+)
+partitioned by (logday string)
+row format serde "org.openx.data.jsonserde.JsonSerDe"
+with serdepoperties ('ingore.malformed.json' = 'true')
+location "/taotao/cloud/request/log/sources";
 
--- 系统访问日志源数据表
+-- 系统请求日志源数据表
+create external TABLE if not exists taotao_cloud_request_log_parquet
+(
+    trace_id          string comment '请求日志id',
+    application_name  string comment '服务名称',
+    request_ip        string comment '请求IP',
+    type              int comment '操作类型 1 操作记录 2异常记录',
+    username          string comment '操作人name',
+    user_id           bigint comment '操作人ID',
+    client_id         string comment '客户端ID',
+    description       string comment '操作描述',
+    action_method     string comment '请求方法',
+    action_url        string comment '请求url',
+    params            string comment '请求参数',
+    ua                string comment '浏览器',
+    classpath         string comment '类路径',
+    request_method    string comment '请求方法',
+    operate_type      int comment '操作类型（1查询/获取，2添加，3修改，4删除）',
+    start_time        bigint comment '开始时间',
+    finish_time       bigint comment '完成时间',
+    consuming_time    bigint comment '消耗时间',
+    ex_detail         string comment '异常详情信息 堆栈信息',
+    ex_desc           string comment '异常描述 e.getMessage',
+    tenant_id         string comment '租户id'
+)
+partitioned by (logday string)
+stored as parquet
+location "/taotao/cloud/request/log/parquet";
+
+-- 系统日志源数据表
 create external TABLE if not exists taotao_cloud_sys_log_source
 (
-    traceId         string comment '请求日志id',
-    applicationName string comment '服务名称',
-    requestIp       string comment '请求IP',
-    type            string comment '操作类型 1 操作记录 2异常记录',
-    userName        string comment '操作人name',
-    userId          string comment '操作人ID',
-    clientId        string comment '客户端ID',
-    description     string comment '操作描述',
-    actionMethod    string comment '请求方法',
-    actionUrl       string comment '请求url',
-    params          string comment '请求参数',
-    ua              string comment '浏览器',
-    classPath       string comment '类路径',
-    requestMethod   string comment '请求方法',
-    operateType     string comment '操作类型（1查询/获取，2添加，3修改，4删除）',
-    startTime       string comment '开始时间',
-    finishTime      string comment '完成时间',
-    consumingTime   string comment '消耗时间',
-    exDetail        string comment '异常详情信息 堆栈信息',
-    exDesc          string comment '异常描述 e.getMessage',
-    tenantId        string comment '租户id'
+    application_name string comment '服务名称',
+    trace_id         string comment '请求日志id',
+    server_ip        string comment '服务器ip',
+    server_port      string comment '服务器端口',
+    timestamp        timestamp comment '时间戳',
+    thread           string comment '线程',
+    pid              string comment 'pid',
+    parent_span_id   string comment 'parentSpanId',
+    span_id          string comment 'span_id',
+    exportable       string comment 'exportable',
+    logger           string comment 'logger',
+    level            string comment 'level',
+    message          string comment 'message',
+    host             string comment 'host',
+    stack_trace      string comment 'stack_trace'
 )
 partitioned by (logday string)
 row format serde "org.openx.data.jsonserde.JsonSerDe"
 with serdepoperties ('ingore.malformed.json' = 'true')
 location "/taotao/cloud/sys/log/sources";
 
--- 系统访问日志源数据表
+-- 系统日志parquet数据表
 create external TABLE if not exists taotao_cloud_sys_log_parquet
 (
-    traceId         string comment '请求日志id',
-    applicationName string comment '服务名称',
-    requestIp       string comment '请求IP',
-    type            string comment '操作类型 1 操作记录 2异常记录',
-    userName        string comment '操作人name',
-    userId          string comment '操作人ID',
-    clientId        string comment '客户端ID',
-    description     string comment '操作描述',
-    actionMethod    string comment '请求方法',
-    actionUrl       string comment '请求url',
-    params          string comment '请求参数',
-    ua              string comment '浏览器',
-    classPath       string comment '类路径',
-    requestMethod   string comment '请求方法',
-    operateType     string comment '操作类型（1查询/获取，2添加，3修改，4删除）',
-    startTime       string comment '开始时间',
-    finishTime      string comment '完成时间',
-    consumingTime   string comment '消耗时间',
-    exDetail        string comment '异常详情信息 堆栈信息',
-    exDesc          string comment '异常描述 e.getMessage',
-    tenantId        string comment '租户id'
+      application_name string comment '服务名称',
+      trace_id         string comment '请求日志id',
+      server_ip        string comment '服务器ip',
+      server_port      string comment '服务器端口',
+      timestamp        timestamp comment '时间戳',
+      thread           string comment '线程',
+      pid              string comment 'pid',
+      parent_span_id   string comment 'parentSpanId',
+      span_id          string comment 'span_id',
+      exportable       string comment 'exportable',
+      logger           string comment 'logger',
+      level            string comment 'level',
+      message          string comment 'message',
+      host             string comment 'host',
+      stack_trace      string comment 'stack_trace'
 )
 partitioned by (logday string)
 stored as parquet

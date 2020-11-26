@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.service.impl;
+package com.taotao.cloud.log.annotation;
 
-import com.taotao.cloud.log.model.SysLog;
-import com.taotao.cloud.log.service.ISysLogService;
-import lombok.extern.slf4j.Slf4j;
+
+import java.lang.annotation.*;
 
 /**
- * 审计日志实现类-logger
+ * 系统操作记录
  *
  * @author dengtao
- * @date 2020/5/2 11:18
+ * @date 2020/6/3 13:32
  * @since v1.0
  */
-@Slf4j
-public class LoggerSysLogServiceImpl implements ISysLogService {
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+@Documented
+public @interface RequestOperateLog {
 
-    @Override
-    public void save(SysLog sysLog) {
-        log.info("本地日志记录成功：{}", sysLog);
-    }
+    /**
+     * 功能描述
+     */
+    String description() default "";
 }

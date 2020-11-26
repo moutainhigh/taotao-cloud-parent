@@ -29,6 +29,14 @@ LOG_PARQUET_SQL="
     logday
   from taotao_cloud_sys_log_sources
   where logday=${exec_date};
+
+  insert overwrite table taotao_cloud_request_log_parquet
+  partition(logday)
+  select
+    * ,
+    logday
+  from taotao_cloud_request_log_sources
+  where logday=${exec_date};
 "
 
 echo "${LOG_PARQUET_SQL}"

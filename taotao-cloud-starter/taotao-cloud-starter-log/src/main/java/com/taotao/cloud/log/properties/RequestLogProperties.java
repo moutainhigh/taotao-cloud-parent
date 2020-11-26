@@ -13,21 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.event;
+package com.taotao.cloud.log.properties;
 
-import com.taotao.cloud.log.model.SysLog;
-import org.springframework.context.ApplicationEvent;
+import com.taotao.cloud.common.enums.LogTypeEnum;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * 系统日志事件
+ * 审计日志配置
  *
  * @author dengtao
- * @date 2020/6/3 13:33
+ * @date 2020/5/2 11:19
  * @since v1.0
  */
-public class SysLogEvent extends ApplicationEvent {
+@Data
+@RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.log")
+public class RequestLogProperties {
 
-    public SysLogEvent(SysLog sysLog) {
-        super(sysLog);
-    }
+    /**
+     * 是否开启审计日志
+     */
+    private Boolean enabled = false;
+
+    /**
+     * 日志记录类型(logger/redis/kafka)
+     */
+    private String type = LogTypeEnum.LOGGER.getName();
+
 }

@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.log.annotation;
+package com.taotao.cloud.log.service;
 
-
-import java.lang.annotation.*;
+import com.taotao.cloud.log.model.RequestLog;
 
 /**
- * 系统操作记录
+ * 日志接口
  *
  * @author dengtao
- * @date 2020/6/3 13:32
+ * @date 2020/5/2 11:18
  * @since v1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-@Documented
-public @interface SysOperateLog {
+public interface IRequestLogService {
 
     /**
-     * 功能描述
+     * 添加日志
+     *
+     * @param requestLog sysLog
+     * @author dengtao
+     * @date 2020/4/27 16:52
      */
-    String description() default "";
+    void save(RequestLog requestLog);
 }

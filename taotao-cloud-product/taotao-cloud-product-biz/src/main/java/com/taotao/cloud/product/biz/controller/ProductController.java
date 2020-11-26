@@ -1,7 +1,7 @@
 package com.taotao.cloud.product.biz.controller;
 
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.product.api.dto.ProductDTO;
 import com.taotao.cloud.product.api.vo.ProductVO;
 import com.taotao.cloud.product.biz.entity.Product;
@@ -35,7 +35,7 @@ public class ProductController {
 	private final IProductService productInfoService;
 
 	@ApiOperation("根据id查询商品信息")
-	@SysOperateLog(description = "根据id查询商品信息")
+	@RequestOperateLog(description = "根据id查询商品信息")
 	@PreAuthorize("hasAuthority('product:info:id')")
 	@GetMapping(value = "/info/id/{id:[0-9]*}")
 	Result<ProductVO> findProductInfoById(@PathVariable("id") Long id) {
@@ -45,7 +45,7 @@ public class ProductController {
 	}
 
 	@ApiOperation("添加商品信息")
-	@SysOperateLog(description = "添加商品信息")
+	@RequestOperateLog(description = "添加商品信息")
 	@PreAuthorize("hasAuthority('product:info:save')")
 	@PostMapping
 	Result<ProductVO> saveProduct(@Validated @RequestBody ProductDTO productDTO) {

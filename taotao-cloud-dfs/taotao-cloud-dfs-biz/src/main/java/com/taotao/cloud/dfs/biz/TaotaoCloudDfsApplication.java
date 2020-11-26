@@ -4,7 +4,7 @@ import com.taotao.cloud.core.annotation.EnableTaoTaoCloudMVC;
 import com.taotao.cloud.data.jpa.annotation.EnableTaoTaoCloudJPA;
 import com.taotao.cloud.file.annotation.EnableTaoTaoCloudFile;
 import com.taotao.cloud.job.annotation.EnableTaoTaoCloudXxlJob;
-import com.taotao.cloud.log.annotation.EnableTaoTaoCloudSysLog;
+import com.taotao.cloud.log.annotation.EnableTaoTaoCloudRequestLog;
 import com.taotao.cloud.p6spy.annotation.EnableTaoTaoCloudP6spy;
 import com.taotao.cloud.redis.annotation.EnableTaoTaoCloudRedis;
 import com.taotao.cloud.ribbon.annotation.EnableTaoTaoCloudFeign;
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTaoTaoCloudFeign
 @EnableTaoTaoCloudMVC
 @EnableTaoTaoCloudXxlJob
-@EnableTaoTaoCloudSysLog
+@EnableTaoTaoCloudRequestLog
 @EnableTaoTaoCloudRedis
 @EnableTaoTaoCloudSeata
 @EnableTaoTaoCloudSentinel

@@ -2,7 +2,7 @@ package com.taotao.cloud.uc.biz.controller;
 
 import com.taotao.cloud.core.model.PageResult;
 import com.taotao.cloud.core.model.Result;
-import com.taotao.cloud.log.annotation.SysOperateLog;
+import com.taotao.cloud.log.annotation.RequestOperateLog;
 import com.taotao.cloud.uc.api.dto.role.RoleDTO;
 import com.taotao.cloud.uc.api.dto.role.RoleResourceDTO;
 import com.taotao.cloud.uc.api.query.role.RolePageQuery;
@@ -46,7 +46,7 @@ public class SysRoleController {
     private final ISysRoleService sysRoleService;
 
     @ApiOperation("根据id获取角色信息")
-    @SysOperateLog(description = "根据id获取角色信息")
+    @RequestOperateLog(description = "根据id获取角色信息")
     @PreAuthorize("hasAuthority('sys:role:info:id')")
     @GetMapping("/info/id/{id:[0-9]*}")
     public Result<RoleVO> findRoleById(@PathVariable(value = "id") Long id) {
@@ -56,7 +56,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据code查询角色是否存在")
-    @SysOperateLog(description = "根据code查询角色是否存在")
+    @RequestOperateLog(description = "根据code查询角色是否存在")
     @PreAuthorize("hasAuthority('sys:role:exist:code')")
     @GetMapping("/exist/code/{code}")
     public Result<Boolean> existRoleByCode(@PathVariable(value = "code") String code) {
@@ -65,7 +65,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据code获取角色信息")
-    @SysOperateLog(description = "根据code获取角色信息")
+    @RequestOperateLog(description = "根据code获取角色信息")
     @PreAuthorize("hasAuthority('sys:role:info:code')")
     @GetMapping("/info/code")
     public Result<RoleVO> findRoleByCode(@NotNull(message = "code不能为空")
@@ -76,7 +76,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据code列表获取角色信息")
-    @SysOperateLog(description = "根据code列表获取角色信息")
+    @RequestOperateLog(description = "根据code列表获取角色信息")
     @PreAuthorize("hasAuthority('sys:role:info:code')")
     @GetMapping("/info/codes")
     public Result<List<RoleVO>> findRoleByCodes(@NotNull(message = "cde列表不能为空")
@@ -88,7 +88,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("添加角色")
-    @SysOperateLog(description = "添加角色")
+    @RequestOperateLog(description = "添加角色")
     @PreAuthorize("hasAuthority('sys:role:save')")
     @PostMapping
     public Result<Boolean> saveRole(@Valid @RequestBody RoleDTO roleDTO) {
@@ -97,7 +97,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("修改角色")
-    @SysOperateLog(description = "修改角色")
+    @RequestOperateLog(description = "修改角色")
     @PreAuthorize("hasAuthority('sys:role:update')")
     @PostMapping("/{id:[0-9]*}")
     public Result<Boolean> updateRole(@PathVariable(value = "id") Long id,
@@ -107,7 +107,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据id删除角色")
-    @SysOperateLog(description = "根据id删除角色")
+    @RequestOperateLog(description = "根据id删除角色")
     @PreAuthorize("hasAuthority('sys:role:delete')")
     @DeleteMapping("/{id:[0-9]*}")
     public Result<Boolean> deleteRole(@PathVariable(value = "id") Long id) {
@@ -116,7 +116,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("分页查询角色集合")
-    @SysOperateLog(description = "分页查询角色集合")
+    @RequestOperateLog(description = "分页查询角色集合")
     @PreAuthorize("hasAuthority('sys:role:view:page')")
     @GetMapping(value = "/page")
     public PageResult<RoleVO> findRolePage(@Validated @NotNull RolePageQuery roleQuery) {
@@ -129,7 +129,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("查询所有角色列表")
-    @SysOperateLog(description = "查询所有角色列表")
+    @RequestOperateLog(description = "查询所有角色列表")
     @PreAuthorize("hasAuthority('sys:role:list')")
     @GetMapping
     public Result<List<RoleVO>> findAllRoles() {
@@ -140,7 +140,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据用户id获取角色列表")
-    @SysOperateLog(description = "根据用户id获取角色列表")
+    @RequestOperateLog(description = "根据用户id获取角色列表")
     //@PreAuthorize("hasAuthority('sys:role:info:userId')")
     @GetMapping("/info/userId")
     public Result<List<RoleVO>> findRoleByUserId(@NotNull(message = "用户id不能为空")
@@ -154,7 +154,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据用户id列表获取角色列表")
-    @SysOperateLog(description = "根据用户id列表获取角色列表")
+    @RequestOperateLog(description = "根据用户id列表获取角色列表")
     @PreAuthorize("hasAuthority('sys:role:info:userIds')")
     @GetMapping("/info/userIds")
     public Result<List<RoleVO>> findRoleByUserIds(@NotNull(message = "用户id列表不能为空")
@@ -166,7 +166,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("根据角色id更新资源信息(角色分配资源)")
-    @SysOperateLog(description = "根据角色id更新资源信息(角色分配资源)")
+    @RequestOperateLog(description = "根据角色id更新资源信息(角色分配资源)")
     @PreAuthorize("hasAuthority('sys:role:resource')")
     @PutMapping("/resource")
     public Result<Boolean> saveRoleResources(@Validated @RequestBody RoleResourceDTO roleResourceDTO) {
