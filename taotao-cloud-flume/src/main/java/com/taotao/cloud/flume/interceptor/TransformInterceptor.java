@@ -26,8 +26,8 @@ import java.util.Map;
  * @version v1.0.0
  * @date 2020/9/22 13:30
  */
-public class ParquetInterceptor implements Interceptor {
-	private static final Logger logger = LoggerFactory.getLogger(ParquetInterceptor.class);
+public class TransformInterceptor implements Interceptor {
+	private static final Logger logger = LoggerFactory.getLogger(TransformInterceptor.class);
 
 	private static final List<String> PREFIX = Arrays.asList("%", "_", "$");
 
@@ -109,7 +109,7 @@ public class ParquetInterceptor implements Interceptor {
 
 		@Override
 		public Interceptor build() {
-			return new ParquetInterceptor();
+			return new TransformInterceptor();
 		}
 
 		@Override

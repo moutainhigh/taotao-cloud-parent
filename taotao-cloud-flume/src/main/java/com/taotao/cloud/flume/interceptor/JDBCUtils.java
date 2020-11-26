@@ -16,6 +16,8 @@
 package com.taotao.cloud.flume.interceptor;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -28,12 +30,15 @@ import java.util.Properties;
  * @since v1.0
  */
 public class JDBCUtils {
+	private static final Logger logger = LoggerFactory.getLogger(JDBCUtils.class);
+
 	private static DataSource ds;
 
 	static {
 		try {
 			Properties pro = new Properties();
 			pro.load(JDBCUtils.class.getClassLoader().getResourceAsStream("druid.properties"));
+			logger.info(pro.toString());
 			ds = DruidDataSourceFactory.createDataSource(pro);
 		} catch (Exception e) {
 			e.printStackTrace();
