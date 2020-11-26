@@ -16,6 +16,8 @@
 package com.taotao.cloud.hbase.service;
 
 /**
+ * ProductService
+ *
  * @author dengtao
  * @date 2020/10/30 11:13
  * @since v1.0

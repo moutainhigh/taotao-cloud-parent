@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * MapReduceController
+ *
  * @author dengtao
  * @date 2020/10/30 17:39
  * @since v1.0
@@ -46,7 +48,7 @@ public class MapReduceController {
 	 */
 	@RequestMapping(value = "groupSort", method = RequestMethod.POST)
 	@ResponseBody
-	public Result groupSort(@RequestParam("jobName") String jobName, @RequestParam("inputPath") String inputPath)
+	public Result<String> groupSort(@RequestParam("jobName") String jobName, @RequestParam("inputPath") String inputPath)
 		throws Exception {
 		if (StringUtils.isEmpty(jobName) || StringUtils.isEmpty(inputPath)) {
 			return Result.failed("请求参数为空");

@@ -81,7 +81,7 @@ public class AccessLogTransformInterceptor implements Interceptor {
 			event.setBody(result.toJSONString().getBytes());
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			logger.error("error--------" + e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 

@@ -21,26 +21,18 @@ import java.io.IOException;
 public class SecondarySort {
 
     static class SecondarySortMapper extends Mapper<LongWritable, Text, OrderBean, NullWritable> {
-
         OrderBean bean = new OrderBean();
 
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
             String line = value.toString();
             String[] fields = StringUtils.split(line, ",");
-
             bean.set(new Text(fields[0]), new DoubleWritable(Double.parseDouble(fields[2])));
-
             context.write(bean, NullWritable.get());
-
         }
-
     }
 
     static class SecondarySortReducer extends Reducer<OrderBean, NullWritable, OrderBean, NullWritable> {
-
-
         //到达reduce时，相同id的所有bean已经被看成一组，且金额最大的那个一排在第一位
         @Override
         protected void reduce(OrderBean key, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
@@ -48,9 +40,7 @@ public class SecondarySort {
         }
     }
 
-
     public static void main(String[] args) throws Exception {
-
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf);
 
@@ -58,7 +48,6 @@ public class SecondarySort {
 
         job.setMapperClass(SecondarySortMapper.class);
         job.setReducerClass(SecondarySortReducer.class);
-
 
         job.setOutputKeyClass(OrderBean.class);
         job.setOutputValueClass(NullWritable.class);
@@ -75,7 +64,5 @@ public class SecondarySort {
         job.setNumReduceTasks(2);
 
         job.waitForCompletion(true);
-
     }
-
 }

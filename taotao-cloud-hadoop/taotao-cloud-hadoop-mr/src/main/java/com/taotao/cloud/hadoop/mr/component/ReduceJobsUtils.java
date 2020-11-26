@@ -44,7 +44,10 @@ public class ReduceJobsUtils {
 	/**
 	 * 获取HDFS配置信息
 	 *
-	 * @return
+	 * @return org.apache.hadoop.conf.Configuration
+	 * @author dengtao
+	 * @date 2020/11/26 下午8:11
+	 * @since v1.0
 	 */
 	public static Configuration getConfiguration() {
 		Configuration configuration = new Configuration();

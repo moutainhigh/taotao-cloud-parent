@@ -26,82 +26,84 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * HdfsServiceImpl
+ *
  * @author dengtao
  * @date 2020/10/29 15:18
  * @since v1.0
  */
 @Service
 public class HdfsServiceImpl implements HdfsService {
-    @Autowired
-    private HDFSUtil hdfsUtil;
+	@Autowired
+	private HDFSUtil hdfsUtil;
 
-    @Override
-    public boolean mkdir(String path) throws Exception {
-        return hdfsUtil.mkdir(path);
-    }
+	@Override
+	public boolean mkdir(String path) throws Exception {
+		return hdfsUtil.mkdir(path);
+	}
 
-    @Override
-    public boolean existFile(String path) throws Exception {
-        return hdfsUtil.existFile(path);
-    }
+	@Override
+	public boolean existFile(String path) throws Exception {
+		return hdfsUtil.existFile(path);
+	}
 
-    @Override
-    public List<Map<String, Object>> readPathInfo(String path) throws Exception {
-        return hdfsUtil.readPathInfo(path);
-    }
+	@Override
+	public List<Map<String, Object>> readPathInfo(String path) throws Exception {
+		return hdfsUtil.readPathInfo(path);
+	}
 
-    @Override
-    public void createFile(String path, MultipartFile file) throws Exception {
-        hdfsUtil.createFile(path, file);
-    }
+	@Override
+	public void createFile(String path, MultipartFile file) throws Exception {
+		hdfsUtil.createFile(path, file);
+	}
 
-    @Override
-    public String readFile(String path) throws Exception {
-        return hdfsUtil.readFile(path);
-    }
+	@Override
+	public String readFile(String path) throws Exception {
+		return hdfsUtil.readFile(path);
+	}
 
-    @Override
-    public List<Map<String, String>> listFile(String path) throws Exception {
-        return hdfsUtil.listFile(path);
-    }
+	@Override
+	public List<Map<String, String>> listFile(String path) throws Exception {
+		return hdfsUtil.listFile(path);
+	}
 
-    @Override
-    public boolean renameFile(String oldName, String newName) throws Exception {
-        return hdfsUtil.renameFile(oldName, newName);
-    }
+	@Override
+	public boolean renameFile(String oldName, String newName) throws Exception {
+		return hdfsUtil.renameFile(oldName, newName);
+	}
 
-    @Override
-    public boolean deleteFile(String path) throws Exception {
-        return hdfsUtil.deleteFile(path);
-    }
+	@Override
+	public boolean deleteFile(String path) throws Exception {
+		return hdfsUtil.deleteFile(path);
+	}
 
-    @Override
-    public void uploadFile(String path, String uploadPath) throws Exception {
-        hdfsUtil.uploadFile(path, uploadPath);
-    }
+	@Override
+	public void uploadFile(String path, String uploadPath) throws Exception {
+		hdfsUtil.uploadFile(path, uploadPath);
+	}
 
-    @Override
-    public void downloadFile(String path, String downloadPath) throws Exception {
-        hdfsUtil.downloadFile(path, downloadPath);
-    }
+	@Override
+	public void downloadFile(String path, String downloadPath) throws Exception {
+		hdfsUtil.downloadFile(path, downloadPath);
+	}
 
-    @Override
-    public void copyFile(String sourcePath, String targetPath) throws Exception {
-        hdfsUtil.copyFile(sourcePath, targetPath);
-    }
+	@Override
+	public void copyFile(String sourcePath, String targetPath) throws Exception {
+		hdfsUtil.copyFile(sourcePath, targetPath);
+	}
 
-    @Override
-    public byte[] openFileToBytes(String path) throws Exception {
-        return hdfsUtil.openFileToBytes(path);
-    }
+	@Override
+	public byte[] openFileToBytes(String path) throws Exception {
+		return hdfsUtil.openFileToBytes(path);
+	}
 
-    @Override
-    public <T> T openFileToObject(String path, Class<T> clazz) throws Exception {
-        return hdfsUtil.openFileToObject(path, clazz);
-    }
+	@Override
+	public <T> T openFileToObject(String path, Class<T> clazz) throws Exception {
+		return hdfsUtil.openFileToObject(path, clazz);
+	}
 
-    @Override
-    public BlockLocation[] getFileBlockLocations(String path) throws Exception {
-        return hdfsUtil.getFileBlockLocations(path);
-    }
+	@Override
+	public BlockLocation[] getFileBlockLocations(String path) throws Exception {
+		return hdfsUtil.getFileBlockLocations(path);
+	}
 }

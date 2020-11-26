@@ -15,7 +15,6 @@
  */
 package com.taotao.cloud.flink;
 
-
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.functions.KeySelector;
@@ -27,6 +26,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
 
 /**
+ * JBatchWordCount
+ *
  * @author dengtao
  * @date 2020/11/3 09:05
  * @since v1.0

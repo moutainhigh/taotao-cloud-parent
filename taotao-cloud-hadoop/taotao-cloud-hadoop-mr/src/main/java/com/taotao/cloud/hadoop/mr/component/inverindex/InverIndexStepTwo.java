@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.hadoop.mr.component.fensi;
+package com.taotao.cloud.hadoop.mr.component.inverindex;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -28,55 +28,51 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.IOException;
 
 /**
- * SharedFriendsStepOne
+ * InverIndexStepTwo
  *
  * @author dengtao
- * @date 2020/11/26 下午8:17
+ * @date 2020/11/26 下午8:24
  * @since v1.0
  */
-public class SharedFriendsStepOne {
-	static class SharedFriendsStepOneMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class InverIndexStepTwo {
+	public static class IndexStepTwoMapper extends Mapper<LongWritable, Text, Text, Text> {
 		@Override
 		protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			// A:B,C,D,F,E,O
 			String line = value.toString();
-			String[] personFriends = line.split(":");
-			String person = personFriends[0];
-			String friends = personFriends[1];
-
-			for (String friend : friends.split(",")) {
-				// 输出<好友，人>
-				context.write(new Text(friend), new Text(person));
-			}
+			String[] files = line.split("--");
+			context.write(new Text(files[0]), new Text(files[1]));
 		}
 	}
 
-	static class SharedFriendsStepOneReducer extends Reducer<Text, Text, Text, Text> {
+	public static class IndexStepTwoReducer extends Reducer<Text, Text, Text, Text> {
 		@Override
-		protected void reduce(Text friend, Iterable<Text> persons, Context context) throws IOException, InterruptedException {
+		protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 			StringBuilder sb = new StringBuilder();
-			for (Text person : persons) {
-				sb.append(person).append(",");
+			for (Text text : values) {
+				sb.append(text.toString().replace("\t", "-->")).append("\t");
 			}
-			context.write(friend, new Text(sb.toString()));
+			context.write(key, new Text(sb.toString()));
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
+		if (args.length < 1) {
+			args = new String[]{"D:/temp/out/part-r-00000", "D:/temp/out2"};
+		}
 
-		Job job = Job.getInstance(conf);
-		job.setJarByClass(SharedFriendsStepOne.class);
+		Configuration config = new Configuration();
+		Job job = Job.getInstance(config);
 
+		job.setMapperClass(IndexStepTwoMapper.class);
+		job.setReducerClass(IndexStepTwoReducer.class);
+//		job.setMapOutputKeyClass(Text.class);
+//		job.setMapOutputValueClass(Text.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
 
-		job.setMapperClass(SharedFriendsStepOneMapper.class);
-		job.setReducerClass(SharedFriendsStepOneReducer.class);
+		FileInputFormat.setInputPaths(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		FileInputFormat.setInputPaths(job, new Path("D:/srcdata/friends"));
-		FileOutputFormat.setOutputPath(job, new Path("D:/temp/out"));
-
-		job.waitForCompletion(true);
+		System.exit(job.waitForCompletion(true) ? 1 : 0);
 	}
 }

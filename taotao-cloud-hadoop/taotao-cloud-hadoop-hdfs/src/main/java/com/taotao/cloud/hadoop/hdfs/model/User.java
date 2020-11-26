@@ -25,6 +25,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 /**
+ * User
+ *
  * @author dengtao
  * @date 2020/10/29 15:28
  * @since v1.0
@@ -33,23 +35,23 @@ import java.io.IOException;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Writable {
-    private String username;
-    private Integer age;
-    private String address;
+	private String username;
+	private Integer age;
+	private String address;
 
-    @Override
-    public void write(DataOutput output) throws IOException {
-        // 把对象序列化
-        output.writeChars(username);
-        output.writeInt(age);
-        output.writeChars(address);
-    }
+	@Override
+	public void write(DataOutput output) throws IOException {
+		// 把对象序列化
+		output.writeChars(username);
+		output.writeInt(age);
+		output.writeChars(address);
+	}
 
-    @Override
-    public void readFields(DataInput input) throws IOException {
-        // 把序列化的对象读取到内存中
-        username = input.readUTF();
-        age = input.readInt();
-        address = input.readUTF();
-    }
+	@Override
+	public void readFields(DataInput input) throws IOException {
+		// 把序列化的对象读取到内存中
+		username = input.readUTF();
+		age = input.readInt();
+		address = input.readUTF();
+	}
 }

@@ -23,6 +23,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
+ * HDFSComponent
+ *
  * @author dengtao
  * @date 2020/10/29 15:19
  * @since v1.0
@@ -30,34 +32,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class HDFSComponent {
 
-    @Autowired
-    private HdfsConfiguration hdfsConfiguration;
+	@Autowired
+	private HdfsConfiguration hdfsConfiguration;
 
+	@Bean
+	public HDFSUtil hdfsUtil() {
+		//System.setProperty("hadoop.home.dir", "D:\\software\\hadoop-dev\\hadoop-2.7.7");
+		HDFSUtil hdfsUtil = new HDFSUtil(getConfiguration(), hdfsConfiguration.getPath(), hdfsConfiguration.getUsername());
+		return hdfsUtil;
+	}
 
-    @Bean
-    public HDFSUtil hdfsUtil() {
-        //System.setProperty("hadoop.home.dir", "D:\\software\\hadoop-dev\\hadoop-2.7.7");
-        HDFSUtil hdfsUtil = new HDFSUtil(getConfiguration(), hdfsConfiguration.getPath(), hdfsConfiguration.getUsername());
-        return hdfsUtil;
-    }
-
-    /**
-     * 获取HDFS配置信息
-     *
-     * @return org.apache.hadoop.conf.Configuration
-     * @author dengtao
-     * @date 2020/10/29 15:22
-     * @since v1.0
-     */
-    private Configuration getConfiguration() {
-        Configuration configuration = new Configuration();
-        configuration.set("fs.defaultFS", hdfsConfiguration.getPath());
-        /**
-         * 参数优先级： 1、客户端代码中设置的值 2、classpath下的用户自定义配置文件 3、然后是服务器的默认配置
-         */
-        configuration.set("dfs.replication", "1");
-        configuration.set("dfs.block.size", "64m");
-        return configuration;
-    }
+	/**
+	 * 获取HDFS配置信息
+	 *
+	 * @return org.apache.hadoop.conf.Configuration
+	 * @author dengtao
+	 * @date 2020/10/29 15:22
+	 * @since v1.0
+	 */
+	private Configuration getConfiguration() {
+		Configuration configuration = new Configuration();
+		configuration.set("fs.defaultFS", hdfsConfiguration.getPath());
+		/**
+		 * 参数优先级： 1、客户端代码中设置的值 2、classpath下的用户自定义配置文件 3、然后是服务器的默认配置
+		 */
+		configuration.set("dfs.replication", "1");
+		configuration.set("dfs.block.size", "64m");
+		return configuration;
+	}
 
 }

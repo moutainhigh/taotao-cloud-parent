@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.taotao.cloud.hbase.properties;
+package com.taotao.cloud.hadoop.mr.component.wordcount;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
 
 /**
- * HbaseProperties
+ * 输入为map的输出
  *
  * @author dengtao
- * @date 2020/10/30 11:09
+ * @date 2020/11/26 下午8:06
  * @since v1.0
  */
-@Data
-@ConfigurationProperties(prefix = "spring.hbase")
-public class HbaseProperties {
-
-	private String quorum;
-	private String port;
-	private String znode;
-	private String maxsize;
+public class WordCountCombiner extends Reducer<Text, IntWritable, Text, IntWritable> {
+	@Override
+	protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+		int count = 0;
+		for (IntWritable v : values) {
+			count += v.get();
+		}
+		context.write(key, new IntWritable(count));
+	}
 }
