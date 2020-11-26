@@ -1,3 +1,11 @@
+dnf config-manager --add-repo  https://openresty.org/package/centos/openresty.repo
+dnf install openresty
+
+wget https://github.com/doujiang24/lua-resty-kafka/archive/master.zip
+unzip master.zip
+
+cp -r ~/lua-resty-kafka-master/lib/resty/kafka /usr/local/openresty/lib/resty/
+
 mkdir -pv /opt/app/collect-app{conf/vhost,logs/data,script/logs}
 
 cp /usr/local/openresty/nginx/conf/mime.types /opt/app/collect-app/conf
@@ -14,6 +22,7 @@ crontab /opt/app/collect-app/script/collect-app-log.cron
 crontab -l
 crontab -e
 
+echo "
 .
 `-- collect-app
     |-- client_body_temp
@@ -40,3 +49,5 @@ crontab -e
     |   |   `-- spilt-access-log.log
     |   `-- spilt-access-log.sh
     `-- uwsgi_temp
+"
+

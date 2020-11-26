@@ -55,7 +55,7 @@ public class HDFSComponent {
         /**
          * 参数优先级： 1、客户端代码中设置的值 2、classpath下的用户自定义配置文件 3、然后是服务器的默认配置
          */
-        configuration.set("dfs.replication", "2");
+        configuration.set("dfs.replication", "1");
         configuration.set("dfs.block.size", "64m");
         return configuration;
     }

@@ -21,7 +21,7 @@ public class TaoTaoCloudHadoopHDFSApplicationTests {
 
 	@Test
 	public void testAddUser() throws Exception {
-		hdfsService.mkdir("/taotao");
+		hdfsService.mkdir("/test");
 	}
 
 }

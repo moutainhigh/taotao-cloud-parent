@@ -25,8 +25,8 @@ import java.util.List;
  * @version v1.0.0
  * @date 2020/9/22 13:30
  */
-public class Base64Interceptor implements Interceptor {
-	private static final Logger logger = LoggerFactory.getLogger(Base64Interceptor.class);
+public class SourceInterceptor implements Interceptor {
+	private static final Logger logger = LoggerFactory.getLogger(SourceInterceptor.class);
 
 	@Override
 	public void initialize() {
@@ -44,30 +44,26 @@ public class Base64Interceptor implements Interceptor {
 				String content = fields[1];
 
 				String metaStr = new String(Base64.decodeBase64(meta));
-				logger.info("metaStr--------" + metaStr);
 				JSONObject metaJson = JSONObject.parseObject(metaStr);
 
 				String contentStr = new String(Base64.decodeBase64(content));
-				logger.info("contentStr--------" + contentStr);
 				JSONObject contentJson = JSONObject.parseObject(contentStr);
 
-				String ctime = new SimpleDateFormat("yyyyMMdd").format(Double.parseDouble(metaJson.getString("ctime")));
+				String ctime = new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(metaJson.getString("ctime")));
 				event.getHeaders().put("ctime", ctime);
-//                String chour = new SimpleDateFormat("HH").format(Double.parseDouble(metaJson.getString("chour")));
-//                event.getHeaders().put("chour", chour);
+				event.getHeaders().put("type", "source");
 
 				JSONObject result = new JSONObject();
 				result.put("ctime", metaJson.getLongValue("ctime"));
 				result.put("project", metaJson.getString("project"));
 				result.put("content", contentJson);
 
-				logger.info("result--------" + result.toJSONString());
 				event.setBody(result.toJSONString().getBytes());
 				return event;
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			logger.info("error--------" + e.getMessage());
+			logger.error("error--------" + e.getMessage());
 			return null;
 		}
 
@@ -76,7 +72,7 @@ public class Base64Interceptor implements Interceptor {
 
 	@Override
 	public List<Event> intercept(List<Event> list) {
-		List<Event> result = new ArrayList<Event>();
+		List<Event> result = new ArrayList<>();
 		for (Event event : list) {
 			Event intercept = intercept(event);
 			if (null != intercept) {
@@ -95,7 +91,7 @@ public class Base64Interceptor implements Interceptor {
 
 		@Override
 		public Interceptor build() {
-			return new Base64Interceptor();
+			return new SourceInterceptor();
 		}
 
 		@Override
