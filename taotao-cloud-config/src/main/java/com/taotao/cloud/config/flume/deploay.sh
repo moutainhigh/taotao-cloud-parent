@@ -21,3 +21,11 @@ nohup ${FLUME_HOME}/bin/flume-ng agent -n taotao-cloud-access-log -c $FLUME_HOME
 nohup ${FLUME_HOME}/bin/flume-ng agent -n taotao-cloud-access-log -c $FLUME_HOME/conf \
 -f ${FLUME_HOME}/conf/taotao-cloud-access-log-kafka-agent.conf -Dflume.root.logger=INFO,console \
 -Dflume.monitoring.type=http -Dflume.monitoring.port=31001 &
+
+
+nohup ${FLUME_HOME}/bin/flume-ng agent -n taotao-cloud-log -c $FLUME_HOME/conf \
+-f ${FLUME_HOME}/conf/taotao-cloud-log-kafka-agent.conf -Dflume.root.logger=INFO,console &
+
+nohup ${FLUME_HOME}/bin/flume-ng agent -n taotao-cloud-log -c $FLUME_HOME/conf \
+-f ${FLUME_HOME}/conf/taotao-cloud-log-kafka-agent.conf -Dflume.root.logger=INFO,console \
+-Dflume.monitoring.type=http -Dflume.monitoring.port=31001

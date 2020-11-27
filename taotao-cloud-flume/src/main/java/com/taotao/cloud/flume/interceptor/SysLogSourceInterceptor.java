@@ -13,12 +13,8 @@ import org.apache.flume.interceptor.Interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * <br>
@@ -37,19 +33,11 @@ public class SysLogSourceInterceptor implements Interceptor {
 	@Override
 	public Event intercept(Event event) {
 		try {
-			byte[] body = event.getBody();
-			String bodyStr = new String(body);
-			JSONObject bodyJson = JSONObject.parseObject(bodyStr);
-
-			SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ENGLISH);
-			String timestamp = bodyJson.getString("timestamp");
-			Date date = dff.parse(timestamp);
-			SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
-			String ctime = df1.format(date);
-
-			event.getHeaders().put("ctime", ctime);
-			event.setBody(body);
-		} catch (NumberFormatException | ParseException e) {
+			String body = new String(event.getBody());
+			JSONObject bodyJson = JSONObject.parseObject(body);
+			String logday = bodyJson.getString("logday");
+			event.getHeaders().put("ctime", logday);
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 			return null;

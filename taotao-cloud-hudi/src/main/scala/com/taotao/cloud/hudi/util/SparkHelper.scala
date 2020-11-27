@@ -26,7 +26,7 @@ object SparkHelper {
       case "dev" =>
         val conf = new SparkConf()
           .setAppName("Log2Hudi DEV")
-          .setMaster("local[2]")
+          .setMaster("local[1]")
           .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
           .set("spark.sql.hive.metastore.version", "3.1.2")
           .set("spark.sql.hive.metastore.jars", "maven")

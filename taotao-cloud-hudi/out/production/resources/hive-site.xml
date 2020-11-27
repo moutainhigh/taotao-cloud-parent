@@ -16,48 +16,63 @@
    limitations under the License.
 -->
 <configuration>
+	<property>
+		<name>hive.server2.enable.doAs</name>
+		<value>true</value>
+	</property>
 
-    <!--Where in HDFS we're going to store table files.-->
-    <property>
-        <name>hive.metastore.warehouse.dir</name>
-        <value>/usr/hive/warehouse</value>
-    </property>
+	<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>/user/hive/warehouse</value>
+	</property>
 
-    <!--Postgres metastore connection details (stores info about tables etc.)-->
-    <property>
-        <name>javax.jdo.option.ConnectionDriverName</name>
-        <value>org.postgresql.Driver</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://hivemetastore:5432/hivemetastoredb</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionUserName</name>
-        <value>postgres</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionPassword</name>
-        <value>new_password</value>
-    </property>
+	<property>
+		<name>hive.metastore.uris</name>
+		<value>thrift://106.13.201.31:9083</value>
+	</property>
 
-    <!--    https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Started -->
-    <property>
-        <name>hive.execution.engine</name>
-        <value>spark</value>
-    </property>
-    <property>
-        <name>spark.yarn.jars</name>
-        <value>hdfs://master:9000/spark-jars/*</value>
-    </property>
+	<property>
+		<name>hive.server2.thrift.bind.host</name>
+		<value>106.13.201.31</value>
+	</property>
 
-    <!-- To be able to execute Hive queries from Zeppelin -->
-    <property>
-        <name>hive.server2.enable.doAs</name>
-        <value>false</value>
-        <description>
-            Setting this property to true will have HiveServer2 execute
-            Hive operations as the user making the calls to it.
-        </description>
-    </property>
+	<property>
+		<name>hive.server2.thrift.port</name>
+		<value>10000</value>
+	</property>
+
+	<property>
+		<name>hive.exec.scratchdir</name>
+		<value>/tmp</value>
+	</property>
+
+	<property>
+		<name>hive.server2.enable.impersonation</name>
+		<value>true</value>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:mysql://106.13.201.31:3306/hive?createDatabaseIfNotExist=TRUE</value>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>com.mysql.cj.jdbc.Driver</value>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionUserName</name>
+		<value>root</value>
+	</property>
+
+	<property>
+		<name>javax.jdo.option.ConnectionPassword</name>
+		<value>n3nbhbn3ymb!</value>
+	</property>
+
+	<property>
+		<name>datanucleus.autoStartMechanism</name>
+		<value>SchemaTable</value>
+	</property>
 </configuration>

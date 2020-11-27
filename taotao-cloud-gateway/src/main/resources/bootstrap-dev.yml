@@ -23,6 +23,20 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
+  kafka:
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:106.13.201.31}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        linger.ms: 500
   cloud:
     loadbalancer:
       ribbon:
@@ -160,16 +174,16 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 redis-rate-limiter.burstCapacity: 5
         - id: taotao-cloud-pay-center
-            uri: lb://taotao-cloud-pay-center
-            predicates:
-              - Path=${taotao.cloud.gateway.base-uri}/pay/**
-            filters:
-              - StripPrefix=3
-              - name: RequestRateLimiter
-                args:
-                  key-resolver: "#{@remoteAddrKeyResolver}"
-                  redis-rate-limiter.replenishRate: 1
-                  redis-rate-limiter.burstCapacity: 5
+          uri: lb://taotao-cloud-pay-center
+          predicates:
+            - Path=${taotao.cloud.gateway.base-uri}/pay/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 5
         - id: taotao-cloud-log-center
           uri: lb://taotao-cloud-log-center
           predicates:

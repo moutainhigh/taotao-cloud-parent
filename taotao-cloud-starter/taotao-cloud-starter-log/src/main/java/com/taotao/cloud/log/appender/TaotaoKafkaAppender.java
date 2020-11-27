@@ -17,9 +17,6 @@ package com.taotao.cloud.log.appender;
 
 import com.github.danielwegener.logback.kafka.KafkaAppender;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * TaotaoKafkaAppender
  *
@@ -34,10 +31,10 @@ public class TaotaoKafkaAppender<E> extends KafkaAppender<E> {
 
     @Override
     public void doAppend(E e) {
-        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
-        if (!topic.endsWith(format)) {
-            this.topic = topic.concat("-").concat(format);
-        }
+        // String format = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
+        // if (!topic.endsWith(format)) {
+        //     this.topic = topic.concat("-").concat(format);
+        // }
         super.doAppend(e);
     }
 }

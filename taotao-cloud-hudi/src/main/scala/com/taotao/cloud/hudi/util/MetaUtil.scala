@@ -8,7 +8,7 @@ object MetaUtil {
   def getMetaJson(metaType: Int): String = {
     val conn = MysqlUtil().getMysqlConn
     val statement = conn.createStatement()
-    val sql = "select field, field_type from log_meta where meta_type = " + metaType
+    val sql = "select field, field_type from `taotao-cloud-log-meta` where meta_type = " + metaType
 
     val resultSet = statement.executeQuery(sql)
     val jsonMeta = new JSONObject()
@@ -27,7 +27,7 @@ object MetaUtil {
     val columnMetaMap = new mutable.HashMap[String, String]
     val conn = MysqlUtil().getMysqlConn
     val statement = conn.createStatement()
-    val resultSet = statement.executeQuery("select field, field_type from log_meta")
+    val resultSet = statement.executeQuery("select field, field_type from `taotao-cloud-log-meta`")
 
     while (resultSet.next()) {
       val field = resultSet.getString("field")

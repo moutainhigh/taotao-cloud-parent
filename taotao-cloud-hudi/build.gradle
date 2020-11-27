@@ -41,7 +41,6 @@ configurations {
     compile.exclude group: "xerces", module: "xercesImpl"
 }
 
-
 shadowJar {
     mergeServiceFiles()
     classifier=null

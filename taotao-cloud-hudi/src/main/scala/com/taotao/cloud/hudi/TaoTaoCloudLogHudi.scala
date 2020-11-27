@@ -11,12 +11,20 @@ import org.apache.spark.sql.streaming.{StreamingQueryListener, Trigger}
 import org.apache.spark.sql.{DataFrame, Dataset, SaveMode}
 import org.slf4j.{Logger, LoggerFactory}
 
-//-e dev -b 192.168.99.37:9092 -t taotao-cloud-backend -m 0 -i 10 -c /checkpoint/spark/log_hudi -g /user/hudi/cow/action_data -s action_data -y cow -r jdbc:hive2://192.68.99.37:10000 -n root
-object Log2Hudi {
-  val LOGGER: Logger = LoggerFactory.getLogger("Log2Hudi")
+/**
+ * TaoTaoCloudLogHudi
+ *
+ * -e dev -b 106.13.201.31:9092 -t taotao-cloud-backend -m 0 -i 10 -c /checkpoint/spark/log_hudi -g /user/hudi/cow/action_data -s action_data -y cow -r jdbc:hive2://192.68.99.37:10000 -n root
+ *
+ * @author dengtao
+ * @date 2020/11/27 下午3:06
+ * @since v1.0
+ */
+object TaoTaoCloudLogHudi {
+  val LOGGER: Logger = LoggerFactory.getLogger("TaoTaoCloudLogHudi")
 
   def main(args: Array[String]): Unit = {
-    val config = Config.parseConfig(Log2Hudi, args);
+    val config = Config.parseConfig(TaoTaoCloudLogHudi, args);
     val spark = SparkHelper.getSparkSession(config.env);
 
     spark.streams.addListener(new StreamingQueryListener() {
@@ -43,7 +51,7 @@ object Log2Hudi {
       .option("staringOffsets", "earliest")
       .option("maxOffsetsPerTrigger", 100000)
       .option("failOnDataLoss", value = false)
-      .option("consumer.group.id", "Log2Hudi")
+      .option("consumer.group.id", "TaoTaoCloudLogHudi")
       .load()
 
     val metaType: String = config.metaType
@@ -55,7 +63,7 @@ object Log2Hudi {
     dataframe.selectExpr("CAST(value as String)")
       .as[String]
       .writeStream
-      .queryName("log_hudi")
+      .queryName("TaoTaoCloudLogHudi")
       .option("checkpointLocation", config.checkpointDir + "/action/")
       .trigger(Trigger.ProcessingTime(config.trigger + " seconds"))
       .foreachBatch((batchDF: Dataset[String], batchId: Long) => {
@@ -64,8 +72,8 @@ object Log2Hudi {
         val newDF: Dataset[String] = batchDF.map(new LogExtract().unionMeatAndBody(_, meta_log_json_str))
 
         if (!newDF.isEmpty) {
-          newDF.select(from_json($"value", msb.value).as("log_data"))
-            .select("log_data.*")
+          newDF.select(from_json($"value", msb.value).as("taotao_cloud_log_data"))
+            .select("taotao_cloud_log_data.*")
             .write
             .format("org.apache.hudi")
             .options(HudiUtil.getEnentConfig(config.tableType, config.syncJDBCUrl, config.syncJDBCUsername))

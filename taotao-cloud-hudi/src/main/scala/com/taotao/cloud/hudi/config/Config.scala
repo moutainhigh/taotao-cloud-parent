@@ -28,14 +28,14 @@ object Config {
       opt[String]('m', "metaType").required().action((x, config) => config.copy(metaType = x)).text("metaType")
 
       programName match {
-        case "Log2Console" =>
+        case "TaoTaoCloudLogConsole" =>
 
         case "Log2Hdfs" =>
           opt[String]('c', "checkpointDir").required().action((x, config) => config.copy(checkpointDir = x)).text("checkpointDir")
           opt[String]('p', "path").required().action((x, config) => config.copy(path = x)).text("path")
           opt[String]('i', "trigger").required().action((x, config) => config.copy(trigger = x)).text("trigger")
 
-        case "Log2Hudi" =>
+        case "TaoTaoCloudLogHudi" =>
           opt[String]('i', "trigger").required().action((x, config) => config.copy(trigger = x)).text("trigger")
           opt[String]('c', "checkpointDir").required().action((x, config) => config.copy(checkpointDir = x)).text("checkpointDir")
           opt[String]('g', "hudiBasePath").required().action((x, config) => config.copy(hudiBasePath = x)).text("hudiBasePath")

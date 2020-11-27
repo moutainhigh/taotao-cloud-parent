@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- * 远程调用会员登录日志模块
+ * RemoteMemberLoginService
  *
  * @author dengtao
- * @date 2020/5/2 16:42
+ * @date 2020/11/27 下午3:06
+ * @since v1.0
  */
 @FeignClient(contextId = "remoteMemberLoginService", value = ServiceNameConstant.TAOTAO_CLOUD_AFTERSALE_CENTER, fallbackFactory = RemoteMemberLoginFallbackImpl.class)
 public interface RemoteMemberLoginService {

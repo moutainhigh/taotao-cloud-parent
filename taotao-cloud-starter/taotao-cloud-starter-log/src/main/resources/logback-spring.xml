@@ -56,29 +56,30 @@
         </filter>
     </appender>
 
-    <appender name="customKafkaAppender" class="com.taotao.cloud.log.appender.TaotaoKafkaAppender">
+    <appender name="KafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>GMT+8</timeZone>
-                </timestamp>
+            <providers class="net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders">
+                <!--<timestamp>-->
+                <!--    <timeZone>GMT+8</timeZone>-->
+                <!--</timestamp>-->
                 <pattern>
                     <pattern>
                         {
                         "application_name": "${APP_NAME:-}",
                         "trace_id": "%X{t-traceId:-}",
-                        "server_ip": "${SERVER_IP:0.0.0.0}",
+                        "server_ip": "${SERVER_IP:-}",
                         "server_port": "${SERVER_PORT:-}",
-                        "timestamp": "%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+                        "ctime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "logday": "%d{yyyy-MM-dd}",
                         "thread": "%thread",
                         "pid": "${PID:-}",
                         "parent_span_id" : "%X{X-B3-ParentSpanId:-}",
                         "span_id": "%X{X-B3-SpanId:-}",
                         "exportable": "%X{X-Span-Export:-}",
-                        "logger": "%logger",
+                        "logger": "%logger{36}",
                         "level": "%p",
                         "message": "%msg",
-                        "host": "${SERVER_IP:0.0.0.0}",
+                        "host": "${SERVER_IP:-}",
                         "stack_trace": "%ex"
                         }
                     </pattern>
@@ -91,9 +92,9 @@
         <producerConfig>bootstrap.servers=${BOOTSTRAP_SERVERS}</producerConfig>
         <producerConfig>acks=0</producerConfig>
         <producerConfig>retries=0</producerConfig>
-        <producerConfig>batch.size=16384</producerConfig>
+        <producerConfig>batch.size=10</producerConfig>
         <producerConfig>buffer-memory=33554432</producerConfig>
-        <producerConfig>linger.ms=500</producerConfig>
+        <producerConfig>linger.ms=1000</producerConfig>
         <producerConfig>max.block.ms=0</producerConfig>
     </appender>
 
@@ -102,11 +103,15 @@
         <appender-ref ref="FileAppender"/>
     </appender>
 
+	<appender name="kafka_async" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="KafkaAppender"/>
+	</appender>
+
     <logger name="org.apache.kafka" level="off"/>
 
     <root level="INFO">
         <appender-ref ref="StdoutAppender"/>
-        <appender-ref ref="file_async"/>
-        <appender-ref ref="customKafkaAppender"/>
+        <!--<appender-ref ref="file_async"/>-->
+        <appender-ref ref="kafka_async"/>
     </root>
 </configuration>

@@ -33,7 +33,7 @@ public class MetaUtils {
 		try {
 			Connection conn = JDBCUtils.getConn();
 			Statement statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("select field, field_type from `access-log-meta`");
+			ResultSet resultSet = statement.executeQuery("select field, field_type from `taotao-cloud-log-meta` where meta_type = 0");
 
 			JSONObject jsonMeta = new JSONObject();
 			while (resultSet.next()) {

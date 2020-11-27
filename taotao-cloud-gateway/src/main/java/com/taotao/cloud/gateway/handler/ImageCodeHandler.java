@@ -18,6 +18,7 @@ package com.taotao.cloud.gateway.handler;
 import cn.hutool.http.HttpStatus;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.utils.CaptchaUtil;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import com.wf.captcha.ArithmeticCaptcha;
@@ -49,6 +50,7 @@ public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
         try {
             ArithmeticCaptcha captcha = CaptchaUtil.getArithmeticCaptcha();
             String text = captcha.text();
+			LogUtil.info(text);
             MultiValueMap<String, String> params = request.queryParams();
             String t = params.getFirst(PARAM_T);
             redisRepository.setExpire(CommonConstant.TAOTAO_CAPTCHA_KEY + t, text.toLowerCase(), 120);
