@@ -17,6 +17,7 @@ package com.taotao.cloud.log.aspect;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.URLUtil;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.taotao.cloud.common.constant.CommonConstant;
@@ -25,6 +26,7 @@ import com.taotao.cloud.common.enums.LogOperateTypeEnum;
 import com.taotao.cloud.common.utils.AddrUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.utils.SecurityUtil;
+import com.taotao.cloud.core.utils.WebUtil;
 import com.taotao.cloud.log.event.RequestLogEvent;
 import com.taotao.cloud.log.model.RequestLog;
 import com.taotao.cloud.log.properties.RequestLogProperties;
@@ -119,13 +121,14 @@ public class RequestLogAspect {
 			requestLog.setUsername(SecurityUtil.getUsername());
 			requestLog.setActionUrl(URLUtil.getPath(request.getRequestURI()));
 			requestLog.setRequestMethod(request.getMethod());
-			requestLog.setUa(request.getHeader("user-agent"));
 			Object[] args = joinPoint.getArgs();
+			requestLog.setArgs(Arrays.toString(args));
+			requestLog.setUa(request.getHeader("user-agent"));
 			requestLog.setClasspath(joinPoint.getTarget().getClass().getName());
 			String name = joinPoint.getSignature().getName();
 			requestLog.setActionMethod(name);
-
-			requestLog.setParams(Arrays.toString(args));
+			requestLog.setParams(JSON.toJSONString(WebUtil.getAllRequestParam(request)));
+			requestLog.setHeaders(JSON.toJSONString(WebUtil.getAllRequestHeaders(request)));
 			requestLog.setOperateType(LogUtil.getOperateType(name));
 			requestLog.setDescription(LoggerUtil.getControllerMethodDescription(joinPoint));
 		}

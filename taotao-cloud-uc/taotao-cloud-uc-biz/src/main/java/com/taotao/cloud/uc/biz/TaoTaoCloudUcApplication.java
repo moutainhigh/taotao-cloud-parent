@@ -13,10 +13,15 @@ import com.taotao.cloud.sentinel.annotation.EnableTaoTaoCloudSentinel;
 import com.taotao.cloud.swagger.annotation.EnableTaoTaoCloudSwagger2;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.cloud.client.SpringCloudApplication;
 
+/**
+ * TaoTaoCloudUcApplication
+ *
+ * @author dengtao
+ * @date 2020/11/30 下午3:33
+ * @since v1.0
+ */
 @EnableTaoTaoCloudSwagger2
 @EnableTaoTaoCloudOauth2ResourceServer
 @EnableTaoTaoCloudJPA
@@ -29,9 +34,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTaoTaoCloudSeata
 @EnableTaoTaoCloudSentinel
 @EnableEncryptableProperties
-@EnableTransactionManagement(proxyTargetClass = true)
-@EnableDiscoveryClient
-@SpringBootApplication
+@SpringCloudApplication
 public class TaoTaoCloudUcApplication {
 
 	public static void main(String[] args) {

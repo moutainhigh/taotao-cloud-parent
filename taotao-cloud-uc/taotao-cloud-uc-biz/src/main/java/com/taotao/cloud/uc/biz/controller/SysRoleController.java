@@ -89,7 +89,7 @@ public class SysRoleController {
 
     @ApiOperation("添加角色")
     @RequestOperateLog(description = "添加角色")
-    @PreAuthorize("hasAuthority('sys:role:save')")
+    //@PreAuthorize("hasAuthority('sys:role:save')")
     @PostMapping
     public Result<Boolean> saveRole(@Valid @RequestBody RoleDTO roleDTO) {
         Boolean result = sysRoleService.saveRole(roleDTO);

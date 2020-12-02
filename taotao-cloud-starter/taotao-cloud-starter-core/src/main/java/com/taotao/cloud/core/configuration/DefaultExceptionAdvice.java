@@ -60,7 +60,8 @@ import java.util.Set;
  * @date 2020/5/2 09:12
  * @since v1.0
  */
-@RestControllerAdvice({"com.taotao.cloud.*.biz.controller"})
+// @RestControllerAdvice({"com.taotao.cloud.*.biz.controller"})
+@RestControllerAdvice
 public class DefaultExceptionAdvice {
 
 	@ExceptionHandler({BaseException.class})

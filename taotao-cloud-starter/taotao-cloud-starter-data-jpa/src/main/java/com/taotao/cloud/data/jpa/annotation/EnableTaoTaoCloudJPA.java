@@ -17,6 +17,7 @@ package com.taotao.cloud.data.jpa.annotation;
 
 import com.taotao.cloud.data.jpa.configuration.HibernateConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -33,6 +34,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({HibernateConfiguration.class})
+@EnableTransactionManagement(proxyTargetClass = true)
 public @interface EnableTaoTaoCloudJPA {
 
 }

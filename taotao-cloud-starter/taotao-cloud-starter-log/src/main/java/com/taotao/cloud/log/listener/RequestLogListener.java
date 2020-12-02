@@ -15,14 +15,15 @@
  */
 package com.taotao.cloud.log.listener;
 
+import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.log.event.RequestLogEvent;
 import com.taotao.cloud.log.model.RequestLog;
-import com.taotao.cloud.log.service.IRequestLogService;
+import com.taotao.cloud.log.service.impl.KafkaRequestLogServiceImpl;
+import com.taotao.cloud.log.service.impl.LoggerRequestLogServiceImpl;
+import com.taotao.cloud.log.service.impl.RedisRequestLogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
-
-import javax.annotation.Resource;
 
 /**
  * 注解形式的监听 异步监听日志事件
@@ -34,14 +35,25 @@ import javax.annotation.Resource;
 @Slf4j
 public class RequestLogListener {
 
-    @Resource
-    private IRequestLogService sysLogService;
+	@Async
+	@EventListener(RequestLogEvent.class)
+	public void saveRequestLog(RequestLogEvent event) {
+		RequestLog requestLog = (RequestLog) event.getSource();
+		KafkaRequestLogServiceImpl kafkaRequestLogService = BeanUtil.getBean(KafkaRequestLogServiceImpl.class, true);
+		if (null != kafkaRequestLogService) {
+			kafkaRequestLogService.save(requestLog);
+		}
 
-    @Async
-    @EventListener(RequestLogEvent.class)
-    public void saveRequestLog(RequestLogEvent event) {
-        RequestLog requestLog = (RequestLog) event.getSource();
+		LoggerRequestLogServiceImpl loggerRequestLogService = BeanUtil.getBean(LoggerRequestLogServiceImpl.class, true);
+		if (null != loggerRequestLogService) {
+			loggerRequestLogService.save(requestLog);
+		}
 
-        sysLogService.save(requestLog);
-    }
+		RedisRequestLogServiceImpl redisRequestLogService = BeanUtil.getBean(RedisRequestLogServiceImpl.class, true);
+		if (null != redisRequestLogService) {
+			redisRequestLogService.save(requestLog);
+		}
+
+		//sysLogService.save(requestLog);
+	}
 }

@@ -18,6 +18,7 @@ package com.taotao.cloud.common.utils;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.taotao.cloud.common.exception.BaseException;
 import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -49,13 +50,17 @@ public class BeanUtil {
     public <T> T getBean(Class<T> type, boolean required) {
         ConfigurableApplicationContext applicationContext = ContextUtil.getApplicationContext();
         if (type != null && applicationContext != null) {
-            if (required) {
-                return applicationContext.getBean(type);
-            } else {
-                if (applicationContext.getBeansOfType(type).size() > 0) {
-                    return applicationContext.getBean(type);
-                }
-            }
+        	try {
+				if (required) {
+					return applicationContext.getBean(type);
+				} else {
+					if (applicationContext.getBeansOfType(type).size() > 0) {
+						return applicationContext.getBean(type);
+					}
+				}
+			}catch (NoSuchBeanDefinitionException e){
+        		return null;
+			}
         }
         return null;
     }

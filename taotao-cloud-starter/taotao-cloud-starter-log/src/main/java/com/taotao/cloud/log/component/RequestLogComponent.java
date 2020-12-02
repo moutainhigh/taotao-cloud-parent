@@ -16,19 +16,23 @@
 package com.taotao.cloud.log.component;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.annotation.EnableTaoTaoCloudAsync;
 import com.taotao.cloud.log.aspect.RequestLogAspect;
 import com.taotao.cloud.log.listener.RequestLogListener;
+import com.taotao.cloud.log.properties.RequestLogProperties;
 import com.taotao.cloud.log.service.impl.KafkaRequestLogServiceImpl;
 import com.taotao.cloud.log.service.impl.LoggerRequestLogServiceImpl;
 import com.taotao.cloud.log.service.impl.RedisRequestLogServiceImpl;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * 当web项目引入此依赖时，自动配置对应的内容 初始化log的事件监听与切面配置
@@ -41,39 +45,73 @@ import org.springframework.context.annotation.Bean;
 @EnableTaoTaoCloudAsync
 public class RequestLogComponent implements InitializingBean {
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        log.info(StarterNameConstant.TAOTAO_CLOUD_LOG_STARTER, "日志模块已启动");
-    }
+	@Autowired
+	RequestLogProperties requestLogProperties;
 
-    @Bean
-    public RequestLogListener sysLogListener() {
-        return new RequestLogListener();
-    }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		LogUtil.info(StarterNameConstant.TAOTAO_CLOUD_LOG_STARTER + "{0}", "日志模块已启动");
+	}
 
-    @Bean
-    public RequestLogAspect sysLogAspect(ApplicationEventPublisher publisher) {
-        return new RequestLogAspect(publisher);
-    }
+	@Bean
+	public RequestLogListener sysLogListener() {
+		return new RequestLogListener();
+	}
 
-    @Bean
-    @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "logger", matchIfMissing = true)
-    public LoggerRequestLogServiceImpl loggerSysLogService() {
-        return new LoggerRequestLogServiceImpl();
-    }
+	@Bean
+	public RequestLogAspect sysLogAspect(ApplicationEventPublisher publisher) {
+		return new RequestLogAspect(publisher);
+	}
 
-    @Bean
-    @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "redis")
-    @ConditionalOnBean(value = {RedisRepository.class})
-    public RedisRequestLogServiceImpl redisSysLogService() {
-        return new RedisRequestLogServiceImpl();
-    }
+	@Bean
+	//@ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "logger", matchIfMissing = true)
+	public LoggerRequestLogServiceImpl loggerSysLogService() {
+		if (determineLogType()) {
+			if (determineLogType("logger")) {
+				return new LoggerRequestLogServiceImpl();
+			}
+		}
+		return null;
+	}
 
-    @Bean
-    @ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "kafka")
-    public KafkaRequestLogServiceImpl kafkaSysLogService() {
-        return new KafkaRequestLogServiceImpl();
-    }
 
+	@Bean
+	//@ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "redis")
+	@ConditionalOnBean(value = {RedisRepository.class})
+	public RedisRequestLogServiceImpl redisSysLogService() {
+		if (determineLogType()) {
+			if (determineLogType("redis")) {
+				return new RedisRequestLogServiceImpl();
+			}
+		}
+		return null;
+	}
+
+	@Bean
+	//@ConditionalOnProperty(prefix = "taotao.cloud.log", name = "type", havingValue = "kafka")
+	@ConditionalOnClass({KafkaTemplate.class})
+	public KafkaRequestLogServiceImpl kafkaSysLogService() {
+		if (determineLogType()) {
+			if (determineLogType("kafka")) {
+				return new KafkaRequestLogServiceImpl();
+			}
+		}
+		return null;
+	}
+
+	private boolean determineLogType() {
+		String[] types = requestLogProperties.getTypes();
+		return types.length != 0;
+	}
+
+	private boolean determineLogType(String type) {
+		String[] types = requestLogProperties.getTypes();
+		for (String s : types) {
+			if (type.equals(s)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 

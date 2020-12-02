@@ -57,7 +57,7 @@ public class SysUserController {
 
 	@ApiOperation("保存(添加)用户")
 	@RequestOperateLog(description = "保存(添加)用户")
-	@PreAuthorize("hasAuthority('sys:user:add')")
+	//@PreAuthorize("hasAuthority('sys:user:add')")
 	@PostMapping
 	public Result<AddUserVO> saveUser(@Validated @RequestBody UserDTO userDTO) {
 		SysUser sysUser = UserMapper.INSTANCE.userDtoToSysUser(userDTO);
@@ -147,7 +147,7 @@ public class SysUserController {
 
 	@ApiOperation("根据id获取用户信息")
 	@RequestOperateLog(description = "根据id获取用户信息")
-	@PreAuthorize("hasAuthority('sys:user:info:id')")
+	//@PreAuthorize("hasAuthority('sys:user:info:id')")
 	@GetMapping("/info/id/{id:[0-9]*}")
 	public Result<UserVO> findUserInfoById(@PathVariable(value = "id") Long id) {
 		SysUser user = sysUserService.findUserInfoById(id);

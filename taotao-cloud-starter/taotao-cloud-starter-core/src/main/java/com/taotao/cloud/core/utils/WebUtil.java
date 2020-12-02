@@ -106,6 +106,19 @@ public class WebUtil {
         return res;
     }
 
+	public static Map<String, String> getAllRequestHeaders(HttpServletRequest request) {
+		Map<String, String> res = new HashMap<>();
+		Enumeration<?> temp = request.getHeaderNames();
+		if (null != temp) {
+			while (temp.hasMoreElements()) {
+				String en = (String) temp.nextElement();
+				String value = request.getHeader(en);
+				res.put(en, value);
+			}
+		}
+		return res;
+	}
+
     public static ConfigurableWebServerApplicationContext getConfigurableWebServerApplicationContext() {
         ApplicationContext context = ContextUtil.getApplicationContext();
         if (context instanceof ConfigurableWebServerApplicationContext) {

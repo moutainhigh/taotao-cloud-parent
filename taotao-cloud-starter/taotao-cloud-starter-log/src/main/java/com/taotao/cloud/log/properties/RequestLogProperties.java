@@ -32,14 +32,14 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @ConfigurationProperties(prefix = "taotao.cloud.log")
 public class RequestLogProperties {
 
-    /**
-     * 是否开启审计日志
-     */
-    private Boolean enabled = false;
+	/**
+	 * 是否开启审计日志
+	 */
+	private Boolean enabled = false;
 
-    /**
-     * 日志记录类型(logger/redis/kafka)
-     */
-    private String type = LogTypeEnum.LOGGER.getName();
+	/**
+	 * 日志记录类型(logger/redis/kafka)
+	 */
+	private String[] types = new String[]{LogTypeEnum.LOGGER.getName()};
 
 }

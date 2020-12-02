@@ -76,7 +76,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:p6spy:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:ENC(RGAhmAvQZI2/69eo8rl5bSwPXjXkMTk8M0QuL5vlVM/epApayMBFzdlLpomy8kDk)}
+    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
     password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     hikari:
@@ -107,69 +107,64 @@ spring:
     host: ${TAOTAO-CLOUD-REDIS-HOST:127.0.0.1}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     database: 1
-    #    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
+    #password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
       pool:
         max-active: 8
         max-wait: -1
         max-idle: 8
         min-idle: 0
-#  data:
-#    elasticsearch:
-#      repositories:
-#        # elasticsearch 开发阶段关闭
-#        enabled: true
-#      client:
-#        reactive:
-#          endpoints:
-#            - ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:192.168.99.230}:${TAOTAO-CLOUD-ELASTICSEARCH-PORT:9200}
-#          connection-timeout: 5
-#          username: ${TAOTAO-CLOUD-ELASTICSEARCH-USERNAME:elastic}
-#          password: ${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:elastic}
-#  kafka:
-#    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.230}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
-#    producer:
-#      retries: 0
-#      batch-size: 16384
-#      buffer-memory: 33554432
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-#      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-#      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-#      acks: 1
-#      properties:
-#        linger.ms: 500
-#    consumer:
-#      auto-commit-interval: 1S
-#      auto-offset-reset: earliest
-#      enable-auto-commit: false
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#    listener:
-#      concurrency: 5
-#      ack-mode: manual_immediate
-#      missing-topics-fatal: false
-#  gson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    disable-html-escaping: true
-#    pretty-printing: true
-#    serialize-nulls: true
-#    long-serialization-policy: string
-#  sleuth:
-#    web:
-#      client:
-#        # sleuth 开发阶段关闭
-#        enabled: true
-#    sampler:
-#      probability: 1.0
-#  zipkin:
-#    # zipkin 开发阶段关闭
-#    enabled: true
-#    sender:
-#      type: kafka
+  data:
+    elasticsearch:
+      repositories:
+        # elasticsearch 开发阶段关闭
+        enabled: false
+      client:
+        reactive:
+          endpoints:
+            - ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:192.168.99.230}:${TAOTAO-CLOUD-ELASTICSEARCH-PORT:9200}
+          connection-timeout: 5
+          username: ${TAOTAO-CLOUD-ELASTICSEARCH-USERNAME:elastic}
+          password: ${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:elastic}
+  kafka:
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:106.13.201.31}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        linger.ms: 500
+    consumer:
+      auto-commit-interval: 1S
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+  sleuth:
+    # sleuth 开发阶段关闭
+    enabled: false
+    web:
+      client:
+        enabled: false
+    sampler:
+      probability: 1.0
+  zipkin:
+    # zipkin 开发阶段关闭
+    enabled: false
+    sender:
+      type: kafka
 #  shardingsphere:
-#    # zipkin 开发阶段关闭
+#    # shardingsphere 开发阶段关闭
 #    enabled: false
 #    datasource:
 #      names: mysql-master-1,mysql-slave-1,mysql-master-2,mysql-slave-2
@@ -275,7 +270,6 @@ security:
     authorization:
       check-token-access: http://taotao-cloud-uc-center/oauth/check_token
 
-
 #mybatis-plus:
 #  #  mapper-locations: classpath:/mapper/*Mapper.xml
 #  typeAliasesPackage: com.taotao.cloud.uc.biz.entity
@@ -301,11 +295,13 @@ taotao:
           http-urls: >
             /api-docs,
             /user/info/username,
+            /user/info/id/*,
             /resource/test/seata,
             /role/info/userId,
             /resource/info/codes,
             /member/info/security,
-            /user
+            /user,
+            /role
     swagger:
       enabled: true
       title: 用户中心
@@ -329,7 +325,9 @@ taotao:
         connect-timeout: 10000
     log:
       enabled: true
-      type: logger
+      types:
+        - logger
+        - kafka
     p6spy:
       enabled: true
       dateformat: yyyy-MM-dd HH:mm:ss
