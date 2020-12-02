@@ -8,12 +8,12 @@ apply plugin: 'scala'
 dependencies {
     implementation "com.alibaba:fastjson:1.2.3"
 
-    implementation "org.apache.spark:spark-core_2.12:3.0.1"
-    implementation "org.apache.spark:spark-sql_2.12:3.0.1"
-    implementation "org.apache.spark:spark-hive_2.12:3.0.1"
-    implementation "org.apache.spark:spark-streaming_2.12:3.0.1"
-    implementation "org.apache.spark:spark-avro_2.12:3.0.1"
-    implementation "org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.1"
+    implementation "org.apache.spark:spark-core_2.12:2.4.4"
+    implementation "org.apache.spark:spark-sql_2.12:2.4.4"
+    implementation "org.apache.spark:spark-hive_2.12:2.4.4"
+    implementation "org.apache.spark:spark-streaming_2.12:2.4.4"
+    implementation "org.apache.spark:spark-avro_2.12:2.4.4"
+    implementation "org.apache.spark:spark-sql-kafka-0-10_2.12:2.4.4"
 
     implementation "org.apache.hudi:hudi-spark-bundle_2.12:0.6.0"
 
@@ -21,15 +21,15 @@ dependencies {
         exclude group: 'org.eclipse.jetty.aggregate', module: '*'
     }
 
-    implementation('net.heartsavior.spark:spark-sql-kafka-offset-committer_2.12:0.3.0-spark-3.0') {
+    implementation('net.heartsavior.spark:spark-sql-kafka-offset-committer_2.12:0.3.0-spark-2.4') {
         exclude group: 'org.scala-lang', module: 'scala-library'
     }
 
     implementation "mysql:mysql-connector-java"
     implementation "commons-codec:commons-codec:1.6"
     implementation 'org.codehaus.janino:janino:3.0.11'
-    implementation "org.scala-lang:scala-library:2.12.11"
-    implementation "org.scala-lang:scala-reflect:2.12.11"
+    implementation "org.scala-lang:scala-library:2.12.8"
+    implementation "org.scala-lang:scala-reflect:2.12.8"
 
     implementation('com.github.scopt:scopt_2.12:4.0.0-RC2') {
         exclude group: 'org.scala-lang', module: 'scala-library'
