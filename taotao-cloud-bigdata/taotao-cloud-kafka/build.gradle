@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-kafka'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

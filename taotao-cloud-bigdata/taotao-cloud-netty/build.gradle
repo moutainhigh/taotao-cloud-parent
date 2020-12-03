@@ -1,0 +1,10 @@
+archivesBaseName = 'taotao-cloud-netty'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-mybatis-plus')
+
+}
