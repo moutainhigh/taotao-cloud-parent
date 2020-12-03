@@ -1,5 +1,7 @@
 package com.taotao.cloud.hudi.util
 
+import java.util.UUID
+
 import com.alibaba.fastjson.JSONObject
 
 import scala.collection.mutable
@@ -20,6 +22,7 @@ object MetaUtil {
     }
 
     conn.close()
+    jsonMeta.put("uuid", UUID.randomUUID().toString)
     jsonMeta.toJSONString
   }
 

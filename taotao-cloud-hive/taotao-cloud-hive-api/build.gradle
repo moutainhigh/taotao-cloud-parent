@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.apache.hadoop:hadoop-mapreduce-client-core:3.1.2'
     implementation 'org.apache.hadoop:hadoop-mapreduce-client-common:3.1.2'
     implementation 'org.apache.hadoop:hadoop-hdfs:3.1.2'
+
     implementation 'org.apache.hive:hive-exec:3.1.2'
     implementation 'org.apache.hive:hive-service:3.1.2'
     implementation('org.apache.hive:hive-jdbc:3.1.2'){

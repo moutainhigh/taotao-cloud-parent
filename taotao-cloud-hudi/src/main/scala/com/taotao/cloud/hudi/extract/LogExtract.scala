@@ -42,6 +42,7 @@ class LogExtract extends java.io.Serializable {
       val logDay = sdf.format(serverTime)
 
       unionJson.put("logday", logDay)
+      unionJson.put("uuid", logDay)
 
       val json = JSON.parseObject(jsonStr)
       unionJson.forEach((key, value) => {json.put(key.trim(), value)})
@@ -55,6 +56,7 @@ class LogExtract extends java.io.Serializable {
         }
       })
 
+      LOGGER.info("result==============" + result)
       result.toJSONString
     } catch {
       case e: Exception =>
