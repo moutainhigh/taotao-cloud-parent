@@ -18,6 +18,7 @@ github:
     squash: true
     merge: false
     rebase: false
+
 notifications:
   commits:      common-commits@cloud.taotao.org
   issues:       common-issues@cloud.taotao.org
