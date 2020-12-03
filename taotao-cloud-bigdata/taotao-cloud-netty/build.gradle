@@ -4,7 +4,19 @@ jar.enabled = false
 bootJar.enabled = false
 
 dependencies {
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-common')
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-mybatis-plus')
+    compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'
+    compile 'org.springframework:spring-context-support:4.3.6.RELEASE'
+    compile 'org.springframework:spring-aop:4.3.6.RELEASE'
+    compile 'org.springframework:spring-aspects:4.3.6.RELEASE'
+    compile 'org.springframework:spring-context:4.3.6.RELEASE'
+    compile 'org.springframework:spring-orm:4.3.6.RELEASE'
+    compile 'org.springframework:spring-core:4.3.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.3.6.RELEASE'
+    compile 'org.springframework:spring-beans:4.3.6.RELEASE'
+    compile 'org.springframework:spring-web:4.3.6.RELEASE'
+    compile 'org.springframework:spring-test:4.3.6.RELEASE'
 
+    compile 'org.apache.hadoop:hadoop-common:2.7.5'
+    compile 'org.apache.hadoop:hadoop-hdfs:2.7.5'
+    compile 'org.apache.hadoop:hadoop-client:2.7.5'
 }

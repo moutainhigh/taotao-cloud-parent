@@ -4,5 +4,5 @@ jar.enabled = false
 bootJar.enabled = false
 
 dependencies {
-
+    compile 'org.apache.activemq:activemq-all:5.11.2'
 }

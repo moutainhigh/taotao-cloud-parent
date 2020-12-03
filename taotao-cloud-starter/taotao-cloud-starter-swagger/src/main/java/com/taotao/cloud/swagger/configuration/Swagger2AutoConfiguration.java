@@ -19,6 +19,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.swagger.properties.Swagger2Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
@@ -58,7 +59,7 @@ public class Swagger2AutoConfiguration implements BeanFactoryAware, Initializing
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER + "]" + "swagger模块已启动");
+        LogUtil.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER + "]" + "swagger模块已启动");
     }
 
     @Bean
@@ -241,7 +242,7 @@ public class Swagger2AutoConfiguration implements BeanFactoryAware, Initializing
     }
 
     /**
-     * 局部参数按照name覆盖局部参数
+     * 按照name覆盖局部参数
      *
      * @param globalOperationParameters globalOperationParameters
      * @param docketOperationParameters docketOperationParameters
@@ -274,6 +275,4 @@ public class Swagger2AutoConfiguration implements BeanFactoryAware, Initializing
         resultOperationParameters.addAll(docketOperationParameters);
         return buildGlobalOperationParametersFromSwaggerProperties(resultOperationParameters);
     }
-
-
 }

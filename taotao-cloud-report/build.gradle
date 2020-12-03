@@ -1,4 +1,4 @@
-archivesBaseName = 'taotao-cloud-hadoop'
+archivesBaseName = 'taotao-cloud-report'
 
 jar.enabled = false
 bootJar.enabled = false

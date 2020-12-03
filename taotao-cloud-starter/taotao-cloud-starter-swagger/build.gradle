@@ -10,8 +10,9 @@ dependencies {
     implementation "org.springframework:spring-web"
     compile "io.springfox:springfox-swagger2"
 
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
 }
