@@ -19,7 +19,7 @@
 依赖 | 版本
 ---|---
 Spring Boot |  2.2.6.RELEASE  
-Spring Cloud | Hoxton.SR3   
+Spring Cloud | Hoxton.SR8  
 Spring Cloud alibaba | 2.2.1.RELEASE  
 Spring Security OAuth2 | 2.3.6
 Mybatis Plus | 3.3.1

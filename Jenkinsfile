@@ -18,7 +18,7 @@
 pipeline {
 
     agent {
-        label 'Hadoop'
+        label 'TAOTAO CLOUD'
     }
 
     options {

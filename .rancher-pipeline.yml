@@ -66,6 +66,15 @@ stages:
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
+      - publishImageConfig:
+          dockerfilePath: ./taotao-cloud-order/Dockerfile
+          buildContext: ./taotao-cloud-order
+          tag: taotao-cloud/taotao-cloud-order:${CICD_EXECUTION_SEQUENCE}
+          pushRemote: true
+          registry: 192.168.99.240:8443
+        env:
+          PLUGIN_DEBUG: "true"
+          PLUGIN_INSECURE: "true"
     when:
       branch:
         include:

@@ -1,6 +1,8 @@
 node_modules/
 target/
 /*/target/
+.gradle
+/gradle
 
 !.mvn/wrapper/maven-wrapper.jar
 
