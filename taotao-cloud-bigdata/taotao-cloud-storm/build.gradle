@@ -4,5 +4,6 @@ jar.enabled = false
 bootJar.enabled = false
 
 dependencies {
-
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }

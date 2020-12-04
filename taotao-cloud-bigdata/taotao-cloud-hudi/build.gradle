@@ -41,6 +41,9 @@ dependencies {
     compile('com.github.scopt:scopt_2.12:4.0.0-RC2') {
         exclude group: 'org.scala-lang', module: 'scala-library'
     }
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 configurations {

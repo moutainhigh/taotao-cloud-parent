@@ -22,4 +22,7 @@ dependencies {
         exclude group: 'jmxtools', module: 'com.sun.jdmk'
         exclude group: 'jmxri', module: 'com.sun.jmx'
     }
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
