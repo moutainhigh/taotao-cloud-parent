@@ -79,6 +79,7 @@ dependencies {
 
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
 //     implementation project(':taotao-cloud-starter:taotao-cloud-starter-shardingjdbc')
 //     implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')
 //     implementation project(':taotao-cloud-starter:taotao-cloud-starter-elk')

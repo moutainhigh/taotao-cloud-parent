@@ -52,8 +52,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public Boolean existRoleByCode(String code) {
-        BooleanExpression predicate = SYS_ROLE.code.eq(code);
-        return roleRepository.exists(predicate);
+		BooleanExpression predicate = SYS_ROLE.code.eq(code);
+		return roleRepository.exists(predicate);
     }
 
     @Override

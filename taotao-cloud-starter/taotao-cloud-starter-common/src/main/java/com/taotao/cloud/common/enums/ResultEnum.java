@@ -194,7 +194,23 @@ public enum ResultEnum implements BaseEnum {
 	/**
 	 * 会员用户信息不存在
 	 */
-	MEMBER_NOT_EXIST(500034, "会员用户信息不存在");
+	MEMBER_NOT_EXIST(500034, "会员用户信息不存在"),
+	/**
+	 * 参数类型不匹配
+	 */
+	 METHOD_ARGUMETN_TYPE_MISMATCH(500035, "参数类型不匹配"),
+	/**
+	 * 缺少参数
+	 */
+	 MISSING_SERVLET_REQUESET_PARAMETER(500036, "缺少参数"),
+	/**
+	 * 请求method不匹配
+	 */
+	HTTP_REQUEST_METHOD_NOT_SUPPORTED(500037, "请求method不匹配"),
+	/**
+	 * RequestBody类型参数数据类型转换异常  HttpMessageNotReadable
+	 */
+	HTTP_MESSAGE_NOT_READABLE(500038, "RequestBody类型参数数据类型转换异常");
 
 	/**
 	 * 返回码

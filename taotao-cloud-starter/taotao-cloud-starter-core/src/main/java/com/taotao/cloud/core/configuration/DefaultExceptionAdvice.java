@@ -19,6 +19,7 @@ import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.exception.BusinessException;
+import com.taotao.cloud.common.exception.FeignException;
 import com.taotao.cloud.common.exception.IdempotencyException;
 import com.taotao.cloud.common.exception.LockException;
 import com.taotao.cloud.common.exception.MessageException;
@@ -38,9 +39,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
@@ -60,13 +63,19 @@ import java.util.Set;
  * @date 2020/5/2 09:12
  * @since v1.0
  */
-// @RestControllerAdvice({"com.taotao.cloud.*.biz.controller"})
 @RestControllerAdvice
 public class DefaultExceptionAdvice {
 
 	@ExceptionHandler({BaseException.class})
 	public Result<String> badBaseException(NativeWebRequest req, BaseException e) {
 		LogUtil.error("【全局异常拦截】BaseException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
+			uri(req), query(req), e.getMessage());
+		return Result.failed(e.getCode(), e.getMessage());
+	}
+
+	@ExceptionHandler({FeignException.class})
+	public Result<String> badFeignException(NativeWebRequest req, BaseException e) {
+		LogUtil.error("【全局异常拦截】FeignException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getCode(), e.getMessage());
 	}
@@ -149,14 +158,6 @@ public class DefaultExceptionAdvice {
 		return Result.failed(ResultEnum.SQL_ERROR);
 	}
 
-	@ExceptionHandler({HttpMessageNotReadableException.class})
-	public Result<String> handleHttpMessageNotReadableException(NativeWebRequest req,
-																HttpMessageNotReadableException e) {
-		LogUtil.error("【全局异常拦截】HttpMessageNotReadableException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
-			uri(req), query(req), e.getMessage());
-		return Result.failed(ResultEnum.ERROR);
-	}
-
 	/**
 	 * 处理Get请求中 使用@Valid 验证路径中请求实体校验失败后抛出的异常
 	 */
@@ -182,6 +183,31 @@ public class DefaultExceptionAdvice {
 		ErrorMsg errorMsg = new ErrorMsg();
 		errorMsg.setError(getErrors(bindingResult));
 		return Result.failed(errorMsg, ResultEnum.VERIFY_ARGUMENT_ERROR);
+	}
+
+	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
+	public Result<String> requestTypeMismatch(NativeWebRequest req,
+											  MethodArgumentTypeMismatchException e) {
+		LogUtil.error("【全局异常拦截】MethodArgumentTypeMismatchException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
+			uri(req), query(req), e.getMessage());
+		return Result.failed(e.getMessage(), ResultEnum.METHOD_ARGUMETN_TYPE_MISMATCH);
+	}
+
+	@ExceptionHandler({MissingServletRequestParameterException.class})
+	public Result<String> requestMissingServletRequest(NativeWebRequest req,
+													   MissingServletRequestParameterException e) {
+		LogUtil.error("【全局异常拦截】MissingServletRequestParameterException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
+			uri(req), query(req), e.getMessage());
+		return Result.failed(e.getMessage(), ResultEnum.MISSING_SERVLET_REQUESET_PARAMETER);
+	}
+
+	@ExceptionHandler({HttpMessageNotReadableException.class})
+	public Result<String> httpMessageNotReadableException(NativeWebRequest req, HttpMessageNotReadableException e) {
+		LogUtil.error("【全局异常拦截】HttpMessageNotReadableException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
+			uri(req), query(req), e.getMessage());
+		Throwable throwable = e.getRootCause();
+		assert throwable != null;
+		return Result.failed(throwable.getMessage(), ResultEnum.HTTP_MESSAGE_NOT_READABLE);
 	}
 
 	@ExceptionHandler(ValidationException.class)

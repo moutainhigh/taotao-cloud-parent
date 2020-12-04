@@ -10,6 +10,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.order.api.dto.OrderDTO;
 import com.taotao.cloud.order.biz.entity.Order;
+import com.taotao.cloud.order.biz.entity.QOrder;
 import com.taotao.cloud.order.biz.repository.OrderInfoRepository;
 import com.taotao.cloud.order.biz.service.IOrderInfoService;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderInfoServiceImpl implements IOrderInfoService {
 
 	private final OrderInfoRepository orderInfoRepository;
-	private final static QOrder ORDER_INFO = QOrder.orderInfo;
+	private final static QOrder ORDER_INFO = QOrder.order;
 
 	@Override
 	public Order findOrderInfoByCode(String code) {

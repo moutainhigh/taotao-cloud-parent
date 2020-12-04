@@ -1,5 +1,6 @@
 package com.taotao.cloud.order.api.feign.fallback;
 
+import com.taotao.cloud.common.exception.FeignException;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.order.api.dto.OrderDTO;
@@ -20,13 +21,13 @@ public class RemoteOrderFallbackImpl implements FallbackFactory<RemoteOrderServi
             @Override
             public Result<OrderVO> findOrderInfoByCode(String code) {
                 LogUtil.error("调用findOrderInfoByCode异常：{}", code, throwable);
-                return Result.failed(null, 500);
+				throw new FeignException(throwable.getMessage());
             }
 
             @Override
             public Result<OrderVO> saveOrder(OrderDTO orderDTO) {
                 LogUtil.error("调用saveOrder异常：{}", orderDTO, throwable);
-                return Result.failed(null, 500);
+				throw new FeignException(throwable.getMessage());
             }
         };
     }
