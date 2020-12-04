@@ -302,7 +302,8 @@ taotao:
     # 日志模块
     log:
       enabled: true
-      type: kafka
+      types:
+        - kafka
       trace:
         enabled: true
     # elk模块

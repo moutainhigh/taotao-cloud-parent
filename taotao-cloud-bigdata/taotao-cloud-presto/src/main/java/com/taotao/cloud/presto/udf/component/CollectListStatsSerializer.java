@@ -19,7 +19,7 @@ import com.facebook.presto.common.block.Block;
 import com.facebook.presto.common.block.BlockBuilder;
 import com.facebook.presto.common.type.Type;
 import com.facebook.presto.spi.function.AccumulatorStateSerializer;
-import com.taotao.cloud.presto.udf.CollectListAggregation;
+import com.taotao.cloud.presto.udf.udf.CollectListAggregation;
 
 import static com.facebook.presto.common.type.VarbinaryType.VARBINARY;
 

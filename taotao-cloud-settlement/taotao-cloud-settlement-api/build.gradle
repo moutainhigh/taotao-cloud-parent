@@ -11,4 +11,8 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
 
     compile "org.springframework.boot:spring-boot-starter-validation"
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
 }

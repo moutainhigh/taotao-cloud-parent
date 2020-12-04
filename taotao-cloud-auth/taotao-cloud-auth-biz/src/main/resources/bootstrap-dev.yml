@@ -293,7 +293,8 @@ taotao:
     #          access-key-secret: cc8f4a3bf3664665ade85818fa3b2516
     # 日志模块
     log:
-      type: logger
+      types:
+        - logger
       enabled: true
     p6spy:
       enabled: true

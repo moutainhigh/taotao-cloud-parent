@@ -144,7 +144,6 @@ taotao:
           http-urls:
             - /graphiql
             - /graphql
-
     ribbon:
       isolation:
         enabled: true
@@ -155,7 +154,8 @@ taotao:
         connect-timeout: 10000
     log:
       enabled: true
-      type: logger
+      types:
+        - logger
     p6spy:
       enabled: true
       dateformat: yyyy-MM-dd HH:mm:ss
@@ -203,7 +203,6 @@ ribbon:
   OkToRetryOnAllOperations: true
   MaxAutoRetries: 1
   MaxAutoRetriesNextServer: 1
-
 
 graphql:
   servlet:

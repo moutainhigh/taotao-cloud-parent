@@ -317,7 +317,8 @@ taotao:
         connect-timeout: 10000
     log:
       enabled: true
-      type: logger
+      types:
+        - logger
     p6spy:
       enabled: true
       dateformat: yyyy-MM-dd HH:mm:ss

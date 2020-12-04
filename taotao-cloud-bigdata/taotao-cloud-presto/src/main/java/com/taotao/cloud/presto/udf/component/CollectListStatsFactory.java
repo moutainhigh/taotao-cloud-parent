@@ -17,7 +17,7 @@ package com.taotao.cloud.presto.udf.component;
 
 import com.facebook.presto.spi.function.AccumulatorStateFactory;
 import com.facebook.presto.spi.function.GroupedAccumulatorState;
-import com.taotao.cloud.presto.udf.CollectListAggregation;
+import com.taotao.cloud.presto.udf.udf.CollectListAggregation;
 
 /**
  * @author dengtao

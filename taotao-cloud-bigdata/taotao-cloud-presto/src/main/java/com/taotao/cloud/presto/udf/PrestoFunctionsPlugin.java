@@ -17,7 +17,7 @@ package com.taotao.cloud.presto.udf;
 
 import com.facebook.presto.spi.Plugin;
 import com.google.common.collect.ImmutableSet;
-import com.taotao.cloud.presto.udf.ToDate;
+import com.taotao.cloud.presto.udf.udf.ToDate;
 
 import java.util.Set;
 

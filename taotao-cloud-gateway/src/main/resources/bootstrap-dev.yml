@@ -364,7 +364,9 @@ taotao:
           renew:
             enabled: true
     log:
-      type: logger
+      types:
+        - logger
+      enabled: true
 
 management:
   endpoints:

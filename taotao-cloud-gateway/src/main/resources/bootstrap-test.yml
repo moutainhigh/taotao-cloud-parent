@@ -262,7 +262,9 @@ taotao:
             enabled: true
     # 日志模块
     log:
-      type: logger
+      types:
+        - logger
+      enabled: true
 
 management:
   endpoints:

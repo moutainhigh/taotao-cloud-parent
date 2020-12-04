@@ -18,10 +18,16 @@ package com.taotao.cloud.presto.udf.udf;
 import com.facebook.presto.common.block.BlockBuilder;
 import com.facebook.presto.common.type.StandardTypes;
 import com.facebook.presto.common.type.VarcharType;
-import com.facebook.presto.spi.function.*;
-import com.taotao.cloud.presto.component.CollectListStats;
-import com.taotao.cloud.presto.component.CollectListStatsFactory;
-import com.taotao.cloud.presto.component.CollectListStatsSerializer;
+import com.facebook.presto.spi.function.AccumulatorState;
+import com.facebook.presto.spi.function.AccumulatorStateMetadata;
+import com.facebook.presto.spi.function.AggregationState;
+import com.facebook.presto.spi.function.CombineFunction;
+import com.facebook.presto.spi.function.InputFunction;
+import com.facebook.presto.spi.function.OutputFunction;
+import com.facebook.presto.spi.function.SqlType;
+import com.taotao.cloud.presto.udf.component.CollectListStats;
+import com.taotao.cloud.presto.udf.component.CollectListStatsFactory;
+import com.taotao.cloud.presto.udf.component.CollectListStatsSerializer;
 import io.airlift.slice.Slice;
 
 /**
