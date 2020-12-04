@@ -1,0 +1,9 @@
+archivesBaseName = 'taotao-cloud-cart'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}
+

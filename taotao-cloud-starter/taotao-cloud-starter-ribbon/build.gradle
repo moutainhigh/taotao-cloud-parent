@@ -20,6 +20,9 @@ dependencies {
     implementation "org.apache.httpcomponents:httpmime"
     implementation "com.squareup.okhttp3:okhttp"
 
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

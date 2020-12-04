@@ -15,7 +15,6 @@
  */
 package com.taotao.cloud.hbase.controller;
 
-import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.hbase.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +39,8 @@ public class ProductController {
 	}
 
 	@RequestMapping("queryByRowKey")
-	public Result<String> queryByRowKey(String rowKey) {
+	public String queryByRowKey(String rowKey) {
 		//Product product = productService.query(rowKey);
-		return Result.succeed("hello");
+		return "hello";
 	}
 }

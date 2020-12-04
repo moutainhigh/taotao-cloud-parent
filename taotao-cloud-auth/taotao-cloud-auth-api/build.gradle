@@ -11,4 +11,7 @@ dependencies {
 
     implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'
     compile "org.springframework.boot:spring-boot-starter-validation"
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }

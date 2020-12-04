@@ -11,6 +11,9 @@ dependencies {
     compile 'com.baomidou:mybatis-plus-extension'
     implementation 'org.springframework.security:spring-security-core'
 
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

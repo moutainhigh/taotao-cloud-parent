@@ -9,5 +9,9 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-swagger')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
 
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     compile "org.springframework.boot:spring-boot-starter-validation"
 }

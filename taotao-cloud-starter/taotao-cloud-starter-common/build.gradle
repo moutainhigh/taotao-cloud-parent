@@ -14,6 +14,11 @@ dependencies {
     compile 'org.javassist:javassist'
     compile 'com.github.whvcse:easy-captcha'
 
+    compile 'cn.hutool:hutool-all'
+
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     implementation "org.springframework.cloud:spring-cloud-context"
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
