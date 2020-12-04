@@ -225,7 +225,7 @@ graphql:
 graphiql:
   mapping: /graphiql
   endpoint:
-    graphql: /graphql
+    graphql: http://localhost:9900/api/v1.0/manager/graphql
     subscriptions: /subscriptions
   subscriptions:
     timeout: 30

@@ -350,6 +350,7 @@ taotao:
             /uc/user,
             /auth/client,
             /manager/graphql,
+            /manager/graphiql,
             /auth/oauth/**,
             /auth/mobile/login,
             /auth/sms/code,
