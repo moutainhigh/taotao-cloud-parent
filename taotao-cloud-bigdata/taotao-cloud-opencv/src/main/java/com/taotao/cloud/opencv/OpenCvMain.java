@@ -16,8 +16,6 @@
 package com.taotao.cloud.opencv;
 
 import org.bytedeco.ffmpeg.global.avcodec;
-import org.bytedeco.javacpp.Loader;
-import org.bytedeco.javacpp.opencv_objdetect;
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber;
@@ -31,8 +29,8 @@ import org.bytedeco.javacv.FrameRecorder;
 public class OpenCvMain {
 	public static void main(String[] args) throws FrameGrabber.Exception, FrameRecorder.Exception, InterruptedException {
 		// Preload the opencv_objdetect module to work around a known bug.
-		String str = Loader.load(opencv_objdetect.class);
-		System.out.println(str);
+		// String str = Loader.load(opencv_objdetect.class);
+		// System.out.println(str);
 
 		FrameGrabber grabber = FrameGrabber.createDefault(0);
 		grabber.start();

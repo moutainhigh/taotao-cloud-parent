@@ -1,0 +1,8 @@
+archivesBaseName = 'taotao-cloud-coupon'
+
+jar.enabled = false
+bootJar.enabled = false
+
+dependencies {
+
+}

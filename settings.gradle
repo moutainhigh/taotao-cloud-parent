@@ -149,3 +149,19 @@ include 'taotao-cloud-stock:taotao-cloud-stock-biz'
 include 'taotao-cloud-recommend'
 include 'taotao-cloud-recommend:taotao-cloud-recommend-api'
 include 'taotao-cloud-recommend:taotao-cloud-recommend-biz'
+/* 优惠券模块 */
+include 'taotao-cloud-coupon'
+include 'taotao-cloud-coupon:taotao-cloud-coupon-api'
+include 'taotao-cloud-coupon:taotao-cloud-coupon-biz'
+/* 新闻模块 */
+include 'taotao-cloud-news'
+include 'taotao-cloud-news:taotao-cloud-news-api'
+include 'taotao-cloud-news:taotao-cloud-news-biz'
+/* 运营模块 */
+include 'taotao-cloud-operation'
+include 'taotao-cloud-operation:taotao-cloud-operation-api'
+include 'taotao-cloud-operation:taotao-cloud-operation-biz'
+/* 公告模块 */
+include 'taotao-cloud-bulletin'
+include 'taotao-cloud-bulletin:taotao-cloud-bulletin-api'
+include 'taotao-cloud-bulletin:taotao-cloud-bulletin-biz'
