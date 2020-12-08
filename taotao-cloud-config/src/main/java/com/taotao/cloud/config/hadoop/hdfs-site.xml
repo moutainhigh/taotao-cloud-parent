@@ -18,17 +18,17 @@
 <configuration>
 	<property>
 		<name>dfs.namenode.name.dir</name>
-		<value>/opt/hadoop/data/nameNode</value>
+		<value>/bigdata/hadoop-3.3.0/data/nameNode</value>
 	</property>
 
 	<property>
 		<name>dfs.datanode.data.dir</name>
-		<value>/opt/hadoop/data/dataNode</value>
+		<value>/bigdata/hadoop-3.3.0/data/dataNode</value>
 	</property>
 
 	<property>
 		<name>dfs.namenode.http.address</name>
-		<value>localhost:9870</value>
+		<value>taotao-cloud:9870</value>
 	</property>
 
 	<property>
@@ -45,7 +45,6 @@
 		<name>dfs.permissions.enabled</name>
 		<value>false</value>
 	</property>
-
 
 	<property>
 		<name>dfs.permissions</name>

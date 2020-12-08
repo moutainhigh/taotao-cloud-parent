@@ -29,19 +29,39 @@
 	</property>
 
 	<property>
-		<name>yarn.nodemanager.resource.memory-mb</name>
-		<value>1536</value>
+		<name>yarn.nodemanager.env-whitelist</name>
+		<value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
 	</property>
 
 	<property>
-		<name>yarn.scheduler.maximum-allocation-mb</name>
-		<value>1536</value>
+		<name>yarn.log-aggregation-enable</name>
+		<value>true</value>
 	</property>
 
 	<property>
-		<name>yarn.scheduler.minimum-allocation-mb</name>
-		<value>128</value>
+		<name>yarn.log-aggregation.retain-seconds</name>
+		<value>604800</value>
 	</property>
+
+	<!--<property>-->
+	<!--	<name>yarn.application.classpath</name>-->
+	<!--	<value>/taotao-cloud/hadoop-3.2.1/etc/hadoop:/taotao-cloud/hadoop-3.2.1/share/hadoop/common/lib/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/common/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/hdfs:/taotao-cloud/hadoop-3.2.1/share/hadoop/hdfs/lib/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/hdfs/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/mapreduce/lib/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/mapreduce/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/yarn:/taotao-cloud/hadoop-3.2.1/share/hadoop/yarn/lib/*:/taotao-cloud/hadoop-3.2.1/share/hadoop/yarn/*</value>-->
+	<!--</property>-->
+
+	<!--<property>-->
+	<!--	<name>yarn.nodemanager.resource.memory-mb</name>-->
+	<!--	<value>4096</value>-->
+	<!--</property>-->
+
+	<!--<property>-->
+	<!--	<name>yarn.scheduler.maximum-allocation-mb</name>-->
+	<!--	<value>4096</value>-->
+	<!--</property>-->
+
+	<!--<property>-->
+	<!--	<name>yarn.scheduler.minimum-allocation-mb</name>-->
+	<!--	<value>128</value>-->
+	<!--</property>-->
 
 	<property>
 		<name>yarn.nodemanager.vmem-check-enabled</name>

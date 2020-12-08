@@ -24,7 +24,7 @@
 
 	<property>
 		<name>hadoop.tmp.dir</name>
-		<value>/opt/hadoop/tmp</value>
+		<value>/bigdata/hadoop-3.3.0/tmp</value>
 	</property>
 
 	<property>
