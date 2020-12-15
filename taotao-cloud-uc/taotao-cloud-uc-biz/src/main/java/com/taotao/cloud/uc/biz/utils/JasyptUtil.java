@@ -27,21 +27,21 @@ import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 public class JasyptUtil {
 
 
-	public static void main(final String[] args) {
-		 String password = "taotao-cloud";
-		 String input = "123456";
-		try {
-			StringEncryptor stringEncryptor = JasyptUtil.getInstance(password);
-			String mima = stringEncryptor.encrypt(input);
-			System.out.println("【" + input + "】被加密成【" + mima + "】");
+	// public static void main(final String[] args) {
+	// 	 String password = "taotao-cloud";
+	// 	 String input = "123456";
+	// 	try {
+	// 		StringEncryptor stringEncryptor = JasyptUtil.getInstance(password);
+	// 		String mima = stringEncryptor.encrypt(input);
+	// 		System.out.println("【" + input + "】被加密成【" + mima + "】");
 
-			String jiemi = stringEncryptor.decrypt(mima);
-			System.out.println("【" + mima + "】被解密成【" + jiemi + "】");
+	// 		String jiemi = stringEncryptor.decrypt(mima);
+	// 		System.out.println("【" + mima + "】被解密成【" + jiemi + "】");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	// 	}
+	// }
 
 	private static StringEncryptor stringEncryptor = null;
 

@@ -1,7 +1,7 @@
 archivesBaseName = 'taotao-cloud-recommend'
 
 jar.enabled = true
-bootJar.enabled = true
+bootJar.enabled = false
 
 dependencies {
 

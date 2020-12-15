@@ -362,6 +362,7 @@ feign:
     response:
       enabled: true
 
+
 #hystrix:
 #  threadpool:
 #    default:

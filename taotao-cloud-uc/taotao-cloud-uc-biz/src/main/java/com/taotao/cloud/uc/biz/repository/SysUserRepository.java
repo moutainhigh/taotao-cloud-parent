@@ -39,6 +39,7 @@ public class SysUserRepository extends BaseJpaRepository<SysUser, Long> {
     private final static QSysUser SYS_USER = QSysUser.sysUser;
 
     public Boolean updatePassword(Long id, String newPassword) {
+        
         long number = jpaQueryFactory.update(SYS_USER)
                 .set(SYS_USER.password, newPassword)
                 .where(SYS_USER.id.eq(id))

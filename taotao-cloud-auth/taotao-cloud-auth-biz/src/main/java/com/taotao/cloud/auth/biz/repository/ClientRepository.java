@@ -15,21 +15,22 @@
  */
 package com.taotao.cloud.auth.biz.repository;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.auth.api.query.ClientPageQuery;
 import com.taotao.cloud.auth.biz.entity.Client;
 import com.taotao.cloud.auth.biz.entity.QClient;
-import com.taotao.cloud.common.enums.DelFlagEnum;
 import com.taotao.cloud.data.jpa.repository.BaseJpaRepository;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * 客户端Repository

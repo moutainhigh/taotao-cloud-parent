@@ -1,4 +1,4 @@
-rootProject.name = 'taotao-cloud'
+rootProject.name = 'taotao-cloud-parent'
 
 /* starter模块 */
 include 'taotao-cloud-starter'

@@ -5,8 +5,10 @@ server:
   undertow:
     buffer-size: 2048
     direct-buffers: true
-    io-threads: 24
-    worker-threads: 1500
+    threads:
+      io: 24
+      worker: 1500
+
 
 spring:
   main:
@@ -92,7 +94,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
       concurrency: 5
-      ack-mode: manual_immediate
+      ack-mode: MANUAL_IMMEDIATE
       missing-topics-fatal: false
   gson:
     date-format: yyyy-MM-dd HH:mm:ss
