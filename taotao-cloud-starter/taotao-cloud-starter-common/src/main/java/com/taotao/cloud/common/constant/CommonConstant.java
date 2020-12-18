@@ -251,4 +251,7 @@ public interface CommonConstant {
     int OPERATE_TYPE_4 = 4;
 
     Long RESOURCE_TREE_ROOT_ID = 0L;
+
+    String SUCCESS = "success";
+    String ERROR = "error";
 }

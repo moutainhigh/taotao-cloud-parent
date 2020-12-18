@@ -15,14 +15,25 @@
  */
 package com.taotao.cloud.security.component;
 
+import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.taotao.cloud.common.constant.CommonConstant;
-import com.taotao.cloud.common.enums.ResultEnum;
+import com.taotao.cloud.common.utils.IdGeneratorUtil;
 import org.slf4j.MDC;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.security.oauth2.common.exceptions.*;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+import org.springframework.security.oauth2.common.exceptions.RedirectMismatchException;
+import org.springframework.security.oauth2.common.exceptions.UnsupportedResponseTypeException;
 import org.springframework.security.oauth2.provider.error.DefaultWebResponseExceptionTranslator;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -35,30 +46,57 @@ import java.time.format.DateTimeFormatter;
  * @since v1.0
  */
 public class WebResponseExceptionTranslatorComponent extends DefaultWebResponseExceptionTranslator {
-    public static final String BAD_MSG = "坏的凭证";
+	public static final String BAD_MSG = "坏的凭证";
 
-    @Override
-    public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
-        OAuth2Exception oAuth2Exception;
-        if (e.getMessage() != null && e.getMessage().equals(BAD_MSG)) {
-            oAuth2Exception = new InvalidGrantException("用户名或密码错误", e);
-        } else if (e instanceof InternalAuthenticationServiceException) {
-            oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
-        } else if (e instanceof RedirectMismatchException) {
-            oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
-        } else if (e instanceof InvalidScopeException) {
-            oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
-        } else {
-            oAuth2Exception = new UnsupportedResponseTypeException("登录失败:未查询到用户", e);
-        }
-        ResponseEntity<OAuth2Exception> response = super.translate(oAuth2Exception);
-        ResponseEntity.status(200);
-        response.getBody().addAdditionalInformation("code", ResultEnum.UNAUTHORIZED.getCode() + "");
-        response.getBody().addAdditionalInformation("message", oAuth2Exception.getMessage());
-        response.getBody().addAdditionalInformation("data", null);
-        response.getBody().addAdditionalInformation("requestId", MDC.get(CommonConstant.TRACE_ID));
-        response.getBody().addAdditionalInformation("timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+	@Override
+	public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
+		OAuth2Exception oAuth2Exception;
+		if (e.getMessage() != null && e.getMessage().equals(BAD_MSG)) {
+			oAuth2Exception = new InvalidGrantException("用户名或密码错误", e);
+		} else if (e instanceof InternalAuthenticationServiceException) {
+			oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
+		} else if (e instanceof RedirectMismatchException) {
+			oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
+		} else if (e instanceof InvalidScopeException) {
+			oAuth2Exception = new InvalidGrantException(e.getMessage(), e);
+		} else {
+			oAuth2Exception = new UnsupportedResponseTypeException("登录失败:未查询到用户", e);
+		}
+		ResponseEntity<OAuth2Exception> response = super.translate(oAuth2Exception);
+		OAuth2Exception auth2Exception = response.getBody();
 
-        return response;
-    }
+		assert auth2Exception != null;
+		BootOAuth2Exception exception = new BootOAuth2Exception(auth2Exception.getMessage(), auth2Exception);
+
+		return new ResponseEntity<>(exception, response.getHeaders(), HttpStatus.OK);
+	}
+
+	@JsonSerialize(using = BootOAuthExceptionJacksonSerializer.class)
+	public static class BootOAuth2Exception extends OAuth2Exception {
+		public BootOAuth2Exception(String msg, Throwable t) {
+			super(msg, t);
+		}
+
+		public BootOAuth2Exception(String msg) {
+			super(msg);
+		}
+	}
+
+	public static class BootOAuthExceptionJacksonSerializer extends StdSerializer<BootOAuth2Exception> {
+		protected BootOAuthExceptionJacksonSerializer() {
+			super(BootOAuth2Exception.class);
+		}
+
+		@Override
+		public void serialize(BootOAuth2Exception value, JsonGenerator json, SerializerProvider serializerProvider) throws IOException {
+			json.writeStartObject();
+			json.writeObjectField("code", value.getHttpErrorCode());
+			json.writeObjectField("message", value.getMessage());
+			json.writeObjectField("data", null);
+			json.writeObjectField("type", CommonConstant.ERROR);
+			json.writeObjectField("requestId", StrUtil.isNotBlank(MDC.get(CommonConstant.TRACE_ID)) ? MDC.get(CommonConstant.TRACE_ID) : IdGeneratorUtil.getIdStr());
+			json.writeObjectField("timestamp", CommonConstant.DATETIME_FORMATTER.format(LocalDateTime.now()));
+			json.writeEndObject();
+		}
+	}
 }

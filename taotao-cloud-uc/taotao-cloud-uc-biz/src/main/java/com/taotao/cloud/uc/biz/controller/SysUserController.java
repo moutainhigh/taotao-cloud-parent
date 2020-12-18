@@ -157,7 +157,7 @@ public class SysUserController {
 
 	@ApiOperation("根据username获取用户信息")
 	@RequestOperateLog(description = "根据username获取用户信息")
-	@PreAuthorize("hasAuthority('sys:user:info:username')")
+	//@PreAuthorize("hasAuthority('sys:user:info:username')")
 	@GetMapping("/info/username")
 	public Result<UserVO> findUserInfoByUsername(@NotBlank(message = "用户名称不能为空")
 												 @RequestParam(value = "username") String username) {

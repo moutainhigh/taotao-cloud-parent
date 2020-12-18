@@ -67,14 +67,14 @@ import java.util.Set;
 public class DefaultExceptionAdvice {
 
 	@ExceptionHandler({BaseException.class})
-	public Result<String> badBaseException(NativeWebRequest req, BaseException e) {
+	public Result<String> baseException(NativeWebRequest req, BaseException e) {
 		LogUtil.error("【全局异常拦截】BaseException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getCode(), e.getMessage());
 	}
 
 	@ExceptionHandler({FeignException.class})
-	public Result<String> badFeignException(NativeWebRequest req, BaseException e) {
+	public Result<String> feignException(NativeWebRequest req, BaseException e) {
 		LogUtil.error("【全局异常拦截】FeignException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getCode(), e.getMessage());
@@ -175,8 +175,7 @@ public class DefaultExceptionAdvice {
 	 * @RequestBody上validate失败后抛出的异常是MethodArgumentNotValidException异常
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Result<ErrorMsg> handleMethodArgumentNotValidException(NativeWebRequest req,
-																  MethodArgumentNotValidException e) {
+	public Result<ErrorMsg> handleMethodArgumentNotValidException(NativeWebRequest req, MethodArgumentNotValidException e) {
 		LogUtil.error("【全局异常拦截】MethodArgumentNotValidException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		BindingResult bindingResult = e.getBindingResult();
@@ -186,16 +185,14 @@ public class DefaultExceptionAdvice {
 	}
 
 	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
-	public Result<String> requestTypeMismatch(NativeWebRequest req,
-											  MethodArgumentTypeMismatchException e) {
+	public Result<String> requestTypeMismatch(NativeWebRequest req, MethodArgumentTypeMismatchException e) {
 		LogUtil.error("【全局异常拦截】MethodArgumentTypeMismatchException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getMessage(), ResultEnum.METHOD_ARGUMETN_TYPE_MISMATCH);
 	}
 
 	@ExceptionHandler({MissingServletRequestParameterException.class})
-	public Result<String> requestMissingServletRequest(NativeWebRequest req,
-													   MissingServletRequestParameterException e) {
+	public Result<String> requestMissingServletRequest(NativeWebRequest req, MissingServletRequestParameterException e) {
 		LogUtil.error("【全局异常拦截】MissingServletRequestParameterException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getMessage(), ResultEnum.MISSING_SERVLET_REQUESET_PARAMETER);
@@ -211,8 +208,7 @@ public class DefaultExceptionAdvice {
 	}
 
 	@ExceptionHandler(ValidationException.class)
-	public Result<String> handleException(NativeWebRequest req,
-										  ValidationException e) {
+	public Result<String> handleException(NativeWebRequest req, ValidationException e) {
 		LogUtil.error("【全局异常拦截】ValidationException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		return Result.failed(e.getMessage(), ResultEnum.VERIFY_ARGUMENT_ERROR);
@@ -222,8 +218,7 @@ public class DefaultExceptionAdvice {
 	 * @RequestParam上validate失败后抛出的异常是javax.validation.ConstraintViolationException
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)
-	public Result<ErrorMsg> handleException(NativeWebRequest req,
-											ConstraintViolationException e) {
+	public Result<ErrorMsg> handleException(NativeWebRequest req, ConstraintViolationException e) {
 		LogUtil.error("【全局异常拦截】ConstraintViolationException: 请求路径: {0}, 请求参数: {1}, 异常信息 {2} ", e,
 			uri(req), query(req), e.getMessage());
 		ErrorMsg errorMsg = new ErrorMsg();

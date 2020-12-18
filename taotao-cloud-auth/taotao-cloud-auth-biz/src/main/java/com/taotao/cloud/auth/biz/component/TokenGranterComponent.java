@@ -15,6 +15,7 @@
  */
 package com.taotao.cloud.auth.biz.component;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.enums.ResultEnum;
+import com.taotao.cloud.common.utils.IdGeneratorUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import lombok.SneakyThrows;
 import org.slf4j.MDC;
@@ -31,7 +33,11 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
@@ -43,7 +49,13 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * 自定义的 {@link TokenGranter}<br>
@@ -167,7 +179,8 @@ public class TokenGranterComponent implements TokenGranter {
             jsonGenerator.writeObjectField("code", ResultEnum.SUCCESS.getCode());
             jsonGenerator.writeObjectField("message", ResultEnum.SUCCESS.getMessage());
             jsonGenerator.writeObjectField("timestamp", CommonConstant.DATETIME_FORMATTER.format(LocalDateTime.now()));
-            jsonGenerator.writeObjectField("requestId", MDC.get(CommonConstant.TRACE_ID));
+			jsonGenerator.writeObjectField("type", CommonConstant.ERROR);
+			jsonGenerator.writeObjectField("requestId", StrUtil.isNotBlank(MDC.get(CommonConstant.TRACE_ID)) ? MDC.get(CommonConstant.TRACE_ID) : IdGeneratorUtil.getIdStr());
             jsonGenerator.writeObjectField("data", oAuth2AccessToken.tokenSerialize());
             jsonGenerator.writeEndObject();
         }

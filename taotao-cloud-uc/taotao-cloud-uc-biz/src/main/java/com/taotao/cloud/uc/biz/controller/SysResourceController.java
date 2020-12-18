@@ -194,7 +194,7 @@ public class SysResourceController {
 
 	@ApiOperation("根据角色code列表获取角色列表")
 	@RequestOperateLog(description = "根据角色cde列表获取角色列表")
-	@PreAuthorize("hasAuthority('sys:resource:info:codes')")
+	//@PreAuthorize("hasAuthority('sys:resource:info:codes')")
 	@GetMapping("/info/codes")
 	public Result<List<ResourceVO>> findResourceByCodes(@NotNull(message = "角色cde列表不能为空")
 														@RequestParam(value = "codes") Set<String> codes) {
