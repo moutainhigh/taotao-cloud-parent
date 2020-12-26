@@ -5,9 +5,7 @@ import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.core.model.SecurityUser;
 import com.taotao.cloud.uc.api.feign.RemoteUserService;
 import com.taotao.cloud.uc.api.vo.user.UserVO;
-import feign.hystrix.FallbackFactory;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteLogFallbackImpl

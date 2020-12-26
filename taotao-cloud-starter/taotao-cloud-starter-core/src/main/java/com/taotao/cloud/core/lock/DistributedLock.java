@@ -1,131 +1,80 @@
-/*
- * Copyright 2017-2020 original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.taotao.cloud.core.lock;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 分布式锁顶级接口
- * <p>
- * 例如：
- * RETRY_TIMES=100，SLEEP_MILLIS=100
- * RETRY_TIMES * SLEEP_MILLIS = 10000 意味着如果一直获取不了锁，最长会等待10秒后抛超时异常
  *
- * @author dengtao
- * @date 2020/4/30 10:25
- * @since v1.0
+ * @author zlt
+ * @date 2018/5/29 14:12
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 public interface DistributedLock {
-
 	/**
-	 * 默认超时时间
-	 */
-	long TIMEOUT_MILLIS = 5000;
-
-	/**
-	 * 重试次数
-	 */
-	int RETRY_TIMES = 100;
-
-	/**
-	 * 每次重试后等待的时间
-	 */
-	long SLEEP_MILLIS = 100;
-
-	/**
-	 * 获取锁
+	 * 获取锁，如果获取不成功则一直等待直到lock被获取
 	 *
-	 * @param key key
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:39
-	 * @since v1.0
+	 * @param key       锁的key
+	 * @param leaseTime 加锁的时间，超过这个时间后锁便自动解锁；
+	 *                  如果leaseTime为-1，则保持锁定直到显式解锁
+	 * @param unit      {@code leaseTime} 参数的时间单位
+	 * @param isFair    是否公平锁
+	 * @return 锁对象
 	 */
-	Boolean lock(String key);
+	ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) throws Exception;
+
+	default ZLock lock(String key, long leaseTime, TimeUnit unit) throws Exception {
+		return this.lock(key, leaseTime, unit, false);
+	}
+
+	default ZLock lock(String key, boolean isFair) throws Exception {
+		return this.lock(key, -1, null, isFair);
+	}
+
+	default ZLock lock(String key) throws Exception {
+		return this.lock(key, -1, null, false);
+	}
 
 	/**
-	 * 获取锁
+	 * 尝试获取锁，如果锁不可用则等待最多waitTime时间后放弃
 	 *
-	 * @param key        key
-	 * @param retryTimes 重试次数
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:39
-	 * @since v1.0
+	 * @param key       锁的key
+	 * @param waitTime  获取锁的最大尝试时间(单位 {@code unit})
+	 * @param leaseTime 加锁的时间，超过这个时间后锁便自动解锁；
+	 *                  如果leaseTime为-1，则保持锁定直到显式解锁
+	 * @param unit      {@code waitTime} 和 {@code leaseTime} 参数的时间单位
+	 * @return 锁对象，如果获取锁失败则为null
 	 */
-	Boolean lock(String key, int retryTimes);
+	ZLock tryLock(String key, long waitTime, long leaseTime, TimeUnit unit, boolean isFair) throws Exception;
 
-	/**
-	 * 获取锁
-	 *
-	 * @param key         key
-	 * @param retryTimes  重试次数
-	 * @param sleepMillis 获取锁失败的重试间隔
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:40
-	 * @since v1.0
-	 */
-	Boolean lock(String key, int retryTimes, long sleepMillis);
+	default ZLock tryLock(String key, long waitTime, long leaseTime, TimeUnit unit) throws Exception {
+		return this.tryLock(key, waitTime, leaseTime, unit, false);
+	}
 
-	/**
-	 * 获取锁
-	 *
-	 * @param key    key
-	 * @param expire 获取锁超时时间
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:40
-	 * @since v1.0
-	 */
-	Boolean lock(String key, long expire);
+	default ZLock tryLock(String key, long waitTime, TimeUnit unit, boolean isFair) throws Exception {
+		return this.tryLock(key, waitTime, -1, unit, isFair);
+	}
 
-	/**
-	 * 获取锁
-	 *
-	 * @param key        key
-	 * @param expire     获取锁超时时间
-	 * @param retryTimes 重试次数
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:40
-	 * @since v1.0
-	 */
-	Boolean lock(String key, long expire, int retryTimes);
-
-	/**
-	 * 获取锁
-	 *
-	 * @param key         key
-	 * @param expire      获取锁超时时间
-	 * @param retryTimes  重试次数
-	 * @param sleepMillis 获取锁失败的重试间隔
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:40
-	 * @since v1.0
-	 */
-	Boolean lock(String key, long expire, int retryTimes, long sleepMillis);
+	default ZLock tryLock(String key, long waitTime, TimeUnit unit) throws Exception {
+		return this.tryLock(key, waitTime, -1, unit, false);
+	}
 
 	/**
 	 * 释放锁
 	 *
-	 * @param key key
-	 * @return boolean
-	 * @author dengtao
-	 * @date 2020/10/15 15:41
-	 * @since v1.0
+	 * @param lock 锁对象
 	 */
-	Boolean releaseLock(String key);
+	void unlock(Object lock) throws Exception;
+
+	/**
+	 * 释放锁
+	 *
+	 * @param zLock 锁抽象对象
+	 */
+	default void unlock(ZLock zLock) throws Exception {
+		if (zLock != null) {
+			this.unlock(zLock.getLock());
+		}
+	}
 }

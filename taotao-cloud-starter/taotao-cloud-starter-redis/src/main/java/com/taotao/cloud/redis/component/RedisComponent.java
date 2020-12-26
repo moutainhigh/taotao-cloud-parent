@@ -16,8 +16,6 @@
 package com.taotao.cloud.redis.component;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.core.lock.DistributedLock;
-import com.taotao.cloud.redis.lock.RedisDistributedLock;
 import com.taotao.cloud.redis.properties.CacheManagerProperties;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import com.taotao.cloud.redis.serializer.RedisObjectSerializer;
@@ -51,78 +49,73 @@ import java.util.Map;
 @EnableCaching
 public class RedisComponent implements InitializingBean {
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER + "]" + "redis模块已启动");
-    }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER + "]" + "redis模块已启动");
+	}
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(factory);
+	@Bean
+	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setConnectionFactory(factory);
 
-        RedisSerializer<String> stringSerializer = new StringRedisSerializer();
-        RedisSerializer<Object> redisObjectSerializer = new RedisObjectSerializer();
+		RedisSerializer<String> stringSerializer = new StringRedisSerializer();
+		RedisSerializer<Object> redisObjectSerializer = new RedisObjectSerializer();
 
-        redisTemplate.setKeySerializer(stringSerializer);
-        redisTemplate.setHashKeySerializer(stringSerializer);
-        redisTemplate.setValueSerializer(redisObjectSerializer);
-        redisTemplate.afterPropertiesSet();
+		redisTemplate.setKeySerializer(stringSerializer);
+		redisTemplate.setHashKeySerializer(stringSerializer);
+		redisTemplate.setValueSerializer(redisObjectSerializer);
+		redisTemplate.afterPropertiesSet();
 
-        return redisTemplate;
-    }
+		return redisTemplate;
+	}
 
-    @Bean
-    public RedisRepository redisRepository(RedisTemplate<String, Object> redisTemplate) {
-        return new RedisRepository(redisTemplate);
-    }
+	@Bean
+	public RedisRepository redisRepository(RedisTemplate<String, Object> redisTemplate) {
+		return new RedisRepository(redisTemplate);
+	}
 
-    @Bean
-    public DistributedLock redisDistributedLock(RedisTemplate<String, Object> redisTemplate) {
-        return new RedisDistributedLock(redisTemplate);
-    }
+	@Primary
+	@Bean(name = "cacheManager")
+	public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory,
+									 CacheManagerProperties cacheManagerProperties) {
+		RedisCacheConfiguration difConf = getDefConf().entryTtl(Duration.ofHours(1));
 
-    @Primary
-    @Bean(name = "cacheManager")
-    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory,
-                                     CacheManagerProperties cacheManagerProperties) {
-        RedisCacheConfiguration difConf = getDefConf().entryTtl(Duration.ofHours(1));
+		//自定义的缓存过期时间配置
+		int configSize = cacheManagerProperties.getConfigs() == null ? 0 : cacheManagerProperties.getConfigs().size();
+		Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(configSize);
+		if (configSize > 0) {
+			cacheManagerProperties.getConfigs().forEach(e -> {
+				RedisCacheConfiguration conf = getDefConf().entryTtl(Duration.ofSeconds(e.getSecond()));
+				redisCacheConfigurationMap.put(e.getKey(), conf);
+			});
+		}
 
-        //自定义的缓存过期时间配置
-        int configSize = cacheManagerProperties.getConfigs() == null ? 0 : cacheManagerProperties.getConfigs().size();
-        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(configSize);
-        if (configSize > 0) {
-            cacheManagerProperties.getConfigs().forEach(e -> {
-                RedisCacheConfiguration conf = getDefConf().entryTtl(Duration.ofSeconds(e.getSecond()));
-                redisCacheConfigurationMap.put(e.getKey(), conf);
-            });
-        }
+		return RedisCacheManager.builder(redisConnectionFactory)
+			.cacheDefaults(difConf)
+			.withInitialCacheConfigurations(redisCacheConfigurationMap)
+			.build();
+	}
 
-        return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(difConf)
-                .withInitialCacheConfigurations(redisCacheConfigurationMap)
-                .build();
-    }
+	@Bean
+	public KeyGenerator keyGenerator() {
+		return (target, method, objects) -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append(target.getClass().getName());
+			sb.append(":").append(method.getName()).append(":");
+			for (Object obj : objects) {
+				sb.append(obj.toString());
+			}
+			return sb.toString();
+		};
+	}
 
-    @Bean
-    public KeyGenerator keyGenerator() {
-        return (target, method, objects) -> {
-            StringBuilder sb = new StringBuilder();
-            sb.append(target.getClass().getName());
-            sb.append(":").append(method.getName()).append(":");
-            for (Object obj : objects) {
-                sb.append(obj.toString());
-            }
-            return sb.toString();
-        };
-    }
-
-    private RedisCacheConfiguration getDefConf() {
-        return RedisCacheConfiguration.defaultCacheConfig()
-                .disableCachingNullValues()
-                .computePrefixWith(cacheName -> "cache".concat(":").concat(cacheName).concat(":"))
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new RedisObjectSerializer()));
-    }
+	private RedisCacheConfiguration getDefConf() {
+		return RedisCacheConfiguration.defaultCacheConfig()
+			.disableCachingNullValues()
+			.computePrefixWith(cacheName -> "cache".concat(":").concat(cacheName).concat(":"))
+			.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new RedisObjectSerializer()));
+	}
 
 }

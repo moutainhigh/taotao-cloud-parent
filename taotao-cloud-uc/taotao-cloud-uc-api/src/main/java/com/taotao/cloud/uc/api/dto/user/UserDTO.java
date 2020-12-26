@@ -1,6 +1,6 @@
 package com.taotao.cloud.uc.api.dto.user;
 
-import com.taotao.cloud.core.constraints.IntEnums;
+import com.taotao.cloud.core.mvc.constraints.IntEnums;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

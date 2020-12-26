@@ -16,7 +16,6 @@
 package com.taotao.cloud.core.utils;
 
 import com.taotao.cloud.common.constant.CommonConstant;
-import com.taotao.cloud.common.utils.BeanUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.SecurityUser;
 import lombok.experimental.UtilityClass;

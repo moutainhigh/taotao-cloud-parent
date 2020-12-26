@@ -5,7 +5,7 @@ import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.product.api.dto.ProductDTO;
 import com.taotao.cloud.product.api.feign.RemoteProductService;
 import com.taotao.cloud.product.api.vo.ProductVO;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteLogFallbackImpl

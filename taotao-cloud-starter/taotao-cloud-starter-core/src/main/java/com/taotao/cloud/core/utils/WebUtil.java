@@ -15,7 +15,6 @@
  */
 package com.taotao.cloud.core.utils;
 
-import com.taotao.cloud.common.utils.ContextUtil;
 import com.taotao.cloud.common.utils.NetworkUtil;
 import lombok.val;
 import org.springframework.boot.web.context.ConfigurableWebServerApplicationContext;
@@ -48,63 +47,63 @@ import java.util.Map;
  */
 public class WebUtil {
 
-    private static final ThreadLocal<WebContext> THREAD_CONTEXT = new ThreadLocal<>();
+	private static final ThreadLocal<WebContext> THREAD_CONTEXT = new ThreadLocal<>();
 
-    public static WebContext getContext() {
-        return THREAD_CONTEXT.get();
-    }
+	public static WebContext getContext() {
+		return THREAD_CONTEXT.get();
+	}
 
-    public static HttpServletRequest getRequest() {
-        WebContext webContext = getContext();
-        return webContext == null ? null : webContext.request;
-    }
+	public static HttpServletRequest getRequest() {
+		WebContext webContext = getContext();
+		return webContext == null ? null : webContext.request;
+	}
 
-    public static HttpServletResponse getResponse() {
-        WebContext webContext = getContext();
-        return webContext == null ? null : webContext.response;
-    }
+	public static HttpServletResponse getResponse() {
+		WebContext webContext = getContext();
+		return webContext == null ? null : webContext.response;
+	}
 
-    public static void bindContext(HttpServletRequest request, HttpServletResponse response) {
-        THREAD_CONTEXT.set(new WebContext(request, response));
-    }
+	public static void bindContext(HttpServletRequest request, HttpServletResponse response) {
+		THREAD_CONTEXT.set(new WebContext(request, response));
+	}
 
-    public static void clearContext() {
-        THREAD_CONTEXT.remove();
-    }
+	public static void clearContext() {
+		THREAD_CONTEXT.remove();
+	}
 
-    public static class WebContext {
-        private final HttpServletRequest request;
-        private final HttpServletResponse response;
+	public static class WebContext {
+		private final HttpServletRequest request;
+		private final HttpServletResponse response;
 
-        public WebContext(HttpServletRequest request, HttpServletResponse response) {
-            this.request = request;
-            this.response = response;
-        }
-    }
+		public WebContext(HttpServletRequest request, HttpServletResponse response) {
+			this.request = request;
+			this.response = response;
+		}
+	}
 
-    public static String getBaseUrl() {
-        if (!isWeb()) {
-            return "";
-        }
-        val webServer = getConfigurableWebServerApplicationContext().getWebServer();
-        if (webServer == null) {
-            return "";
-        }
-        return "http://" + NetworkUtil.getIpAddress() + ":" + webServer.getPort();
-    }
+	public static String getBaseUrl() {
+		if (!isWeb()) {
+			return "";
+		}
+		val webServer = getConfigurableWebServerApplicationContext().getWebServer();
+		if (webServer == null) {
+			return "";
+		}
+		return "http://" + NetworkUtil.getIpAddress() + ":" + webServer.getPort();
+	}
 
-    public static Map<String, String> getAllRequestParam(HttpServletRequest request) {
-        Map<String, String> res = new HashMap<>();
-        Enumeration<?> temp = request.getParameterNames();
-        if (null != temp) {
-            while (temp.hasMoreElements()) {
-                String en = (String) temp.nextElement();
-                String value = request.getParameter(en);
-                res.put(en, value);
-            }
-        }
-        return res;
-    }
+	public static Map<String, String> getAllRequestParam(HttpServletRequest request) {
+		Map<String, String> res = new HashMap<>();
+		Enumeration<?> temp = request.getParameterNames();
+		if (null != temp) {
+			while (temp.hasMoreElements()) {
+				String en = (String) temp.nextElement();
+				String value = request.getParameter(en);
+				res.put(en, value);
+			}
+		}
+		return res;
+	}
 
 	public static Map<String, String> getAllRequestHeaders(HttpServletRequest request) {
 		Map<String, String> res = new HashMap<>();
@@ -119,61 +118,61 @@ public class WebUtil {
 		return res;
 	}
 
-    public static ConfigurableWebServerApplicationContext getConfigurableWebServerApplicationContext() {
-        ApplicationContext context = ContextUtil.getApplicationContext();
-        if (context instanceof ConfigurableWebServerApplicationContext) {
-            return (ConfigurableWebServerApplicationContext) context;
-        }
-        return null;
-    }
+	public static ConfigurableWebServerApplicationContext getConfigurableWebServerApplicationContext() {
+		ApplicationContext context = ContextUtil.getApplicationContext();
+		if (context instanceof ConfigurableWebServerApplicationContext) {
+			return (ConfigurableWebServerApplicationContext) context;
+		}
+		return null;
+	}
 
-    public static boolean isWeb() {
-        return getConfigurableWebServerApplicationContext() != null;
-    }
+	public static boolean isWeb() {
+		return getConfigurableWebServerApplicationContext() != null;
+	}
 
-    /**
-     * 从Flux<DataBuffer>中获取字符串的方法
-     *
-     * @return 请求体
-     */
-    public static String getBodyString(ServerHttpRequest serverHttpRequest) {
-        HttpMessageReader<byte[]> httpMessageReader = new DecoderHttpMessageReader(new ByteArrayDecoder());
-        ResolvableType resolvableType = ResolvableType.forClass(byte[].class);
-        Mono<byte[]> mono = httpMessageReader.readMono(resolvableType, serverHttpRequest, Collections.emptyMap());
-        return mono.map(String::new).block();
-    }
+	/**
+	 * 从Flux<DataBuffer>中获取字符串的方法
+	 *
+	 * @return 请求体
+	 */
+	public static String getBodyString(ServerHttpRequest serverHttpRequest) {
+		HttpMessageReader<byte[]> httpMessageReader = new DecoderHttpMessageReader(new ByteArrayDecoder());
+		ResolvableType resolvableType = ResolvableType.forClass(byte[].class);
+		Mono<byte[]> mono = httpMessageReader.readMono(resolvableType, serverHttpRequest, Collections.emptyMap());
+		return mono.map(String::new).block();
+	}
 
-    public static String getBodyString(HttpServletRequest request) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        try {
-            inputStream = request.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return sb.toString().trim();
-    }
+	public static String getBodyString(HttpServletRequest request) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		InputStream inputStream = null;
+		BufferedReader reader = null;
+		try {
+			inputStream = request.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+			String line = "";
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return sb.toString().trim();
+	}
 
 
 }

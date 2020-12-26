@@ -15,13 +15,20 @@
  */
 package com.taotao.cloud.auth.biz.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.auth.api.vo.TokenVO;
 import com.taotao.cloud.auth.biz.service.ITokensService;
 import com.taotao.cloud.core.model.PageResult;
+import com.taotao.cloud.core.model.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +55,30 @@ public class TokenController {
     public PageResult<TokenVO> list(@RequestParam Map<String, Object> params, String tenantId) {
         return tokensService.listTokens(params, tenantId);
     }
+
+	/**
+	 * 退出并删除token
+	 * @param authHeader Authorization
+	 */
+	@DeleteMapping("/logout")
+	public Result<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String authHeader) {
+		if (StrUtil.isBlank(authHeader)) {
+			throw new IllegalArgumentException("参数错误");
+		}
+
+		String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, StrUtil.EMPTY).trim();
+		return removeToken(tokenValue);
+	}
+
+	/**
+	 * 令牌管理调用
+	 * @param token token
+	 */
+	@DeleteMapping("/{token}")
+	public Result<Boolean> removeToken(@PathVariable("token") String token) {
+		Boolean result  = tokensService.removeToken(token);
+		return Result.succeed(result);
+	}
 
 //    @ApiOperation(value = "用户名密码获取token")
 //    @GetMapping("/user")

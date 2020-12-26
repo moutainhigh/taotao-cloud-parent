@@ -27,10 +27,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taotao.cloud.common.exception.IdempotencyException;
 import com.taotao.cloud.common.exception.LockException;
 import com.taotao.cloud.core.lock.DistributedLock;
+import com.taotao.cloud.core.lock.ZLock;
 import com.taotao.cloud.data.mybatis.plus.service.ISuperService;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * service实现父类
@@ -40,112 +42,63 @@ import java.util.Objects;
  * @since v1.0
  */
 public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ISuperService<T> {
-    /**
-     * 幂等性新增记录
-     * 例子如下：
-     * <p>
-     * String username = sysUser.getUsername();
-     * <p>
-     * boolean result = super.saveIdempotency(
-     * sysUser
-     * , lock
-     * , LOCK_KEY_USERNAME+username
-     * , new QueryWrapper<SysUser>().eq("username", username)
-     * );
-     *
-     * @param entity       实体对象
-     * @param lock         锁实例
-     * @param lockKey      锁的key
-     * @param countWrapper 判断是否存在的条件
-     * @param msg          对象已存在提示信息
-     */
-    @Override
-    public boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
-        if (lock == null) {
-            throw new LockException("分布式锁为空");
-        }
-        if (StrUtil.isEmpty(lockKey)) {
-            throw new LockException("锁的key为空");
-        }
+	@Override
+	public boolean saveIdempotency(T entity, DistributedLock locker, String lockKey, Wrapper<T> countWrapper, String msg) throws Exception {
+		if (locker == null) {
+			throw new LockException("DistributedLock is null");
+		}
+		if (StrUtil.isEmpty(lockKey)) {
+			throw new LockException("lockKey is null");
+		}
+		try (
+			ZLock lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
+		) {
+			if (lock != null) {
+				//判断记录是否已存在
+				int count = super.count(countWrapper);
+				if (count == 0) {
+					return super.save(entity);
+				} else {
+					if (StrUtil.isEmpty(msg)) {
+						msg = "已存在";
+					}
+					throw new IdempotencyException(msg);
+				}
+			} else {
+				throw new LockException("锁等待超时");
+			}
+		}
+	}
 
-        try {
-            boolean isLock = lock.lock(lockKey);
-            if (isLock) {
-                int count = super.count(countWrapper);
-                if (count == 0) {
-                    return super.save(entity);
-                } else {
-                    throw new IdempotencyException(StrUtil.isEmpty(msg) ? "数据已存在" : msg);
-                }
-            } else {
-                throw new LockException("锁等待超时");
-            }
-        } finally {
-            lock.releaseLock(lockKey);
-        }
-    }
+	@Override
+	public boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) throws Exception {
+		return saveIdempotency(entity, lock, lockKey, countWrapper, null);
+	}
 
-    /**
-     * 幂等性新增记录
-     *
-     * @param entity       实体对象
-     * @param lock         锁实例
-     * @param lockKey      锁的key
-     * @param countWrapper 判断是否存在的条件
-     */
-    @Override
-    public boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {
-        return saveIdempotency(entity, lock, lockKey, countWrapper, null);
-    }
+	@Override
+	public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) throws Exception {
+		if (null != entity) {
+			Class<?> cls = entity.getClass();
+			TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
+			if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
+				Object idVal = ReflectionKit.getFieldValue(entity, tableInfo.getKeyProperty());
+				if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
+					if (StrUtil.isEmpty(msg)) {
+						msg = "已存在";
+					}
+					return this.saveIdempotency(entity, lock, lockKey, countWrapper, msg);
+				} else {
+					return updateById(entity);
+				}
+			} else {
+				throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
+			}
+		}
+		return false;
+	}
 
-    /**
-     * 幂等性新增或更新记录
-     * 例子如下：
-     * String username = sysUser.getUsername();
-     * boolean result = super.saveOrUpdateIdempotency(sysUser, lock
-     * , LOCK_KEY_USERNAME+username
-     * , new QueryWrapper<SysUser>().eq("username", username));
-     *
-     * @param entity       实体对象
-     * @param lock         锁实例
-     * @param lockKey      锁的key
-     * @param countWrapper 判断是否存在的条件
-     * @param msg          对象已存在提示信息
-     */
-    @Override
-    public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
-        if (null != entity) {
-            Class<?> cls = entity.getClass();
-            TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
-            if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
-                Object idVal = ReflectionKit.getFieldValue(entity, tableInfo.getKeyProperty());
-                if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
-                    return this.saveIdempotency(entity, lock, lockKey, countWrapper, StrUtil.isEmpty(msg) ? "数据已存在" : msg);
-                } else {
-                    return updateById(entity);
-                }
-            } else {
-                throw ExceptionUtils.mpe("执行错误,未找到@TableId.");
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 幂等性新增或更新记录
-     * 例子如下：
-     * String username = sysUser.getUsername();
-     * boolean result = super.saveOrUpdateIdempotency(sysUser, lock
-     * , LOCK_KEY_USERNAME+username
-     * , new QueryWrapper<SysUser>().eq("username", username));
-     *
-     * @param entity       实体对象
-     * @param lock         锁实例
-     * @param lockKey      锁的key
-     * @param countWrapper 判断是否存在的条件
-     */
-    @Override
-    public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {
-        return this.saveOrUpdateIdempotency(entity, lock, lockKey, countWrapper, null);
-    }
+	@Override
+	public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) throws Exception {
+		return this.saveOrUpdateIdempotency(entity, lock, lockKey, countWrapper, null);
+	}
 }

@@ -18,7 +18,7 @@ package com.taotao.cloud.security.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
-import com.taotao.cloud.common.utils.BeanUtil;
+import com.taotao.cloud.core.utils.BeanUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.core.model.SecurityUser;

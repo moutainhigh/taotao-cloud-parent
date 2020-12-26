@@ -5,7 +5,7 @@ import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.core.model.SecurityUser;
 import com.taotao.cloud.member.api.feign.RemoteMemberService;
 import com.taotao.cloud.member.api.vo.MemberVO;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteMemberFallbackImpl

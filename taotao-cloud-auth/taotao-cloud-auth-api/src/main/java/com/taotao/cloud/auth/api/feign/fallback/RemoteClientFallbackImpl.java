@@ -16,8 +16,8 @@
 package com.taotao.cloud.auth.api.feign.fallback;
 
 import com.taotao.cloud.auth.api.feign.RemoteClientService;
-import feign.hystrix.FallbackFactory;
 import lombok.AllArgsConstructor;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

@@ -15,7 +15,7 @@
  */
 package com.taotao.cloud.core.annotation;
 
-import com.taotao.cloud.core.component.AsyncTaskComponent;
+import com.taotao.cloud.core.async.AsyncTaskComponent;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

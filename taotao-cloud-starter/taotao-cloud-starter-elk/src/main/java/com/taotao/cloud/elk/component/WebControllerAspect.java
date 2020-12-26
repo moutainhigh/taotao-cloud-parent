@@ -107,7 +107,7 @@ public class WebControllerAspect {
             if (!annotation.annotationType().toString().contains("org.springframework.web.bind.annotation")) {
                 continue;
             }
-            sb.append(JsonUtil.serialize(request.getParameterMap()));
+            sb.append(JsonUtil.toJSONString(request.getParameterMap()));
         }
         return sb.toString();
     }
@@ -121,7 +121,7 @@ public class WebControllerAspect {
         if (null == retVal) {
             return "";
         }
-        return JsonUtil.serialize(retVal);
+        return JsonUtil.toJSONString(retVal);
     }
 
     private String getRemoteHost(HttpServletRequest request) {

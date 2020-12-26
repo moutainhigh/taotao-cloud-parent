@@ -53,4 +53,6 @@ public interface ITokensService {
      * @date 2020/4/29 17:07
      */
     OAuth2AccessToken getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token);
+
+	Boolean removeToken(String token);
 }

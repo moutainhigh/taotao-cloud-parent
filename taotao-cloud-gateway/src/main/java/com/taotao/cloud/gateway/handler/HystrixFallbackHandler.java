@@ -71,7 +71,7 @@ public class HystrixFallbackHandler implements HandlerFunction<ServerResponse> {
         Map<String, String> map = params.toSingleValueMap();
         if (map.size() > 0) {
             message.append(" 请求参数: ");
-            String serialize = JsonUtil.serialize(message);
+            String serialize = JsonUtil.toJSONString(message);
             message.append(serialize);
         }
         Object requestBody = request.exchange().getAttribute(CACHED_REQUEST_BODY_ATTR);

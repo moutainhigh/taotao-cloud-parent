@@ -98,23 +98,23 @@ public class FileUtil {
         return new File(path);
     }
 
-    /**
-     * 获取文件路径
-     *
-     * @param paths 路径列表
-     * @return java.lang.String
-     * @author dengtao
-     * @date 2020/10/15 15:03
-     * @since v1.0
-     */
-    public String getFilePath(String... paths) {
-        StringBuilder sb = new StringBuilder();
-        for (String path : paths) {
-            sb.append(org.springframework.util.StringUtils.trimTrailingCharacter(path, File.separatorChar));
-            sb.append(File.separator);
-        }
-        return org.springframework.util.StringUtils.trimTrailingCharacter(sb.toString(), File.separatorChar);
-    }
+    // /**
+    //  * 获取文件路径
+    //  *
+    //  * @param paths 路径列表
+    //  * @return java.lang.String
+    //  * @author dengtao
+    //  * @date 2020/10/15 15:03
+    //  * @since v1.0
+    //  */
+    // public String getFilePath(String... paths) {
+    //     StringBuilder sb = new StringBuilder();
+    //     for (String path : paths) {
+    //         sb.append(org.springframework.util.StringUtils.trimTrailingCharacter(path, File.separatorChar));
+    //         sb.append(File.separator);
+    //     }
+    //     return org.springframework.util.StringUtils.trimTrailingCharacter(sb.toString(), File.separatorChar);
+    // }
 
     /**
      * 创建目录

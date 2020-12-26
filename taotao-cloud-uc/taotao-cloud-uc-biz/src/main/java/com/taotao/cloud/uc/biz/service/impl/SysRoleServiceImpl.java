@@ -4,7 +4,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.common.utils.BeanUtil;
+import com.taotao.cloud.core.utils.BeanUtil;
 import com.taotao.cloud.uc.api.dto.role.RoleDTO;
 import com.taotao.cloud.uc.api.dto.role.RoleResourceDTO;
 import com.taotao.cloud.uc.api.query.role.RolePageQuery;

@@ -15,9 +15,13 @@
  */
 package com.taotao.cloud.core.annotation;
 
-import com.taotao.cloud.core.configuration.DefaultExceptionAdvice;
-import com.taotao.cloud.core.configuration.TaotaoCloudJackson2ObjectMapperBuilderCustomizer;
-import com.taotao.cloud.core.configuration.WebMvcConfiguration;
+import com.taotao.cloud.core.lock.LockAspect;
+import com.taotao.cloud.core.mvc.DefaultExceptionAdvice;
+import com.taotao.cloud.core.mvc.TaotaoCloudJackson2ObjectMapperBuilderCustomizer;
+import com.taotao.cloud.core.mvc.WebMvcConfiguration;
+import com.taotao.cloud.core.mvc.filter.LbIsolationFilter;
+import com.taotao.cloud.core.mvc.filter.TenantFilter;
+import com.taotao.cloud.core.mvc.filter.TraceFilter;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -36,7 +40,15 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @RestControllerAdvice
-@Import({DefaultExceptionAdvice.class, TaotaoCloudJackson2ObjectMapperBuilderCustomizer.class, WebMvcConfiguration.class})
+@Import({
+	DefaultExceptionAdvice.class,
+	TaotaoCloudJackson2ObjectMapperBuilderCustomizer.class,
+	WebMvcConfiguration.class,
+	LockAspect.class,
+	LbIsolationFilter.class,
+	TenantFilter.class,
+	TraceFilter.class
+})
 public @interface EnableTaoTaoCloudMVC {
 
 }

@@ -18,7 +18,7 @@ package com.taotao.cloud.job.component;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.utils.AddrUtil;
+import com.taotao.cloud.core.utils.AddrUtil;
 import com.taotao.cloud.job.properties.XxlProperties;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.extern.slf4j.Slf4j;

@@ -43,7 +43,7 @@ public interface CommonConstant {
     /**
      * 项目版本号(banner使用)
      */
-    String PROJECT_VERSION = "3.5.0";
+    String PROJECT_VERSION = "1.0";
 
     /**
      * token请求头名称
@@ -254,4 +254,5 @@ public interface CommonConstant {
 
     String SUCCESS = "success";
     String ERROR = "error";
+	String TIME_ZONE_GMT8 = "GMT+8";
 }

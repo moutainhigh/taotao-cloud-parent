@@ -4,9 +4,7 @@ import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.uc.api.feign.RemoteResourceService;
 import com.taotao.cloud.uc.api.vo.resource.ResourceVO;
-import feign.hystrix.FallbackFactory;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -18,14 +16,14 @@ import java.util.Set;
  * @date 2020/4/29 21:43
  */
 public class RemoteResourceFallbackImpl implements FallbackFactory<RemoteResourceService> {
-    @Override
-    public RemoteResourceService create(Throwable throwable) {
-        return new RemoteResourceService() {
-            @Override
-            public Result<List<ResourceVO>> findResourceByCodes(Set<String> codes) {
-                LogUtil.error("调用findResourceByCodes异常：{}", throwable, codes);
-                return Result.failed(null, 500);
-            }
-        };
-    }
+	@Override
+	public RemoteResourceService create(Throwable throwable) {
+		return new RemoteResourceService() {
+			@Override
+			public Result<List<ResourceVO>> findResourceByCodes(Set<String> codes) {
+				LogUtil.error("调用findResourceByCodes异常：{}", throwable, codes);
+				return Result.failed(null, 500);
+			}
+		};
+	}
 }

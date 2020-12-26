@@ -28,37 +28,15 @@ seata:
       cluster: default
 
 spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
   thymeleaf:
     prefix: classpath:/views/
     suffix: .html
     cache: false
   cache:
     type: none
-  cloud:
-    nacos:
-      discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
-        metadata:
-          version: 7
-      config:
-        enabled: false
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
-        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
-        file-extension: yml
-    sentinel:
-      enabled: true
-      eager: true
-      datasource:
-        ds1:
-          nacos:
-            server-addr: 127.0.0.1:8848
-            dataId: taotao-cloud-product-sentinel
-            groupId: DEFAULT_GROUP
-            data-type: json
-            rule-type: flow
-      transport:
-        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:127.0.0.1}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
-        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8711}
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:p6spy:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
@@ -158,21 +136,35 @@ spring:
             redirectUri: http://b086e8ba3be2.ngrok.io/api/login/oauth2/code/weixin
             authorizationGrantType: authorization_code
             clientAuthenticationMethod: post
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        metadata:
+          version: 7
+      config:
+        enabled: false
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+        file-extension: yml
+    sentinel:
+      enabled: true
+      eager: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: taotao-cloud-product-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:127.0.0.1}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8711}
+    loadbalancer:
+      ribbon:
+        enabled: off
 
-security:
-  oauth2:
-    client:
-      clientId: taotao-cloud-uc-center
-      clientSecret: taotao-cloud-uc-center
-      userAuthorizationUri: http://taotao-cloud-uc-center/oauth/authorize
-      access-token-uri: http://taotao-cloud-uc-center/oauth/token
-    resource:
-      id: taotao-cloud-uc-center
-      prefer-token-info: false
-      token-info-uri: http://taotao-cloud-uc-center/oauth/check_token
-      user-info-uri: http://taotao-cloud-uc-center/oauth/user
-    authorization:
-      check-token-access: http://taotao-cloud-uc-center/oauth/check_token
 #  kafka:
 #    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.230}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
 #    producer:
@@ -197,12 +189,6 @@ security:
 #      concurrency: 5
 #      ack-mode: manual_immediate
 #      missing-topics-fatal: false
-#  gson:
-#    date-format: yyyy-MM-dd HH:mm:ss
-#    disable-html-escaping: true
-#    pretty-printing: true
-#    serialize-nulls: true
-#    long-serialization-policy: string
 #  sleuth:
 #    web:
 #      client:
@@ -225,6 +211,21 @@ security:
 #    map-underscore-to-camel-case: true
 #    cache-enabled: false
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+security:
+  oauth2:
+    client:
+      clientId: taotao-cloud-uc-center
+      clientSecret: taotao-cloud-uc-center
+      userAuthorizationUri: http://taotao-cloud-uc-center/oauth/authorize
+      access-token-uri: http://taotao-cloud-uc-center/oauth/token
+    resource:
+      id: taotao-cloud-uc-center
+      prefer-token-info: false
+      token-info-uri: http://taotao-cloud-uc-center/oauth/check_token
+      user-info-uri: http://taotao-cloud-uc-center/oauth/user
+    authorization:
+      check-token-access: http://taotao-cloud-uc-center/oauth/check_token
 
 taotao:
   cloud:
@@ -322,48 +323,9 @@ taotao:
 #      tenant:
 #        enabled: true
 
-#hystrix:
-#  threadpool:
-#    default:
-#      coreSize: 1200
-#      maximumSize: 15000
-#      allowMaximumSizeToDivergeFromCoreSize: true
-#      maxQueueSize: 2000
-#      queueSizeRejectionThreshold: 1800
-#  command:
-#    default:
-#      circuitBreaker:
-#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-#        requestVolumeThreshold: 30
-#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-#        # 也就是5000毫秒后才会关闭circuit。默认5000
-#        sleepWindowInMilliseconds: 45000
-#      execution:
-#        timeout:
-#          enabled: true
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 90000
-
-ribbon:
-  eager-load:
-    enabled: true
-  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-  ReadTimeout: 90000
-  ConnectTimeout: 90000
-  OkToRetryOnAllOperations: true
-  MaxAutoRetries: 1
-  MaxAutoRetriesNextServer: 1
-
 feign:
   sentinel:
     enabled: false
-  hystrix:
-    enabled: true
   okhttp:
     enabled: false
   httpclient:

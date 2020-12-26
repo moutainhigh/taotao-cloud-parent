@@ -77,7 +77,7 @@ public class Result<T> implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	private static <T> Result<T> of(Integer code, T data, String type, String msg) {
+	public static <T> Result<T> of(Integer code, T data, String type, String msg) {
 		return Result.<T>builder()
 			.code(code)
 			.data(data)

@@ -21,10 +21,10 @@ import com.taotao.cloud.gateway.utils.WeightRandomUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.reactive.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.reactive.EmptyResponse;
-import org.springframework.cloud.client.loadbalancer.reactive.Request;
-import org.springframework.cloud.client.loadbalancer.reactive.Response;
+import org.springframework.cloud.client.loadbalancer.DefaultResponse;
+import org.springframework.cloud.client.loadbalancer.EmptyResponse;
+import org.springframework.cloud.client.loadbalancer.Request;
+import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -32,7 +32,11 @@ import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * GrayLoadBalancer<br>

@@ -15,7 +15,9 @@
  */
 package com.taotao.cloud.ribbon.annotation;
 
-import com.taotao.cloud.ribbon.component.FeignComponent;
+import com.taotao.cloud.ribbon.fegin.FeignAutoConfiguration;
+import com.taotao.cloud.ribbon.fegin.FeignHttpInterceptorConfig;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 
@@ -33,12 +35,10 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@EnableTaoTaoCloudFeignInterceptor
-@EnableTaoTaoCloudLbIsolation
 @EnableTaoTaoCloudHttpClient
-@EnableTaoTaoCloudRibbon
 @EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
-@Import({FeignComponent.class})
+@EnableAutoConfiguration(excludeName = "org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration")
+@Import({FeignAutoConfiguration.class, FeignHttpInterceptorConfig.class})
 public @interface EnableTaoTaoCloudFeign {
 
 }

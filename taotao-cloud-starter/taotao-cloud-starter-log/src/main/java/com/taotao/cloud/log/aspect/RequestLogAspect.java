@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.common.enums.LogOperateTypeEnum;
-import com.taotao.cloud.common.utils.AddrUtil;
+import com.taotao.cloud.core.utils.AddrUtil;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.utils.SecurityUtil;
 import com.taotao.cloud.core.utils.WebUtil;

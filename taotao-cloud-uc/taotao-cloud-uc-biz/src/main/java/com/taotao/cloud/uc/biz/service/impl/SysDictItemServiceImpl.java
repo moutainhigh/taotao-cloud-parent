@@ -3,7 +3,7 @@ package com.taotao.cloud.uc.biz.service.impl;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.common.utils.BeanUtil;
+import com.taotao.cloud.core.utils.BeanUtil;
 import com.taotao.cloud.uc.api.dto.dictItem.DictItemDTO;
 import com.taotao.cloud.uc.api.query.dictItem.DictItemPageQuery;
 import com.taotao.cloud.uc.api.query.dictItem.DictItemQuery;

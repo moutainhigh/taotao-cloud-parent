@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * 用户VO
@@ -30,9 +31,6 @@ public class UserVO implements Serializable {
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
-
-    @ApiModelProperty(value = "密码")
-    private String password;
 
     @ApiModelProperty(value = "真实用户名")
     private String username;
@@ -60,6 +58,12 @@ public class UserVO implements Serializable {
 
     @ApiModelProperty(value = "是否锁定 1-正常，2-锁定")
     private Integer lockFlag;
+
+	@ApiModelProperty(value = "角色")
+	private Set<String> roles;
+
+	@ApiModelProperty(value = "权限")
+	private Set<String> permissions;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

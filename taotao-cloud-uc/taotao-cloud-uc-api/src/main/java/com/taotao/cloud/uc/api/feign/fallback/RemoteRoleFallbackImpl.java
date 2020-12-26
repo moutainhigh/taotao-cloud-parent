@@ -4,9 +4,7 @@ import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.uc.api.feign.RemoteRoleService;
 import com.taotao.cloud.uc.api.vo.role.RoleVO;
-import feign.hystrix.FallbackFactory;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 import java.util.List;
 

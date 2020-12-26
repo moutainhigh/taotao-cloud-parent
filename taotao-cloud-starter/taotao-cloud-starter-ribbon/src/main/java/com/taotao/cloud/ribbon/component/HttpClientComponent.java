@@ -38,36 +38,36 @@ import org.springframework.core.annotation.Order;
  */
 public class HttpClientComponent {
 
-    /**
-     * 使用连接池的 httpclient
-     */
-    @Bean
-    @Order(500)
-    public HttpClient httpClient(RestTemplateProperties restTemplateProperties) {
-        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
-                .register("http", PlainConnectionSocketFactory.getSocketFactory())
-                .register("https", SSLConnectionSocketFactory.getSocketFactory())
-                .build();
+	/**
+	 * 使用连接池的 httpclient
+	 */
+	@Bean
+	@Order(500)
+	public HttpClient httpClient(RestTemplateProperties restTemplateProperties) {
+		Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
+			.register("http", PlainConnectionSocketFactory.getSocketFactory())
+			.register("https", SSLConnectionSocketFactory.getSocketFactory())
+			.build();
 
-        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
-        // 最大链接数
-        connectionManager.setMaxTotal(restTemplateProperties.getMaxTotal());
-        // 同路由并发数20
-        connectionManager.setDefaultMaxPerRoute(restTemplateProperties.getMaxPerRoute());
+		PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
+		// 最大链接数
+		connectionManager.setMaxTotal(restTemplateProperties.getMaxTotal());
+		// 同路由并发数20
+		connectionManager.setDefaultMaxPerRoute(restTemplateProperties.getMaxPerRoute());
 
-        RequestConfig requestConfig = RequestConfig.custom()
-                // 读超时
-                .setSocketTimeout(restTemplateProperties.getReadTimeout())
-                // 链接超时
-                .setConnectTimeout(restTemplateProperties.getConnectTimeout())
-                // 链接不够用的等待时间
-                .setConnectionRequestTimeout(restTemplateProperties.getReadTimeout())
-                .build();
+		RequestConfig requestConfig = RequestConfig.custom()
+			// 读超时
+			.setSocketTimeout(restTemplateProperties.getReadTimeout())
+			// 链接超时
+			.setConnectTimeout(restTemplateProperties.getConnectTimeout())
+			// 链接不够用的等待时间
+			.setConnectionRequestTimeout(restTemplateProperties.getReadTimeout())
+			.build();
 
-        return HttpClientBuilder.create()
-                .setDefaultRequestConfig(requestConfig)
-                .setConnectionManager(connectionManager)
-                .setRetryHandler(new DefaultHttpRequestRetryHandler(3, true))
-                .build();
-    }
+		return HttpClientBuilder.create()
+			.setDefaultRequestConfig(requestConfig)
+			.setConnectionManager(connectionManager)
+			.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true))
+			.build();
+	}
 }

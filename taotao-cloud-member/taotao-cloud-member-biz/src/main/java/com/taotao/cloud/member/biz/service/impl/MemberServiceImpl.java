@@ -3,7 +3,7 @@ package com.taotao.cloud.member.biz.service.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.common.utils.AddrUtil;
+import com.taotao.cloud.core.utils.AddrUtil;
 import com.taotao.cloud.core.utils.AuthUtil;
 import com.taotao.cloud.member.api.dto.member.MemberDTO;
 import com.taotao.cloud.member.api.query.member.MemberQuery;

@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.BeanUtil;
+import com.taotao.cloud.core.utils.BeanUtil;
 import com.taotao.cloud.data.mybatis.plus.handler.DateMetaObjectHandler;
 import com.taotao.cloud.data.mybatis.plus.properties.MybatisPlusAutoFillProperties;
 import com.taotao.cloud.data.mybatis.plus.properties.TenantProperties;
