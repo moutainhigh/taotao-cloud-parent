@@ -28,6 +28,8 @@ seata:
       cluster: default
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   mvc:
     servlet:
       load-on-startup: 1
@@ -163,7 +165,7 @@ spring:
         port: ${TAOTAO-CLOUD-SENTINEL-PORT:8711}
     loadbalancer:
       ribbon:
-        enabled: off
+        enabled: false
 
 #  kafka:
 #    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.230}:${TAOTAO-CLOUD-KAFKA-PORT:9092}

@@ -33,14 +33,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFailureEvenHandler implements ApplicationListener<OAuth2AuthenticationFailureEvent> {
 
-    @Override
-    public void onApplicationEvent(OAuth2AuthenticationFailureEvent event) {
-        AuthenticationException authenticationException = event.getException();
-        Authentication authentication = (Authentication) event.getSource();
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof SecurityUser) {
-            // 此处也可以异步调用消息系统发送登录失败
-            LogUtil.info("用户：{0} 登录失败，异常：{1}", ((SecurityUser) principal).getUsername(), authenticationException.getLocalizedMessage());
-        }
-    }
+	@Override
+	public void onApplicationEvent(OAuth2AuthenticationFailureEvent event) {
+		AuthenticationException authenticationException = event.getException();
+		Authentication authentication = (Authentication) event.getSource();
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof SecurityUser) {
+			// 此处也可以异步调用消息系统发送登录失败
+			LogUtil.info("用户：{0} 登录失败，异常：{1}", ((SecurityUser) principal).getUsername(), authenticationException.getLocalizedMessage());
+		}
+	}
 }

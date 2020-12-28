@@ -51,7 +51,7 @@ public interface StarterNameConstant {
     /**
      * ribbon模块
      */
-    String TAOTAO_CLOUD_RIBBON_STARTER = "taotao-cloud-starter-ribbon";
+    String TAOTAO_CLOUD_RIBBON_STARTER = "taotao-cloud-starter-loadbalancer";
 
     /**
      * feign模块

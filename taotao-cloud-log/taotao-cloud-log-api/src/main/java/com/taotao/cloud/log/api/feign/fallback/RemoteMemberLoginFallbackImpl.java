@@ -4,7 +4,7 @@ import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.log.api.feign.RemoteMemberLoginService;
 import com.taotao.cloud.log.api.vo.MemberLoginVO;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteLogFallbackImpl

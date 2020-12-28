@@ -15,7 +15,6 @@
  */
 package com.taotao.cloud.common.utils;
 
-import com.sun.istack.internal.Nullable;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -85,7 +84,7 @@ public class StringUtil {
 	 * @see #hasLength(CharSequence)
 	 * @see #hasText(String)
 	 */
-	public static boolean hasLength(@Nullable String str) {
+	public static boolean hasLength(String str) {
 		return (str != null && !str.isEmpty());
 	}
 
@@ -106,7 +105,7 @@ public class StringUtil {
 	 * @see #hasLength(String)
 	 * @see #hasText(CharSequence)
 	 */
-	public static boolean hasLength(@Nullable CharSequence str) {
+	public static boolean hasLength( CharSequence str) {
 		return (str != null && str.length() > 0);
 	}
 

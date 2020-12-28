@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.4.1'
         springCloudVersion = '2020.0.0'
         springCloudAlibabaVersion = '2.2.3.RELEASE'
+        springSecurityOauth2Version = "2.5.0.RELEASE"
 
         swaggerVersion = '2.9.2'
         swaggerUiVersion = '1.8.7'
@@ -87,6 +88,8 @@ allprojects {
         }
 
         dependencies {
+            dependency "org.springframework.security.oauth:spring-security-oauth2:${springSecurityOauth2Version}"
+
             dependency "org.apache.commons:commons-collections4:${commonsCollections4Version}"
 
             dependency "commons-collections:commons-collections:${commonsCollectionsVersion}"

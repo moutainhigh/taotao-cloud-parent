@@ -201,7 +201,7 @@
 	</root>
 
 	<springProfile name="dev">
-		<root level="INFO">
+		<root level="DEBUG">
 			<appender-ref ref="CONSOLE_APPENDER"/>
 			<appender-ref ref="INFO_FILE"/>
 			<appender-ref ref="DEBUG_FILE"/>

@@ -4,7 +4,7 @@ import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
 import com.taotao.cloud.pay.api.feign.RemotePayFlowService;
 import com.taotao.cloud.pay.api.vo.PayFlowVO;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteLogFallbackImpl

@@ -13,7 +13,7 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-job')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-jpa')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-p6spy')
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-loadbalancer')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-seata')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-sentinel')
 
@@ -30,7 +30,7 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-job')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-jpa')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-p6spy')
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-loadbalancer')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-seata')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-sentinel')
 
@@ -50,21 +50,17 @@ dependencies {
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
 
     // spring boot
-    //developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    runtime 'org.springframework.boot:spring-boot-starter-undertow'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
-    implementation 'org.springframework.boot:spring-boot-autoconfigure'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+    // security
+    implementation 'org.springframework.security.oauth:spring-security-oauth2'
 
     // spring cloud
     implementation 'org.springframework.cloud:spring-cloud-context'
-    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 
     // spring cloud alibaba
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
@@ -74,11 +70,14 @@ dependencies {
     }
     implementation 'io.seata:seata-spring-boot-starter:1.3.0'
 
-     implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
-     runtime 'io.micrometer:micrometer-registry-prometheus'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+//    runtime 'io.micrometer:micrometer-registry-prometheus'
 
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 //     implementation project(':taotao-cloud-starter:taotao-cloud-starter-shardingjdbc')
 //     implementation project(':taotao-cloud-starter:taotao-cloud-starter-elasticsearch')

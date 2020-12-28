@@ -19,7 +19,7 @@ import com.taotao.cloud.bulletin.api.feign.RemoteWithdrawService;
 import com.taotao.cloud.bulletin.api.vo.WithdrawVO;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.core.model.Result;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * RemoteLogFallbackImpl

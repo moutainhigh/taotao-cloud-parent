@@ -13,7 +13,7 @@ dependencies {
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-job')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-data-jpa')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-p6spy')
-    implementation project(':taotao-cloud-starter:taotao-cloud-starter-ribbon')
+    implementation project(':taotao-cloud-starter:taotao-cloud-starter-loadbalancer')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-seata')
     implementation project(':taotao-cloud-starter:taotao-cloud-starter-sentinel')
 

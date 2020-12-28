@@ -16,7 +16,7 @@ spring:
     host: ${TAOTAO-CLOUD-REDIS-HOST:127.0.0.1}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     database: 0
-    #    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
+    #password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
       pool:
         max-active: 8
@@ -46,11 +46,11 @@ spring:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
-    #      config:
-    #        enabled: false
-    #        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
-    #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
-    #        file-extension: yml
+      config:
+        enabled: false
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
+        file-extension: yml
     sentinel:
       enabled: true
       eager: true
@@ -253,12 +253,9 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 #令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 5
-#      default-filters:
-#        # 降级配置
-#        - name: Hystrix
-#          args:
-#            name: default
-#            fallbackUri: 'forward:/fallback'
+      default-filters:
+        - AddRequestHeader=X-Request-taotao-cloud, 1.0
+
 #  sleuth:
 #    web:
 #      client:
@@ -269,43 +266,6 @@ spring:
 #    enabled: false
 #    sender:
 #      type: kafka
-
-#hystrix:
-#  threadpool:
-#    default:
-#      coreSize: 1200
-#      maximumSize: 15000
-#      allowMaximumSizeToDivergeFromCoreSize: true
-#      maxQueueSize: 2000
-#      queueSizeRejectionThreshold: 1800
-#  command:
-#    default:
-#      circuitBreaker:
-#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-#        requestVolumeThreshold: 30
-#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-#        # 也就是5000毫秒后才会关闭circuit。默认5000
-#        sleepWindowInMilliseconds: 45000
-#      execution:
-#        timeout:
-#          enabled: true
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 90000
-
-ribbon:
-  eager-load:
-    enabled: true
-  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-  ReadTimeout: 90000
-  ConnectTimeout: 90000
-  OkToRetryOnAllOperations: true
-  MaxAutoRetries: 1
-  MaxAutoRetriesNextServer: 1
 
 taotao:
   cloud:

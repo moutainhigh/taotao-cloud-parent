@@ -21,6 +21,7 @@ import com.taotao.cloud.security.annotation.EnableTaoTaoCloudOAuth2RedisTokenSto
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.commons.security.ResourceServerTokenRelayAutoConfiguration;
 
 /**
  * TaotaoCloudGatewayApplication
@@ -32,7 +33,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableTaoTaoCloudRequestLog
 @EnableTaoTaoCloudRedis
 @EnableTaoTaoCloudOAuth2RedisTokenStore
-@SpringBootApplication
+@SpringBootApplication(exclude = {ResourceServerTokenRelayAutoConfiguration.class})
 @EnableDiscoveryClient
 public class TaotaoCloudGatewayApplication {
 

@@ -49,6 +49,9 @@ spring:
   application:
     name: taotao-cloud-uc-center
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     nacos:
       discovery:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
@@ -361,51 +364,6 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
-
-
-#hystrix:
-#  threadpool:
-#    default:
-#      coreSize: 1200
-#      maximumSize: 15000
-#      allowMaximumSizeToDivergeFromCoreSize: true
-#      maxQueueSize: 2000
-#      queueSizeRejectionThreshold: 1800
-#  command:
-#    default:
-#      circuitBreaker:
-#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-#        requestVolumeThreshold: 30
-#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-#        # 也就是5000毫秒后才会关闭circuit。默认5000
-#        sleepWindowInMilliseconds: 45000
-#      execution:
-#        timeout:
-#          enabled: false
-#        isolation:
-#          strategy: SEMAPHORE
-#          semaphore:
-#            maxConcurrentRequests: 100
-#          thread:
-#            # 断路器超时时间，默认1000ms
-#            timeoutInMilliseconds: 300000
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 90000
-
-ribbon:
-  eager-load:
-    enabled: true
-  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
-  httpclient:
-    enabled: false
-  okhttp:
-    enabled: true
-  ReadTimeout: 300000
-  ConnectTimeout: 300000
-  OkToRetryOnAllOperations: true
-  MaxAutoRetries: 1
-  MaxAutoRetriesNextServer: 1
 
 management:
   endpoints:
